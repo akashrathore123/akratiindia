@@ -1,0 +1,53 @@
+{
+  "name": "Client",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "client_fname": {
+      "type": "string"
+    },
+    "client_lname": {
+      "type": "string"
+    },
+    "client_mobile": {
+      "type": "string",
+      "required": true
+    },
+    "client_email": {
+      "type": "string",
+      "required": true
+    },
+    "client_password": {
+      "type": "string",
+      "required": true
+    },
+    "client_verified": {
+      "type": "string",
+      "required": true
+    },
+    "client_address": {
+      "type": "string"
+      
+    },
+    "client_city": {
+      "type": "string"
+      
+    },
+    "client_token": {
+      "type": "string",
+      "required": true
+    },
+    "client_realm": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
