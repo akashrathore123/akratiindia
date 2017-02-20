@@ -27,7 +27,7 @@ if(password1 == password2){
                 $cookies.Fabtoken = Fabostyle;
                 addCookie("token="+data.response.client_token);
                 $document.cookie = "token="+data.response.client_token;
-                alert($document.cookie);
+
                 console.log('Fabtoken-' + $cookies.Fabtoken.token);
                 $window.location = "index.html";
 
@@ -82,9 +82,7 @@ app.controller('loginAction',function($scope,$http,$window){
 });
 
 app.controller('loginCheck',['$scope','$http','$cookies','$document', function($scope,$http,$cookies,$document){
-  alert(getCookie());
-  alert($document.cookie);
-  alert($document.prop("cookie"));
+
   if(getCookie()){
     console.log("session exists");
   }else{
