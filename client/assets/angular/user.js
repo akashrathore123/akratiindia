@@ -25,8 +25,8 @@ if(password1 == password2){
                 console.log(data.response.client_token);
                 var Fabostyle = {'token':data.response.client_token};
                 $cookies.Fabtoken = Fabostyle;
-                addCookie("token="+data.response.client_token);
-                $document.cookie = "token="+data.response.client_token;
+
+              //  $document.cookie = "token="+data.response.client_token;
 
                 console.log('Fabtoken-' + $cookies.Fabtoken.token);
                 $window.location = "index.html";
