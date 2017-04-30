@@ -1,0 +1,193 @@
+{
+  "name": "Product",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "PName": {
+      "type": "string",
+      "required": true
+    },
+    "PImage1": {
+      "type": "string"
+    },
+    "PImage2": {
+      "type": "string"
+    },
+    "PImage3": {
+      "type": "string"
+    },
+    "PSize1": {
+      "type": "number"
+    },
+    "PSize2": {
+      "type": "number"
+    },
+    "PSize3": {
+      "type": "number"
+    },
+    "PSize4": {
+      "type": "number"
+    },
+    "PQuantityMax1": {
+      "type": "string"
+    },
+    "PQuantityMax4": {
+      "type": "string"
+    },
+    "PQuantityMax2": {
+      "type": "string"
+    },
+    "PQuantityMin1": {
+      "type": "string"
+    },
+    "PQuantityMax3": {
+      "type": "string"
+    },
+    "PQuantityMin2": {
+      "type": "string"
+    },
+    "PQuantityMin3": {
+      "type": "string"
+    },
+    "PQuantityMin4": {
+      "type": "string"
+    },
+    "PDiscountPrice2": {
+      "type": "string"
+    },
+    "PDiscountPrice3": {
+      "type": "string"
+    },
+    "PDiscountPrice4": {
+      "type": "string"
+    },
+    "PPrice2": {
+      "type": "string"
+    },
+    "PPrice3": {
+      "type": "string"
+    },
+    "PPrice4": {
+      "type": "string"
+    },
+    "PPrice1": {
+      "type": "string",
+      "required": false
+    },
+    "PCategory": {
+      "type": "string",
+      "required": true
+    },
+    "PCode": {
+      "type": "string",
+      "id": true,
+      "required": true
+    },
+    "PCompany": {
+      "type": "string",
+      "required": true
+    },
+    "PDescription": {
+      "type": "string"
+    },
+    "PDiscount": {
+      "type": "string"
+    },
+    "PDiscountPrice1": {
+      "type": "string"
+    },
+    "PFinish1": {
+      "type": "string"
+    },
+    "PFinish2": {
+      "type": "string"
+    },
+    "PFinish3": {
+      "type": "string"
+    },
+    "PFinish4": {
+      "type": "string"
+    },
+    "PHeight1": {
+      "type": "number"
+    },
+    "PHeight2": {
+      "type": "number"
+    },
+    "PHeight3": {
+      "type": "number"
+    },
+    "PHeight4": {
+      "type": "number"
+    },
+    "PHoleToHole1": {
+      "type": "number"
+    },
+    "PHoleToHole2": {
+      "type": "number"
+    },
+    "PHoleToHole3": {
+      "type": "number"
+    },
+    "PHoleToHole4": {
+      "type": "number"
+    },
+    "PLength1": {
+      "type": "number"
+    },
+    "PLength2": {
+      "type": "number"
+    },
+    "PLength3": {
+      "type": "number"
+    },
+    "PLength4": {
+      "type": "number"
+    },
+    "PMaterial1": {
+      "type": "string",
+      "required": true
+    },
+    "PMaterial2": {
+      "type": "string"
+    },
+    "PMaterial3": {
+      "type": "string"
+    },
+    "PMaterial4": {
+      "type": "string"
+    },
+    "PWeight1": {
+      "type": "string"
+    },
+    "PWeight2": {
+      "type": "string"
+    },
+    "PWeight3": {
+      "type": "string"
+    },
+    "PWeight4": {
+      "type": "string"
+    },
+    "PWidth1": {
+      "type": "number"
+    },
+    "PWidth2": {
+      "type": "number"
+    },
+    "PWidth3": {
+      "type": "number"
+    },
+    "PWidth4": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

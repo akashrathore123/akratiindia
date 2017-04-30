@@ -37,5 +37,35 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "Product": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "CartItem": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "Admin": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "Container": {
+    "dataSource": "imageFiles",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "Filedata": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

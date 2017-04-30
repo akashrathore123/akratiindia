@@ -31,11 +31,9 @@
     },
     "client_address": {
       "type": "string"
-      
     },
     "client_city": {
       "type": "string"
-      
     },
     "client_token": {
       "type": "string",
@@ -47,7 +45,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "CartItems": {
+      "type": "hasMany",
+      "model": "CartItem",
+      "foreignKey": "PClientId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

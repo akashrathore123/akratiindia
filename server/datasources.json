@@ -6,11 +6,17 @@
   "mongoDB": {
     "host": "127.0.0.1",
     "port": 27017,
-    "url": "mongodb://127.0.0.1:27017/Fabostyle",
-    "database": "Fabostyle",
+    "url": "mongodb://127.0.0.1:27017/Akratiindia",
+    "database": "Akratiindia",
     "password": "Myjelvin123",
     "name": "mongoDB",
     "user": "akash.rathore",
     "connector": "mongodb"
+  },
+  "imageFiles": {
+    "name": "imageFiles",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "../"
   }
 }

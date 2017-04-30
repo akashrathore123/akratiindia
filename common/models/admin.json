@@ -1,0 +1,30 @@
+{
+  "name": "Admin",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "adminId": {
+      "type": "string",
+      "id": true,
+      "required": true
+    },
+    "adminPassword": {
+      "type": "string",
+      "required": true
+    },
+    "adminName": {
+      "type": "string"
+    },
+    "adminRole": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,45 @@
+{
+  "name": "CartItem",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "PCode": {
+      "type": "string",
+      "required": true
+    },
+    "POrderQuant1": {
+      "type": "number",
+      "required": false
+    },
+    "POrderQuant2": {
+      "type": "number"
+    },
+    "POrderQuant3": {
+      "type": "number"
+    },
+    "POrderQuant4": {
+      "type": "number"
+    },
+    "PDate": {
+      "type": "date"
+    },
+    "PClientId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "product": {
+      "type": "embedsOne",
+      "model": "Product",
+      "property": "PProduct"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

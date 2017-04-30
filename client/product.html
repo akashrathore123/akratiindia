@@ -1,0 +1,259 @@
+
+
+  <div>
+    <div>
+      <div>
+        <div>
+          <div>
+
+          <div class="container" ng-controller = "showProducts">
+          <div class="products-grid">
+    <div ng-repeat="product in products.fields">
+      <div ng-repeat="prod in product">
+         					<div class="col-md-4 product simpleCart_shelfItem text-center">
+
+      						<a href="single.html"><img src="assets/img/{{prod.PImage1}}" alt="" width="350" height="437.5"></a>
+      						<div class="mask">
+      							<a href="single.html" ng-click="setModalData(prod)"  data-toggle="modal" data-target="#myModal" class="quick">Quick View</a>
+                  </div>
+                    <div>
+                      <h4>{{prod.PName}}</h4>
+                      <Strike> Rs. {{prod.PPrice1}}</Strike>
+                      <span class="discount">({{prod.PDiscount}}% OFF)</span>
+                      <span> Rs. {{prod.PDiscountPrice1}}</span>
+                    </div>
+                          <!-- Product View Modal Core -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content" id="product-modal">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">{{modalData.PName}}</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="new-product">
+
+
+                              <div class="slider">
+                              	<input type="radio" name="slide_switch" id="id1"/>
+                              	<label for="id1">
+                              		<img src="assets/img/{{modalData.PImage1}}" />
+                              	</label>
+                              	<img src="assets/img/{{modalData.PImage1}}" />
+
+                              	<!--Lets show the second image by default on page load-->
+                              	<input type="radio" name="slide_switch" id="id2" checked="checked"/>
+                              	<label for="id2">
+                              		<img src="assets/img/{{modalData.PImage2}}" />
+                              	</label>
+                              	<img src="assets/img/{{modalData.PImage2}}" />
+
+                              	<input type="radio" name="slide_switch" id="id3"/>
+                              	<label for="id3">
+                              		<img src="assets/img/{{modalData.PImage3}}" />
+                              	</label>
+                              	<img src="assets/img/{{modalData.PImage3}}" />
+
+
+                              </div>
+
+
+                      				<div class="col-md-7 product-info">
+                      					<div class="product-name">
+                                  <h3>{{modalData.PName}}</h3>
+
+                                  <div class="clearfix"></div>
+
+                      					</div>
+                                <div class="price">
+                                <span >Price:</span><Strike> Rs. {{modalData.PPrice1}}</Strike>
+                                <span class="discount">({{modalData.PDiscount}}% OFF)</span>
+                                <span> Rs. {{modalData.PDiscountPrice1}}</span>
+                                </div>
+                                <br>
+                                <table class="table table-bordered">
+                                  <tr><th>Size</th>
+                                    <td>{{modalData.PSize1}}</td>
+                                    <td>{{modalData.PSize2}}</td>
+                                    <td>{{modalData.PSize3}}</td>
+                                    <td>{{modalData.PSize4}}</td>
+                                  </tr>
+                                  <tr><th>FINISH</th>
+                                    <td>{{modalData.PFinish1}}</td>
+                                    <td>{{modalData.PFinish2}}</td>
+                                    <td>{{modalData.PFinish3}}</td>
+                                    <td>{{modalData.PFinish4}}</td>
+                                  </tr>
+                                  <tr><th>Material</th>
+                                    <td>{{modalData.PMaterial1}}</td>
+                                    <td>{{modalData.PMaterial2}}</td>
+                                    <td>{{modalData.PMaterial3}}</td>
+                                    <td>{{modalData.PMaterial4}}</td>
+                                  </tr>
+                                  <tr><th>Weight (gms)</th>
+                                    <td>{{modalData.PWeight1}}</td>
+                                    <td>{{modalData.PWeight2}}</td>
+                                    <td>{{modalData.PWeight3}}</td>
+                                    <td>{{modalData.PWeight4}}</td>
+                                  </tr>
+                                  <tr><th>L W H (inches)</th>
+                                    <td>{{modalData.PLength1}} {{modalData.PWidth1}} {{modalData.PHeight1}}</td>
+                                    <td>{{modalData.PLength2}} {{modalData.PWidth2}} {{modalData.PHeight2}}</td>
+                                    <td>{{modalData.PLength3}} {{modalData.PWidth3}} {{modalData.PHeight3}}</td>
+                                    <td>{{modalData.PLength4}} {{modalData.PWidth4}} {{modalData.PHeight4}}</td>
+                                  </tr>
+                                  <tr><th>Hole To Hole (inches)</th>
+                                    <td>{{modalData.PHoleToHole1}}</td>
+                                    <td>{{modalData.PHoleToHole2}}</td>
+                                    <td>{{modalData.PHoleToHole3}}</td>
+                                    <td>{{modalData.PHoleToHole4}}</td>
+                                  </tr>
+
+
+                                  <tr><th>Price (Rs.)</th>
+                                    <td>{{modalData.PDiscountPrice1}}</td>
+                                    <td>{{modalData.PDiscountPrice2}}</td>
+                                    <td>{{modalData.PDiscountPrice3}}</td>
+                                    <td>{{modalData.PDiscountPrice4}}</td>
+                                  </tr>
+                                </table>
+
+                      					<div class="span span1">
+
+                                  <span class="right">Min - Max</span>
+                                  <br>
+                      						<span class="right">
+
+                                    <div class="sizes">
+
+                                      <div id="quantity1">
+                                      <span class="quantSize">{{modalData.PSize1}}''</span>
+                                    <div class="input-group" id="quantSelector1">
+
+
+                                              <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant1[1]" onclick="changeQuantity(this)">
+                                                      <span class="glyphicon glyphicon-minus"></span>
+                                                  </button>
+                                              </span>
+                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="10">
+                                              <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd1" onclick="changeQuantity(this)" data-type="plus" data-field="quant1[1]">
+                                                      <span class="glyphicon glyphicon-plus"></span>
+                                                  </button>
+                                              </span>
+
+
+                                          </div>
+                                          <span class="Max-Min">{{modalData.PQuantityMin1}} - {{modalData.PQuantityMax1}}</span>
+                                        </div>
+                                      <br>
+                                      <div id="quantity2">
+                                      <span class="quantSize">{{modalData.PSize2}}''</span>
+                                    <div class="input-group" id="quantSelector2">
+
+                                              <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant2[1]" onclick="changeQuantity(this)">
+                                                            <span class="glyphicon glyphicon-minus"></span>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="10">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd2" onclick="changeQuantity(this)" data-type="plus" data-field="quant2[1]">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </button>
+                                                    </span>
+
+                                                </div>
+                                                <span class="Max-Min">{{modalData.PQuantityMin2}} - {{modalData.PQuantityMax2}}</span>
+                                              </div>
+                                                <br>
+                                                <div id="quantity3">
+                                                <span class="quantSize">{{modalData.PSize3}}''</span>
+                                                <div class="input-group" id="quantSelector3">
+
+                                                          <span class="input-group-btn">
+                                                              <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant3[1]" onclick="changeQuantity(this)">
+                                                                  <span class="glyphicon glyphicon-minus"></span>
+                                                              </button>
+                                                          </span>
+                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="10">
+                                                          <span class="input-group-btn">
+                                                              <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd3" onclick="changeQuantity(this)" data-type="plus" data-field="quant3[1]">
+                                                                  <span class="glyphicon glyphicon-plus"></span>
+                                                              </button>
+                                                          </span>
+
+                                                      </div>
+                                                      <span class="Max-Min">{{modalData.PQuantityMin3}} - {{modalData.PQuantityMax3}}</span>
+                                                    </div>
+                                                      <br>
+                                                      <div id="quantity4">
+                                                      <span class="quantSize">{{modalData.PSize4}}''</span>
+                                                      <div class="input-group" id="quantSelector4">
+
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant4[1]" onclick="changeQuantity(this)">
+                                                                        <span class="glyphicon glyphicon-minus"></span>
+                                                                    </button>
+                                                                </span>
+                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="10">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd4" onclick="changeQuantity(this)" data-type="plus" data-field="quant4[1]">
+                                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                                    </button>
+                                                                </span>
+
+                                                            </div>
+                                                            <span class="Max-Min">  {{modalData.PQuantityMin4}} - {{modalData.PQuantityMax4}}</span>
+                                                          </div>
+                                        </div>
+
+                                         </span>
+                      						<div class="clearfix"></div>
+                      					</div>
+
+                      					<div class="addToCart">
+                      						<a href=""><button class="btn btn-primary" ng-click = "addToCart(prod)" >Add to Cart</button></a>
+                                  <br>
+                                  <span id="addCartError"></span>
+                                  <div class="clearfix"></div>
+                                  <br>
+                      					</div>
+
+                      					<!-- FlexSlider -->
+
+
+                      				</div>
+                              <div class="productDescription">{{modalData.PDescription}}</div>
+
+                      				<div class="clearfix"></div>
+
+
+                      			</div>
+          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                  <!-- Modal ends here -->
+
+      						<a class="product_name" href="single.html">{{prod.PName}}</a>
+      						<p><a class="item_add" href=""><i></i> <span class="item_price">{{prod.PPrice}}</span></a></p>
+      					</div>
+              </div>
+            </div><br>
+            	<div class="clearfix"></div>
+      				</div>
+              <button class="btn btn-default btn-register" ng-click="getProducts()" value="viewMore" id="viewMore">View More</button>
+              <br>
+    </div>

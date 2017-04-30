@@ -1,0 +1,73 @@
+
+<div ng-controller="showCartItems" id="cartContainer" class="cart-container">
+<div class="cart-top">
+   <div class="cart-items">Cart ({{cartCount}} Items)</div>
+<div class="cart-total-price">
+     <div class="cart-total">Total: Rs. {{cartTotal}}</div>
+
+     </div>
+   </div>
+     <div ng-repeat="item in items track by $index">
+
+
+             <div class="cart-block">
+
+               <div class="cart-image">
+                 <img src="assets/img/{{item.PProduct.PImage1}}"/>
+               </div>
+
+               <div class="cart-item-content">
+              <div class="cart-left-block">
+               <div class="cart-title"> <b>{{item.PProduct.PName}}</b> </div>
+               <div class="cart-size"><b>Size:</b> {{item.PProduct.PLength}}'' {{item.PProduct.PWidth}}'' {{item.PProduct.PHeight}}'' (L W H)</div>
+               <div class="cart-quantity"><b>Qty:</b>
+                <div class="cart-price-header">
+                   <span> Size</span>
+                   <span> No. of Units </span>
+                   <span> Unit Price </span>
+                   <span> Total Price </span>
+                 </div>
+                 <div>
+                   <div ng-if = "item.POrderQuant1 > 0">
+                     <span>{{item.PProduct.PSize1}}</span>
+                     <span>{{item.POrderQuant1}}</span>
+                     <span>{{item.PProduct.PPrice1}}</span>
+                     <span>{{item.PPriceTotal1}}</span>
+                   </div>
+                   <div ng-if ="item.POrderQuant2 > 0">
+                     <span>{{item.PProduct.PSize2}}</span>
+                     <span>{{item.POrderQuant2}}</span>
+                     <span>{{item.PProduct.PPrice2}}</span>
+                     <span>{{item.PPriceTotal2}}</span>
+                   </div>
+                   <div ng-if ="item.POrderQuant3 > 0">
+                     <span>{{item.PProduct.PSize3}}</span>
+                     <span>{{item.POrderQuant3}}</span>
+                     <span>{{item.PProduct.PPrice3}}</span>
+                     <span>{{item.PPriceTotal3}}</span>
+                   </div>
+                   <div ng-if ="item.POrderQuant4 > 0">
+                     <span>{{item.PProduct.PSize4}}</span>
+                     <span>{{item.POrderQuant4}}</span>
+                     <span>{{item.PProduct.PPrice4}}</span>
+                     <span>{{item.PPriceTotal4}}</span>
+                   </div>
+                 </div>
+                 </div>
+               </div>
+               <div class="cart-right-block">
+               <div class="cart-price">
+            <!--     <div class="cart-discount-price"> Rs. {{item.PDiscountPrice1}}</div><br>
+               <span class="discount">({{item.PDiscount}}% OFF)</span> <Strike> -->
+              Total Amount:  Rs. {{item.PPriceTotalAll}}</Strike>
+
+
+             </div>
+             <div id="cart-remove">
+               <a href="" class="btn btn-primary"  ng-click="removeFromCart(item)">Remove</a>
+             </div>
+           </div>
+             </div>
+           </div>
+         </div>
+</div>
