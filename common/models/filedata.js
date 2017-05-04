@@ -1,23 +1,38 @@
+var mkdirp = require('mkdirp');
+var util = require('../util/util');
 var CONTAINERS_URL = '/api/containers/';
 module.exports = function(Filedata) {
 
     Filedata.upload = function (ctx,options,cb) {
+
         if(!options) options = {};
-        ctx.req.params.container = 'common';
-        console.log(File.app.models);
-        File.app.models.container.upload(ctx.req,ctx.result,options,function (err,fileObj) {
+        ctx.req.params.container = ctx.req.header('container');
+      
+        // Filedata.app.models.Container.createContainer("../assets/images/"+ctx.req.header('container'),function(err,container){
+        //
+        //   if(err){
+        //     cb(err);
+        //   }
+        // })
+        mkdirp('./client/assets/images/'+ctx.req.header('container'), function (err) {
+       console.log(err);
+   });
+        Filedata.app.models.Container.upload(ctx.req,ctx.result,options,function (err,fileObj) {
             if(err) {
-                cb(err);
+              cb(util.getGenericError("Error",500,"Error occured while upload"+err));
+              return;
             } else {
                 var fileInfo = fileObj.files.file[0];
+                console.log(fileInfo);
                 Filedata.create({
                     name: fileInfo.name,
                     type: fileInfo.type,
                     container: fileInfo.container,
-                    url: CONTAINERS_URL+fileInfo.container+'/download/'+fileInfo.name
+                    url: 'assets/images/'+ctx.req.header('container')+'/'+fileInfo.name
                 },function (err,obj) {
                     if (err !== null) {
-                        cb(err);
+                      cb(util.getGenericError("Error",500,"Unable to add file info"+err));
+                      return;
                     } else {
                         cb(null, obj);
                     }

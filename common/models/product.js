@@ -22,9 +22,30 @@ Product.find({limit: 52, skip: skip, where: {PCategory: category}},function(err,
 }
 });
 
-
 }
 
+Product.addProduct = function(data, cb, next)
+{
+  var realm = data.header('realm');
+  var access_code = data.header('access_code');
+
+  var body = data.body;
+  console.log(body.PCode);
+  if(!realm || !access_code || !body || body.PCode == undefined){
+    cb(util.getGenericError('Error',400,'Bad Request!'));
+    return;
+  }
+  console.log(body);
+  Product.create(body,function(err){
+    if(err){
+      cb(util.getGenericError('Error',500,'Unable to add Product!'));
+    }else{
+      cb(null,"Product added successfully!");
+      return;
+    }
+  })
+  //cb(null);
+}
 Product.remoteMethod('showProducts',{
 
   description:"Fetches products from database",
@@ -34,6 +55,17 @@ Product.remoteMethod('showProducts',{
 ],
   returns: {
       arg: 'products',type: 'object'
+    }
+});
+
+Product.remoteMethod('addProduct',{
+
+  description:"Add products to database",
+  http: {path: '/addProduct', verb: 'post'},
+  accepts: [{arg: 'data', type: 'object', http: { source: 'req' } }
+],
+  returns: {
+      arg: 'response',type: 'object'
     }
 });
 };

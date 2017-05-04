@@ -12,7 +12,7 @@
       <div ng-repeat="prod in product">
          					<div class="col-md-4 product simpleCart_shelfItem text-center">
 
-      						<a href="single.html"><img src="assets/img/{{prod.PImage1}}" alt="" width="350" height="437.5"></a>
+      						<a href="single.html"><img src="assets/images/{{prod.PCode}}/{{prod.PImage1}}" alt="" width="350" height="437.5"></a>
       						<div class="mask">
       							<a href="single.html" ng-click="setModalData(prod)"  data-toggle="modal" data-target="#myModal" class="quick">Quick View</a>
                   </div>
@@ -37,22 +37,22 @@
                               <div class="slider">
                               	<input type="radio" name="slide_switch" id="id1"/>
                               	<label for="id1">
-                              		<img src="assets/img/{{modalData.PImage1}}" />
+                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
                               	</label>
-                              	<img src="assets/img/{{modalData.PImage1}}" />
+                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
 
                               	<!--Lets show the second image by default on page load-->
                               	<input type="radio" name="slide_switch" id="id2" checked="checked"/>
                               	<label for="id2">
-                              		<img src="assets/img/{{modalData.PImage2}}" />
+                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
                               	</label>
-                              	<img src="assets/img/{{modalData.PImage2}}" />
+                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
 
                               	<input type="radio" name="slide_switch" id="id3"/>
                               	<label for="id3">
-                              		<img src="assets/img/{{modalData.PImage3}}" />
+                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" />
                               	</label>
-                              	<img src="assets/img/{{modalData.PImage3}}" />
+                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" />
 
 
                               </div>

@@ -15,7 +15,10 @@
     },
     "Url": {
       "type": "string",
-      "required": true
+      "required": false
+    },
+    "container": {
+      "type": "string"
     }
   },
   "validations": [],
