@@ -20,18 +20,6 @@
     "PImage3": {
       "type": "string"
     },
-    "PSize1": {
-      "type": "number"
-    },
-    "PSize2": {
-      "type": "number"
-    },
-    "PSize3": {
-      "type": "number"
-    },
-    "PSize4": {
-      "type": "number"
-    },
     "PQuantityMax1": {
       "type": "string"
     },
@@ -112,42 +100,6 @@
     "PFinish4": {
       "type": "string"
     },
-    "PHeight1": {
-      "type": "number"
-    },
-    "PHeight2": {
-      "type": "number"
-    },
-    "PHeight3": {
-      "type": "number"
-    },
-    "PHeight4": {
-      "type": "number"
-    },
-    "PHoleToHole1": {
-      "type": "number"
-    },
-    "PHoleToHole2": {
-      "type": "number"
-    },
-    "PHoleToHole3": {
-      "type": "number"
-    },
-    "PHoleToHole4": {
-      "type": "number"
-    },
-    "PLength1": {
-      "type": "number"
-    },
-    "PLength2": {
-      "type": "number"
-    },
-    "PLength3": {
-      "type": "number"
-    },
-    "PLength4": {
-      "type": "number"
-    },
     "PMaterial1": {
       "type": "string",
       "required": true
@@ -173,17 +125,65 @@
     "PWeight4": {
       "type": "string"
     },
+    "PLength1": {
+      "type": "string"
+    },
+    "PLength2": {
+      "type": "string"
+    },
+    "PLength3": {
+      "type": "string"
+    },
+    "PLength4": {
+      "type": "string"
+    },
     "PWidth1": {
-      "type": "number"
+      "type": "string"
     },
     "PWidth2": {
-      "type": "number"
+      "type": "string"
     },
     "PWidth3": {
-      "type": "number"
+      "type": "string"
     },
     "PWidth4": {
-      "type": "number"
+      "type": "string"
+    },
+    "PSize1": {
+      "type": "string"
+    },
+    "PSize2": {
+      "type": "string"
+    },
+    "PSize3": {
+      "type": "string"
+    },
+    "PSize4": {
+      "type": "string"
+    },
+    "PHoleToHole4": {
+      "type": "string"
+    },
+    "PHoleToHole3": {
+      "type": "string"
+    },
+    "PHoleToHole2": {
+      "type": "string"
+    },
+    "PHoleToHole1": {
+      "type": "string"
+    },
+    "PHeight4": {
+      "type": "string"
+    },
+    "PHeight3": {
+      "type": "string"
+    },
+    "PHeight2": {
+      "type": "string"
+    },
+    "PHeight1": {
+      "type": "string"
     }
   },
   "validations": [],

@@ -3963,7 +3963,7 @@ transition: background .55s ease;
 	left: 0; top: 0;
 	transition: all 0.5s;
   width:100%;
-  height:82%;
+  height:83%;
 }
 
 .slider input[name='slide_switch'] {
@@ -4143,4 +4143,47 @@ On click the images will be displayed at normal size to complete the effect
 
 #addCartError{
   font-size: larger;
+}
+
+
+/* Product details css */
+.productContainer{
+  width: 95%;
+  margin-left: 3%;
+}
+
+#prodDescTable{
+  width: 30%;
+  margin-top: -40%;
+  height: 41%;
+}
+
+#selectQuantitySpan{
+width: 21%;
+float: right;
+margin-top: -22%;
+}
+
+#Max-Min{
+  margin-left: 217px;
+}
+
+#addToCartBtn{
+  float: right;
+  margin-right: 6%;
+}
+
+.productDesc{
+  position: relative;
+  margin-left: 38%;
+}
+
+#sliderDiv{
+  width: 34%;
+}
+
+#prodDetailError{
+  float: right;
+  margin-top: 2%;
+  margin-right: -11%;
 }

@@ -30,7 +30,6 @@ Product.addProduct = function(data, cb, next)
   var access_code = data.header('access_code');
 
   var body = data.body;
-  console.log(body.PCode);
   if(!realm || !access_code || !body || body.PCode == undefined){
     cb(util.getGenericError('Error',400,'Bad Request!'));
     return;
@@ -46,6 +45,118 @@ Product.addProduct = function(data, cb, next)
   })
   //cb(null);
 }
+
+Product.getProductCode = function(data, cb, next){
+  var realm = data.header('realm');
+  var access_code = data.header('access_code');
+  if(!realm || !access_code){
+    cb(util.getGenericError('Error',400,'Bad Request!'));
+    return;
+  }
+Product.find({fields:{'PCode':true}},function(err,object){
+  console.log(object);
+  if(err){
+    cb(util.getGenericError("Error",500,"Unable to fetch Products!"));
+  }else{
+    cb(null,object);
+    return;
+  }
+})
+
+}
+
+Product.getUpdateProduct = function(data, cb, next){
+  var realm = data.req.header('realm');
+  var access_code = data.req.header('access_code');
+  if(!realm || !access_code){
+    cb(util.getGenericError('Error',400,'Bad Request!'));
+    return;
+  }
+  var code = data.req.header('code');
+  Product.findOne({where:{PCode:code}},function(err,product){
+    if(err){
+      cb(util.getGenericError("Error",500,"Internal Server Error!"));
+      return;
+    }
+    if(!product){
+      data.res.statusCode = 204;
+      data.res.statusText = "Product not found";
+      data.res.data = {}
+      cb(null,data.res.data);
+
+      return;
+    }else{
+      cb(null,product);
+    }
+  })
+}
+
+Product.updateProduct = function(data, cb, next){
+  var realm = data.header('realm');
+  var access_code = data.header('access_code');
+  var code = data.header('code');
+  if(!realm || !access_code || !code){
+    cb(util.getGenericError('Error',400,'Bad Request!'));
+    return;
+  }
+
+  var updatedProduct = data.body;
+  console.log("body--"+data.body);
+
+  Product.findOne({where:{PCode:code}},function(err,product){
+    if(err){
+      cb(util.getGenericError("Error",500,"Internal Server Error!"));
+      return;
+    }
+    if(!product){
+      data.res.statusCode = 204;
+      data.res.statusText = "Product not found";
+      data.res.data = {}
+      cb(null,data.res.data);
+      return;
+
+    }else{
+console.log("found product");
+    product.updateAttributes(updatedProduct,function(err,product){
+    if(err){
+      cb(util.getGenericError("Error",500,"Internal Server Error!"));
+      return;
+    }else{
+
+      console.log("updated product"+product);
+      cb(null,product);
+    }
+  });
+    }
+  });
+}
+
+Product.productDetails = function(data, cb){
+  var realm = data.req.header('realm');
+  var access_code = data.req.header('access_code');
+  var code = data.req.header('code');
+  if(!realm || !access_code || !code){
+    cb(util.getGenericError('Error',400,'Bad Request!'));
+    return;
+  }
+
+  Product.findOne({where:{PCode:code}},function(err, product){
+    if(err){
+      cb(util.getGenericError("Error",500,"Internal Server Error!"));
+      return;
+    }
+    if(!product){
+      data.res.statusCode = 204;
+      data.res.statusText = "Product not found";
+      cb(null);
+      return;
+    }else{
+      console.log(product);
+      cb(null, product);
+    }
+  });
+}
+
 Product.remoteMethod('showProducts',{
 
   description:"Fetches products from database",
@@ -68,4 +179,49 @@ Product.remoteMethod('addProduct',{
       arg: 'response',type: 'object'
     }
 });
+
+Product.remoteMethod('getProductCode',{
+
+  description:"Fetch product codes",
+  http: {path: '/getProductCode', verb: 'get'},
+  accepts: [{arg: 'data', type: 'object', http: { source: 'req' } }
+],
+  returns: {
+      arg: 'response',type: 'object'
+    }
+});
+
+Product.remoteMethod('getUpdateProduct',{
+
+  description:"Fetch product by product code",
+  http: {path: '/getUpdateProduct', verb: 'get'},
+  accepts: [{arg: 'data', type: 'object', http: { source: 'context' } }
+],
+  returns: {
+      arg: 'response',type: 'object'
+    }
+});
+
+Product.remoteMethod('updateProduct',{
+
+  description:"Update product by product code",
+  http: {path: '/updateProduct', verb: 'put'},
+  accepts: [{arg: 'data', type: 'object', http: { source: 'req' } }
+],
+  returns: {
+      arg: 'response',type: 'object'
+    }
+});
+
+Product.remoteMethod('productDetails',{
+
+  description:"Fetch product details by product code",
+  http: {path: '/productDetails', verb: 'get'},
+  accepts: [{arg: 'data', type: 'object', http: { source: 'context' } }
+],
+  returns: {
+      arg: 'response',type: 'object'
+    }
+});
+
 };

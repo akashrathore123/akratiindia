@@ -1,0 +1,367 @@
+
+
+<div class="update-product" ng-controller="updateProduct">
+
+<!--<select class="selectpicker" data-show-subtext="true" data-live-search="true" ng-model="productCodes" ng-options="x for x in codes"/>
+-->
+Select Product Code: <input list="codeDropdown" type="" ng-model="SelectedCode" ng-change="getUpdateProduct(SelectedCode)" />
+<datalist id="codeDropdown">
+  <option ng-repeat="code in codes" value="{{code}}">
+  </datalist>
+{{codeDropdownResult}}
+
+<form method="post">
+  <div class="add-product left">
+<div class="form-group row">
+  <label for="example-text-input" class="col-2 col-form-label">Product Name</label>
+  <div class="col-10">
+    <input class="form-control" ng-model="products.PName" type="text"  id="example-text-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-search-input" class="col-2 col-form-label">Product Description</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PDescription"  id="example-search-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-email-input" class="col-2 col-form-label">Product Size 1</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PSize1" id="example-email-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-url-input" class="col-2 col-form-label">Product Size 2</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PSize2" id="example-url-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-tel-input" class="col-2 col-form-label">Product Size 3</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PSize3" id="example-tel-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Size 4</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PSize4" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Min Quantity(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMin1" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Max Quantity(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMax1" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Min Quantity(Size 2)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMin2" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Max Quantity(Size 2)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMax2" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Min Quantity(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMin3" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Max Quantity(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMax3" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Min Quantity(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMin4" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-password-input" class="col-2 col-form-label">Product Max Quantity(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PQuantityMax4" id="example-password-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-date-input" class="col-2 col-form-label">Product Discount</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PDiscount" id="example-date-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-2 col-form-label">Product Price(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PPrice1" value="42" id="example-number-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Discount Price(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PDiscountPrice1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Length(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PLength1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Width(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PWidth1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Height(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PHeight1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Material(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PMaterial1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Hole to Hole(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PHoleToHole1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Finish(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PFinish1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Weight(Size 1)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PWeight1" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-2 col-form-label">Product Price(Size 2)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PPrice2" value="42" id="example-number-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Discount Price(Size 2)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PDiscountPrice2" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Length(Size 2)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PLength2" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Width(Size 2)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PWidth2" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Height(Size 2)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PHeight2" id="example-datetime-local-input">
+  </div>
+</div>
+</div>
+<div class="add-product right">
+
+  <div class="form-group row">
+    <label for="example-datetime-local-input" class="col-2 col-form-label">Product Material(Size 2)</label>
+    <div class="col-10">
+      <input class="form-control" type="text" ng-model="products.PMaterial2" id="example-datetime-local-input">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="example-datetime-local-input" class="col-2 col-form-label">Product Hole to Hole(Size 2)</label>
+    <div class="col-10">
+      <input class="form-control" type="text" ng-model="products.PHoleToHole2" id="example-datetime-local-input">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="example-datetime-local-input" class="col-2 col-form-label">Product Finish(Size 2)</label>
+    <div class="col-10">
+      <input class="form-control" type="text" ng-model="products.PFinish2" id="example-datetime-local-input">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="example-datetime-local-input" class="col-2 col-form-label">Product Weight(Size 2)</label>
+    <div class="col-10">
+      <input class="form-control" type="text" ng-model="products.PWeight2" id="example-datetime-local-input">
+    </div>
+  </div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-2 col-form-label">Product Price(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PPrice3" value="42" id="example-number-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Discount Price(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PDiscountPrice3" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Length(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PLength3" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Width(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PWidth3" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Height(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PHeight3" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Material(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PMaterial3" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Hole to Hole(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PHoleToHole3" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Finish(Size 3)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PFinish3" id="example-datetime-local-input">
+  </div>
+</div>
+  <div class="form-group row">
+    <label for="example-datetime-local-input" class="col-2 col-form-label">Product Weight(Size 3)</label>
+    <div class="col-10">
+      <input class="form-control" type="text" ng-model="products.PWeight3" id="example-datetime-local-input">
+    </div>
+</div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-2 col-form-label">Product Price(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PPrice4" value="42" id="example-number-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Discount Price(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PDiscountPrice4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Length(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PLength4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Width(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PWidth4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Height(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PHeight4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Material(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PMaterial4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Hole to Hole(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PHoleToHole4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Finish(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PFinish4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Weight(Size 4)</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PWeight4" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-2 col-form-label">Product Category</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PCategory" value="42" id="example-number-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Code</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PCode" id="example-datetime-local-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-2 col-form-label">Product Company</label>
+  <div class="col-10">
+    <input class="form-control" type="text" ng-model="products.PCompany" value="42" id="example-number-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Image 1</label>
+  <div class="col-10">
+    <input class="form-control" type="file" file-model="PImage1" id="PImage1">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-number-input" class="col-2 col-form-label">Product Image2</label>
+  <div class="col-10">
+    <input class="form-control" type="file" file-model="PImage2" value="42" id="example-number-input">
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Product Image3</label>
+  <div class="col-10">
+    <input class="form-control" type="file" file-model="PImage3" id="example-datetime-local-input">
+  </div>
+</div>
+<input class="btn btn-primary btn-lg btn-block" style="width: 30%;background-color: white;
+    border: groove;color: black;" type="button" value="Update Product" ng-click="updateProduct()"></input>
+    {{updateError}}
+</div>
+</form>
+
+
+</div>

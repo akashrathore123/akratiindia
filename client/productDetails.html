@@ -1,0 +1,221 @@
+
+          <div>
+
+          <div class="productContainer" ng-controller="productDetails">
+
+                          <!-- Product View Modal Core -->
+                      <div class="product-dialog">
+                        <div class="product-content" id="product-content">
+
+                          <div class="product-body">
+                            <div class="new-product">
+
+                              <div class="slider-window">
+                              <div class="slider" id="sliderDiv">
+                                <img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                              	<input type="radio" name="slide_switch" id="id1" checked="checked"/>
+                              	<label for="id1">
+                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                              	</label>
+                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+
+                              	<!--Lets show the second image by default on page load-->
+                              	<input type="radio" name="slide_switch" id="id2" />
+                              	<label for="id2">
+                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
+                              	</label>
+                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
+
+                              	<input type="radio" name="slide_switch" id="id3"/>
+                              	<label for="id3">
+                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" />
+                              	</label>
+                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" />
+
+
+                              </div>
+
+                            </div>
+                      					<div class="product-name">
+                                  <h3>{{modalData.PName}}</h3>
+
+                                  <div class="clearfix"></div>
+
+                      					</div>
+                                <div ng-show="modalData.PDiscount != undefined && modalData.PDiscount != ''" >
+                                <span >Price:</span><Strike> Rs. {{modalData.PPrice1}}</Strike>
+                                <span class="discount">({{modalData.PDiscount}}% OFF)</span>
+                                <span> Rs. {{modalData.PDiscountPrice1}}</span>
+                                </div>
+                                <div ng-show="modalData.PDiscount === undefined || modalData.PDiscount === ''" >
+                                <span >Price:</span>Rs. {{modalData.PPrice1}}
+                                </div>
+
+                                <br>
+                                <table class="table table-bordered" id="prodDescTable">
+                                  <tr><th>Size</th>
+                                    <td ng-show="modalData.PSize1 != undefined && modalData.PSize1 != ''">{{modalData.PSize1}}</td>
+                                    <td ng-show="modalData.PSize2 != undefined && modalData.PSize2 != ''">{{modalData.PSize2}}</td>
+                                    <td ng-show="modalData.PSize3 != undefined && modalData.PSize3 != ''">{{modalData.PSize3}}</td>
+                                    <td ng-show="modalData.PSize4 != undefined && modalData.PSize4 != ''">{{modalData.PSize4}}</td>
+                                  </tr>
+                                  <tr><th>FINISH</th>
+                                    <td ng-show="modalData.PFinish1 != undefined && modalData.PFinish1 != ''">{{modalData.PFinish1}}</td>
+                                    <td ng-show="modalData.PFinish2 != undefined && modalData.PFinish2 != ''">{{modalData.PFinish2}}</td>
+                                    <td ng-show="modalData.PFinish3 != undefined && modalData.PFinish3 != ''">{{modalData.PFinish3}}</td>
+                                    <td ng-show="modalData.PFinish4 != undefined && modalData.PFinish4 != ''">{{modalData.PFinish4}}</td>
+                                  </tr>
+                                  <tr><th>Material</th>
+                                    <td ng-show="modalData.PMaterial1 != undefined && modalData.PMaterial1 != ''">{{modalData.PMaterial1}}</td>
+                                    <td ng-show="modalData.PMaterial2 != undefined && modalData.PMaterial2 != ''">{{modalData.PMaterial2}}</td>
+                                    <td ng-show="modalData.PMaterial3 != undefined && modalData.PMaterial3 != ''">{{modalData.PMaterial3}}</td>
+                                    <td ng-show="modalData.PMaterial4 != undefined && modalData.PMaterial4 != ''">{{modalData.PMaterial4}}</td>
+                                  </tr>
+                                  <tr><th>Weight (gms)</th>
+                                    <td ng-show="modalData.PWeight1 != undefined && modalData.PWeight1 != ''">{{modalData.PWeight1}}</td>
+                                    <td ng-show="modalData.PWeight2 != undefined && modalData.PWeight2 != ''">{{modalData.PWeight2}}</td>
+                                    <td ng-show="modalData.PWeight3 != undefined && modalData.PWeight3 != ''">{{modalData.PWeight3}}</td>
+                                    <td ng-show="modalData.PWeight4 != undefined && modalData.PWeight4 != ''">{{modalData.PWeight4}}</td>
+                                  </tr>
+                                  <tr><th>L W H (cm)</th>
+                                    <td ng-show="modalData.PLength1 != undefined && modalData.PLength1 != ''">{{modalData.PLength1}}  {{modalData.PWidth1}}  {{modalData.PHeight1}}</td>
+                                    <td ng-show="modalData.PLength2 != undefined && modalData.PLength2 != ''">{{modalData.PLength2}}  {{modalData.PWidth2}}  {{modalData.PHeight2}}</td>
+                                    <td ng-show="modalData.PLength3 != undefined && modalData.PLength3 != ''">{{modalData.PLength3}}  {{modalData.PWidth3}}  {{modalData.PHeight3}}</td>
+                                    <td ng-show="modalData.PLength4 != undefined && modalData.PLength4 != ''">{{modalData.PLength4}}  {{modalData.PWidth4}}  {{modalData.PHeight4}}</td>
+                                  </tr>
+                                  <tr><th>Hole To Hole (cm)</th>
+                                    <td ng-show="modalData.PHoleToHole1 != undefined && modalData.PHoleToHole1 != ''">{{modalData.PHoleToHole1}}</td>
+                                    <td ng-show="modalData.PHoleToHole2 != undefined && modalData.PHoleToHole2 != ''">{{modalData.PHoleToHole2}}</td>
+                                    <td ng-show="modalData.PHoleToHole3 != undefined && modalData.PHoleToHole3 != ''">{{modalData.PHoleToHole3}}</td>
+                                    <td ng-show="modalData.PHoleToHole4 != undefined && modalData.PHoleToHole4 != ''">{{modalData.PHoleToHole4}}</td>
+                                  </tr>
+
+
+                                  <tr><th>Price (Rs.)</th>
+                                    <td ng-show="modalData.PDiscountPrice1 != undefined && modalData.PDiscountPrice1 != ''">{{modalData.PDiscountPrice1}}</td>
+                                    <td ng-show="modalData.PDiscountPrice2 != undefined && modalData.PDiscountPrice2 != ''">{{modalData.PDiscountPrice2}}</td>
+                                    <td ng-show="modalData.PDiscountPrice3 != undefined && modalData.PDiscountPrice3 != ''">{{modalData.PDiscountPrice3}}</td>
+                                    <td ng-show="modalData.PDiscountPrice4 != undefined && modalData.PDiscountPrice4 != ''">{{modalData.PDiscountPrice4}}</td>
+                                  </tr>
+                                </table>
+
+                      					<div class="span span1" id="selectQuantitySpan">
+
+                                  <span class="right">Min - Max</span>
+                                  <br>
+                      						<span class="right">
+
+                                    <div class="sizes">
+
+                                      <div id="quantity1" ng-show="modalData.PSize1 != undefined && modalData.PSize1 !=''">
+                                      <span class="quantSize">{{modalData.PSize1}}''</span>
+                                    <div class="input-group" id="quantSelector1">
+
+
+                                              <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant1[1]" onclick="changeQuantity(this)">
+                                                      <span class="glyphicon glyphicon-minus"></span>
+                                                  </button>
+                                              </span>
+                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="10">
+                                              <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd1" onclick="changeQuantity(this)" data-type="plus" data-field="quant1[1]">
+                                                      <span class="glyphicon glyphicon-plus"></span>
+                                                  </button>
+                                              </span>
+
+
+                                          </div>
+                                          <span class="Max-Min" id="Max-Min">{{modalData.PQuantityMin1}} - {{modalData.PQuantityMax1}}</span>
+                                        </div>
+                                      <br>
+                                      <div id="quantity2" ng-show="modalData.PSize2 != undefined && modalData.PSize2 !=''">
+                                      <span class="quantSize">{{modalData.PSize2}}''</span>
+                                    <div class="input-group" id="quantSelector2">
+
+                                              <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant2[1]" onclick="changeQuantity(this)">
+                                                            <span class="glyphicon glyphicon-minus"></span>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="10">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd2" onclick="changeQuantity(this)" data-type="plus" data-field="quant2[1]">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </button>
+                                                    </span>
+
+                                                </div>
+                                                <span class="Max-Min" id="Max-Min">{{modalData.PQuantityMin2}} - {{modalData.PQuantityMax2}}</span>
+                                              </div>
+                                                <br>
+                                                <div id="quantity3" ng-show="modalData.PSize3 != undefined && modalData.PSize3 !=''">
+                                                <span class="quantSize">{{modalData.PSize3}}''</span>
+                                                <div class="input-group" id="quantSelector3">
+
+                                                          <span class="input-group-btn">
+                                                              <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant3[1]" onclick="changeQuantity(this)">
+                                                                  <span class="glyphicon glyphicon-minus"></span>
+                                                              </button>
+                                                          </span>
+                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="10">
+                                                          <span class="input-group-btn">
+                                                              <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd3" onclick="changeQuantity(this)" data-type="plus" data-field="quant3[1]">
+                                                                  <span class="glyphicon glyphicon-plus"></span>
+                                                              </button>
+                                                          </span>
+
+                                                      </div>
+                                                      <span class="Max-Min" id="Max-Min">{{modalData.PQuantityMin3}} - {{modalData.PQuantityMax3}}</span>
+                                                    </div>
+                                                      <br>
+                                                      <div id="quantity4" ng-show="modalData.PSize4 != undefined && modalData.PSize4 !=''">
+                                                      <span class="quantSize">{{modalData.PSize4}}''</span>
+                                                      <div class="input-group" id="quantSelector4" >
+
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant4[1]" onclick="changeQuantity(this)">
+                                                                        <span class="glyphicon glyphicon-minus"></span>
+                                                                    </button>
+                                                                </span>
+                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="10">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd4" onclick="changeQuantity(this)" data-type="plus" data-field="quant4[1]">
+                                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                                    </button>
+                                                                </span>
+
+                                                            </div>
+                                                            <span class="Max-Min" id="Max-Min">  {{modalData.PQuantityMin4}} - {{modalData.PQuantityMax4}}</span>
+                                                          </div>
+                                        </div>
+
+                                         </span>
+                      						<div class="clearfix"></div>
+                      					</div>
+
+                      					<div class="addToCart">
+                      						<a href=""><button class="btn btn-primary" id="addToCartBtn" ng-click = "addToCart(modalData)" >Add to Cart</button></a>
+                                  <br>
+                                  <span id="prodDetailError"></span>
+
+                                  <br>
+                      					</div>
+
+                      					<!-- FlexSlider -->
+                              <div class="productDesc">
+<h5><u>Description</u></h5> {{modalData.PDescription}}</div>
+                      				<div class="clearfix"></div>
+
+
+                      			</div>
+          </div>
+
+                        </div>
+                      </div>
+
+            </div>
+                  <!-- Modal ends here -->
+
+
+    </div>

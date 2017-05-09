@@ -7,6 +7,9 @@ app.config(function($routeProvider){
   .when('/product/:category',{
     templateUrl : 'product.html'
   })
+  .when('/productDetails/:code',{
+    templateUrl : 'productDetails.html'
+  })
   .when('/cart',{
     templateUrl : 'cart.html'
   });
@@ -193,7 +196,6 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage', func
       // console.log(JSON.stringify('{"data":[ {"user" :['+login + '], "cart" :'+ JSON.stringify(cart)+' }]}'));
       var sendData = ' {"user" :'+login + ', "cart" :'+ angular.toJson(cart)+'}';
 
-alert(sendData);
       $http({
 
 
@@ -205,7 +207,7 @@ alert(sendData);
            }).
            success(function(data,status,headers,config){
              var loginData = data.response[0];
-             console.log(loginData);
+            
              var User = '{\"token\" :\"'+ loginData.client_token+'\", \"mobile\" : \"'+loginData.client_mobile+'\", \"email\" :\"'+ loginData.client_email+'\" , \"fname\" :\"'+ loginData.client_fname+'\", \"lname\" :\"'+ loginData.client_lname+'\"}';
              var cartData = loginData.CartItems;
              localStorage.deleteAll('cart');
@@ -316,7 +318,7 @@ $http({
 $scope.getProducts();
 
 $scope.setModalData = function(prod){
-
+console.log("setting--"+prod);
   document.getElementById("addCartError").innerHTML = "";
 
   if (prod.PSize1 == "" || prod.PSize1 == undefined || prod.PSize1 == 0) {
@@ -348,7 +350,10 @@ $scope.setModalData = function(prod){
     document.getElementById("quantValue4").max = prod.PQuantityMax4;
   }
   $scope.modalData = prod;
+  console.log($scope.modalData);
 }
+
+
 
 $scope.addToCart = function(prod){
 //  console.log("addtocart--"+angular.toJson(prod));
@@ -455,6 +460,154 @@ $scope.addToCart = function(prod){
   localStorage.saveData('cart', cartItem);
   updateCart.update();
   document.getElementById("addCartError").innerHTML = "Product added to cart Successfully.";
+
+
+}
+  //console.log(localStorage.getData('cart'));
+
+
+}
+}]);
+
+app.controller('productDetails',['$scope','$http','$window','$location','$routeParams','localStorage','updateCart',function($scope,$http,$window,$location,$routeParams,localStorage,updateCart){
+  $http.defaults.headers.common = {'access_code':'onyourown'};
+  updateCart.update();
+
+  var code = $routeParams.code; //decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent('id').replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+
+$http({
+
+         method : 'GET',
+         url : 'http://localhost:3000/api/Products/productDetails',
+         headers: {'Content-Type': 'application/json',
+                    'realm': 'web',
+                     'code': code},
+
+     }).
+     success(function(data,status,headers,config){
+
+       if(status == 204){
+         $scope.productDetailResponse = "Product not found.";
+       }else{
+       $scope.modalData = data.response;
+console.log($scope.modalData);
+          return;
+
+}
+     })
+.error(function(data,status,headers,config){
+
+  $scope.productDetailResponse  = data.error.message;
+  return;
+});
+
+
+
+$scope.addToCart = function(prod){
+//  console.log("addtocart--"+angular.toJson(prod));
+  var cart;
+  // if(localStorage.getData('cart') != undefined){
+  //   cart = localStorage.getData('cart');
+  // }
+  // console.log("cart--"+ cart);
+  // if(cart != undefined){
+  //   cart.push(prod);
+  // }else {
+  //   cart = prod;
+  // }
+  var order1 = 0;
+  var order2 = 0;
+  var order3 = 0;
+  var order4 = 0;
+
+  if(document.getElementById("quantValue1") != undefined){
+    order1 = Number(document.getElementById("quantValue1").value);
+  }
+  if(document.getElementById("quantValue2") != undefined){
+    order2 = Number(document.getElementById("quantValue2").value);
+  }
+  if(document.getElementById("quantValue3") != undefined){
+    order3 = Number(document.getElementById("quantValue3").value);
+  }
+  if(document.getElementById("quantValue4") != undefined){
+    order4 = Number(document.getElementById("quantValue4").value);
+  }
+
+  if(order1 == 0 && order2 == 0 && order3 == 0 && order4 == 0){
+    document.getElementById("prodDetailError").innerHTML = "Select Quantity of Product";
+    return;
+  }
+
+  if(order1 != 0 && (order1 < prod.PQuantityMin1 || order1 > prod.PQuantityMax1)){
+    document.getElementById("prodDetailError").innerHTML = "Select Quantity between Min-Max of Product Size";
+    return;
+
+  }
+  if(order2 != 0 && (order2 < prod.PQuantityMin2 || order2 > prod.PQuantityMax2)){
+    document.getElementById("prodDetailError").innerHTML = "Select Quantity between Min-Max of Product Size";
+    return;
+
+  }
+  if(order3 != 0 && (order3 < prod.PQuantityMin3 || order3 > prod.PQuantityMax3)){
+    document.getElementById("prodDetailError").innerHTML = "Select Quantity between Min-Max of Product Size";
+    return;
+
+  }
+  if(order4 != 0 && (order4 < prod.PQuantityMin4 || order4 > prod.PQuantityMax4)){
+    document.getElementById("prodDetailError").innerHTML = "Select Quantity between Min-Max of Product Size";
+    return;
+
+  }
+
+  var cartItem = {};
+
+  cartItem.POrderQuant1 = order1;
+  cartItem.POrderQuant2 = order2;
+  cartItem.POrderQuant3 = order3;
+  cartItem.POrderQuant4 = order4;
+  cartItem.PProduct = prod;
+  cartItem.PCode = prod.PCode;
+
+  console.log("cart product--"+cartItem.PProduct);
+
+
+  //console.log(JSON.stringify(cartItem));
+  var session = localStorage.getData('User');
+
+  if(session){
+
+  //$http.defaults.headers.common = {'access_code':'onyourown'};
+  // $http.defaults.headers.common = {'token' : session.token};
+  // $http.defaults.headers.common = {'email' : session.email};
+
+  $http({
+
+
+           method : 'POST',
+           url : 'http://localhost:3000/api/Clients/addToCart',
+           headers: {'Content-Type': 'application/json',
+                      'token' : session.token,
+                      'email' : session.email,
+                      'realm': 'web'},
+           data : cartItem
+       }).
+       success(function(data,status,headers,config){
+        console.log("data---"+JSON.stringify(data.response));
+        localStorage.saveData('cart', data.response);
+        updateCart.update();
+        document.getElementById("prodDetailError").innerHTML = "Product added to cart Successfully.";
+
+
+       })
+  .error(function(data,status,headers,config){
+    document.getElementById("prodDetailError").innerHTML = "<span style='color:red'>"+"Error in adding to cart.</span>";
+    return;
+});
+
+}else{
+  localStorage.saveData('cart', cartItem);
+  updateCart.update();
+  document.getElementById("prodDetailError").innerHTML = "Product added to cart Successfully.";
 
 
 }
