@@ -7,19 +7,17 @@
 
      </div>
    </div>
-     <div ng-repeat="item in items track by $index">
-
+     <div ng-repeat="item in items">
 
              <div class="cart-block">
 
                <div class="cart-image">
-                 <img src="assets/img/{{item.PProduct.PImage1}}"/>
+                 <img src="assets/images/{{item.PProduct.PCode}}/{{item.PProduct.PImage1}}"/>
                </div>
 
                <div class="cart-item-content">
               <div class="cart-left-block">
                <div class="cart-title"> <b>{{item.PProduct.PName}}</b> </div>
-               <div class="cart-size"><b>Size:</b> {{item.PProduct.PLength}}'' {{item.PProduct.PWidth}}'' {{item.PProduct.PHeight}}'' (L W H)</div>
                <div class="cart-quantity"><b>Qty:</b>
                 <div class="cart-price-header">
                    <span> Size</span>

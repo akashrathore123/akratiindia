@@ -207,7 +207,7 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage', func
            }).
            success(function(data,status,headers,config){
              var loginData = data.response[0];
-            
+
              var User = '{\"token\" :\"'+ loginData.client_token+'\", \"mobile\" : \"'+loginData.client_mobile+'\", \"email\" :\"'+ loginData.client_email+'\" , \"fname\" :\"'+ loginData.client_fname+'\", \"lname\" :\"'+ loginData.client_lname+'\"}';
              var cartData = loginData.CartItems;
              localStorage.deleteAll('cart');
@@ -315,42 +315,27 @@ $http({
   return;
 });
 }
-$scope.getProducts();
+  $scope.getProducts();
+
 
 $scope.setModalData = function(prod){
-console.log("setting--"+prod);
+  if(document.getElementById("quantValue1") != undefined){
+    document.getElementById("quantValue1").value=0;
+  }
+  if(document.getElementById("quantValue2") != undefined){
+    document.getElementById("quantValue2").value=0;
+  }
+  if(document.getElementById("quantValue3") != undefined){
+    document.getElementById("quantValue3").value=0;
+  }
+  if(document.getElementById("quantValue4") != undefined){
+    document.getElementById("quantValue4").value=0;
+  }
   document.getElementById("addCartError").innerHTML = "";
 
-  if (prod.PSize1 == "" || prod.PSize1 == undefined || prod.PSize1 == 0) {
-    document.getElementById("quantity1").style.visibility = "hidden";
 
-  }else{
-    //document.getElementById("quantValue1").min = prod.PQuantityMin1;
-    document.getElementById("quantValue1").max = prod.PQuantityMax1;
-  }
-  if (prod.PSize2 == "" || prod.PSize2 == undefined || prod.PSize2 == 0) {
-    document.getElementById("quantity2").style.visibility = "hidden";
-
-  }else {
-    //document.getElementById("quantValue2").min = prod.PQuantityMin2;
-    document.getElementById("quantValue2").max = prod.PQuantityMax2;
-  }
-  if (prod.PSize3 == "" || prod.PSize3 == undefined || prod.PSize3 == 0) {
-    document.getElementById("quantity3").style.visibility = "hidden";
-
-  }else {
-    //document.getElementById("quantValue3").min = prod.PQuantityMin3;
-    document.getElementById("quantValue3").max = prod.PQuantityMax3;
-  }
-  if (prod.PSize4 == "" || prod.PSize4 == undefined || prod.PSize4 == 0) {
-    document.getElementById("quantity4").style.visibility = "hidden";
-
-  }else {
-    //document.getElementById("quantValue4").min = prod.PQuantityMin4;
-    document.getElementById("quantValue4").max = prod.PQuantityMax4;
-  }
   $scope.modalData = prod;
-  console.log($scope.modalData);
+  console.log("modalData--->"+JSON.stringify($scope.modalData));
 }
 
 
@@ -420,7 +405,7 @@ $scope.addToCart = function(prod){
   cartItem.PProduct = prod;
   cartItem.PCode = prod.PCode;
 
-  console.log("cart product--"+cartItem.PProduct);
+  console.log("cart product--"+JSON.stringify(cartItem.PProduct));
 
 
   //console.log(JSON.stringify(cartItem));
@@ -444,7 +429,6 @@ $scope.addToCart = function(prod){
            data : cartItem
        }).
        success(function(data,status,headers,config){
-        console.log("data---"+JSON.stringify(data.response));
         localStorage.saveData('cart', data.response);
         updateCart.update();
         document.getElementById("addCartError").innerHTML = "Product added to cart Successfully.";
@@ -452,7 +436,7 @@ $scope.addToCart = function(prod){
 
        })
   .error(function(data,status,headers,config){
-    document.getElementById("loginResponse").innerHTML = "<span style='color:red'>"+"Error in adding to cart.</span>";
+    document.getElementById("addCartError").innerHTML = "<span style='color:red'>"+"Error in adding to cart.</span>";
     return;
 });
 
@@ -489,8 +473,8 @@ $http({
        if(status == 204){
          $scope.productDetailResponse = "Product not found.";
        }else{
-       $scope.modalData = data.response;
-console.log($scope.modalData);
+       $scope.prodDetailData = data.response;
+console.log($scope.prodDetailData);
           return;
 
 }
@@ -504,6 +488,7 @@ console.log($scope.modalData);
 
 
 $scope.addToCart = function(prod){
+  console.log("add to cart--"+JSON.stringify(prod));
 //  console.log("addtocart--"+angular.toJson(prod));
   var cart;
   // if(localStorage.getData('cart') != undefined){
@@ -658,20 +643,45 @@ for(i=0; i<$scope.cartCount; i++){
   var total = 0;
   var innerHtml = "";
   if(parseInt($scope.items[i].POrderQuant1) > 0){
-    total = total + (parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PDiscountPrice1));
-    $scope.items[i].PPriceTotal1 = parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PDiscountPrice1);
+    if($scope.items[i].PProduct.PDiscountPrice1){
+        total = total + (parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PDiscountPrice1));
+        $scope.items[i].PPriceTotal1 = parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PDiscountPrice1);
+
+  }else{
+        total = total + (parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PPrice1));
+        $scope.items[i].PPriceTotal1 = parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PPrice1);
+
+  }
   }
   if(parseInt($scope.items[i].POrderQuant2) > 0){
-    total = total + (parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PDiscountPrice2));
-      $scope.items[i].PPriceTotal2 = parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PDiscountPrice2);
+    if($scope.items[i].PProduct.PDiscountPrice2){
+        total = total + (parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PDiscountPrice2));
+        $scope.items[i].PPriceTotal2 = parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PDiscountPrice2);
+    }else{
+        total = total + (parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PPrice2));
+        $scope.items[i].PPriceTotal2 = parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PPrice2);
+
+    }
   }
   if(parseInt($scope.items[i].POrderQuant3) > 0){
-    total = total + (parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PDiscountPrice3));
-      $scope.items[i].PPriceTotal3 = parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PDiscountPrice3);
+      if($scope.items[i].PProduct.PDiscountPrice3){
+          total = total + (parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PDiscountPrice3));
+          $scope.items[i].PPriceTotal3 = parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PDiscountPrice3);
+    }else{
+          total = total + (parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PPrice3));
+          $scope.items[i].PPriceTotal3 = parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PPrice3);
+
+    }
   }
   if(parseInt($scope.items[i].POrderQuant4) > 0){
-    total = total + (parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PDiscountPrice4));
-      $scope.items[i].PPriceTotal4 = parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PDiscountPrice4);
+    if($scope.items[i].PProduct.PDiscountPrice4){
+          total = total + (parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PDiscountPrice4));
+          $scope.items[i].PPriceTotal4 = parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PDiscountPrice4);
+    }else{
+          total = total + (parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PPrice4));
+          $scope.items[i].PPriceTotal4 = parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PPrice4);
+
+    }
   }
 
   $scope.items[i].PPriceTotalAll = total;

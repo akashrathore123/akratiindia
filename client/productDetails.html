@@ -12,90 +12,94 @@
 
                               <div class="slider-window">
                               <div class="slider" id="sliderDiv">
-                                <img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                                <img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage1}}" />
                               	<input type="radio" name="slide_switch" id="id1" checked="checked"/>
                               	<label for="id1">
-                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                              		<img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage1}}" />
                               	</label>
-                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                              	<img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage1}}" />
 
                               	<!--Lets show the second image by default on page load-->
                               	<input type="radio" name="slide_switch" id="id2" />
                               	<label for="id2">
-                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
+                              		<img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage2}}" />
                               	</label>
-                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
+                              	<img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage2}}" />
 
                               	<input type="radio" name="slide_switch" id="id3"/>
                               	<label for="id3">
-                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" />
+                              		<img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage3}}" />
                               	</label>
-                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" />
+                              	<img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage3}}" />
 
 
                               </div>
 
                             </div>
                       					<div class="product-name">
-                                  <h3>{{modalData.PName}}</h3>
+                                  <h3>{{prodDetailData.PName}}</h3>
 
                                   <div class="clearfix"></div>
 
                       					</div>
-                                <div ng-show="modalData.PDiscount != undefined && modalData.PDiscount != ''" >
-                                <span >Price:</span><Strike> Rs. {{modalData.PPrice1}}</Strike>
-                                <span class="discount">({{modalData.PDiscount}}% OFF)</span>
-                                <span> Rs. {{modalData.PDiscountPrice1}}</span>
+                                <div ng-show="prodDetailData.PDiscount != undefined && prodDetailData.PDiscount != ''" >
+                                <span >Price:</span><Strike> Rs. {{prodDetailData.PPrice1}}</Strike>
+                                <span class="discount">({{prodDetailData.PDiscount}}% OFF)</span>
+                                <span> Rs. {{prodDetailData.PDiscountPrice1}}</span>
                                 </div>
-                                <div ng-show="modalData.PDiscount === undefined || modalData.PDiscount === ''" >
-                                <span >Price:</span>Rs. {{modalData.PPrice1}}
+                                <div ng-show="prodDetailData.PDiscount === undefined || prodDetailData.PDiscount === ''" >
+                                <span >Price:</span>Rs. {{prodDetailData.PPrice1}}
                                 </div>
 
                                 <br>
                                 <table class="table table-bordered" id="prodDescTable">
                                   <tr><th>Size</th>
-                                    <td ng-show="modalData.PSize1 != undefined && modalData.PSize1 != ''">{{modalData.PSize1}}</td>
-                                    <td ng-show="modalData.PSize2 != undefined && modalData.PSize2 != ''">{{modalData.PSize2}}</td>
-                                    <td ng-show="modalData.PSize3 != undefined && modalData.PSize3 != ''">{{modalData.PSize3}}</td>
-                                    <td ng-show="modalData.PSize4 != undefined && modalData.PSize4 != ''">{{modalData.PSize4}}</td>
+                                    <td ng-show="prodDetailData.PSize1 != undefined && prodDetailData.PSize1 != ''">{{prodDetailData.PSize1}}</td>
+                                    <td ng-show="prodDetailData.PSize2 != undefined && prodDetailData.PSize2 != ''">{{prodDetailData.PSize2}}</td>
+                                    <td ng-show="prodDetailData.PSize3 != undefined && prodDetailData.PSize3 != ''">{{prodDetailData.PSize3}}</td>
+                                    <td ng-show="prodDetailData.PSize4 != undefined && prodDetailData.PSize4 != ''">{{prodDetailData.PSize4}}</td>
                                   </tr>
                                   <tr><th>FINISH</th>
-                                    <td ng-show="modalData.PFinish1 != undefined && modalData.PFinish1 != ''">{{modalData.PFinish1}}</td>
-                                    <td ng-show="modalData.PFinish2 != undefined && modalData.PFinish2 != ''">{{modalData.PFinish2}}</td>
-                                    <td ng-show="modalData.PFinish3 != undefined && modalData.PFinish3 != ''">{{modalData.PFinish3}}</td>
-                                    <td ng-show="modalData.PFinish4 != undefined && modalData.PFinish4 != ''">{{modalData.PFinish4}}</td>
+                                    <td ng-show="prodDetailData.PFinish1 != undefined && prodDetailData.PFinish1 != ''">{{prodDetailData.PFinish1}}</td>
+                                    <td ng-show="prodDetailData.PFinish2 != undefined && prodDetailData.PFinish2 != ''">{{prodDetailData.PFinish2}}</td>
+                                    <td ng-show="prodDetailData.PFinish3 != undefined && prodDetailData.PFinish3 != ''">{{prodDetailData.PFinish3}}</td>
+                                    <td ng-show="prodDetailData.PFinish4 != undefined && prodDetailData.PFinish4 != ''">{{prodDetailData.PFinish4}}</td>
                                   </tr>
                                   <tr><th>Material</th>
-                                    <td ng-show="modalData.PMaterial1 != undefined && modalData.PMaterial1 != ''">{{modalData.PMaterial1}}</td>
-                                    <td ng-show="modalData.PMaterial2 != undefined && modalData.PMaterial2 != ''">{{modalData.PMaterial2}}</td>
-                                    <td ng-show="modalData.PMaterial3 != undefined && modalData.PMaterial3 != ''">{{modalData.PMaterial3}}</td>
-                                    <td ng-show="modalData.PMaterial4 != undefined && modalData.PMaterial4 != ''">{{modalData.PMaterial4}}</td>
+                                    <td ng-show="prodDetailData.PMaterial1 != undefined && prodDetailData.PMaterial1 != ''">{{prodDetailData.PMaterial1}}</td>
+                                    <td ng-show="prodDetailData.PMaterial2 != undefined && prodDetailData.PMaterial2 != ''">{{prodDetailData.PMaterial2}}</td>
+                                    <td ng-show="prodDetailData.PMaterial3 != undefined && prodDetailData.PMaterial3 != ''">{{prodDetailData.PMaterial3}}</td>
+                                    <td ng-show="prodDetailData.PMaterial4 != undefined && prodDetailData.PMaterial4 != ''">{{prodDetailData.PMaterial4}}</td>
                                   </tr>
                                   <tr><th>Weight (gms)</th>
-                                    <td ng-show="modalData.PWeight1 != undefined && modalData.PWeight1 != ''">{{modalData.PWeight1}}</td>
-                                    <td ng-show="modalData.PWeight2 != undefined && modalData.PWeight2 != ''">{{modalData.PWeight2}}</td>
-                                    <td ng-show="modalData.PWeight3 != undefined && modalData.PWeight3 != ''">{{modalData.PWeight3}}</td>
-                                    <td ng-show="modalData.PWeight4 != undefined && modalData.PWeight4 != ''">{{modalData.PWeight4}}</td>
+                                    <td ng-show="prodDetailData.PWeight1 != undefined && prodDetailData.PWeight1 != ''">{{prodDetailData.PWeight1}}</td>
+                                    <td ng-show="prodDetailData.PWeight2 != undefined && prodDetailData.PWeight2 != ''">{{prodDetailData.PWeight2}}</td>
+                                    <td ng-show="prodDetailData.PWeight3 != undefined && prodDetailData.PWeight3 != ''">{{prodDetailData.PWeight3}}</td>
+                                    <td ng-show="prodDetailData.PWeight4 != undefined && prodDetailData.PWeight4 != ''">{{prodDetailData.PWeight4}}</td>
                                   </tr>
                                   <tr><th>L W H (cm)</th>
-                                    <td ng-show="modalData.PLength1 != undefined && modalData.PLength1 != ''">{{modalData.PLength1}}  {{modalData.PWidth1}}  {{modalData.PHeight1}}</td>
-                                    <td ng-show="modalData.PLength2 != undefined && modalData.PLength2 != ''">{{modalData.PLength2}}  {{modalData.PWidth2}}  {{modalData.PHeight2}}</td>
-                                    <td ng-show="modalData.PLength3 != undefined && modalData.PLength3 != ''">{{modalData.PLength3}}  {{modalData.PWidth3}}  {{modalData.PHeight3}}</td>
-                                    <td ng-show="modalData.PLength4 != undefined && modalData.PLength4 != ''">{{modalData.PLength4}}  {{modalData.PWidth4}}  {{modalData.PHeight4}}</td>
+                                    <td ng-show="prodDetailData.PLength1 != undefined && prodDetailData.PLength1 != ''">{{prodDetailData.PLength1}}  {{prodDetailData.PWidth1}}  {{prodDetailData.PHeight1}}</td>
+                                    <td ng-show="prodDetailData.PLength2 != undefined && prodDetailData.PLength2 != ''">{{prodDetailData.PLength2}}  {{prodDetailData.PWidth2}}  {{prodDetailData.PHeight2}}</td>
+                                    <td ng-show="prodDetailData.PLength3 != undefined && prodDetailData.PLength3 != ''">{{prodDetailData.PLength3}}  {{prodDetailData.PWidth3}}  {{prodDetailData.PHeight3}}</td>
+                                    <td ng-show="prodDetailData.PLength4 != undefined && prodDetailData.PLength4 != ''">{{prodDetailData.PLength4}}  {{prodDetailData.PWidth4}}  {{prodDetailData.PHeight4}}</td>
                                   </tr>
                                   <tr><th>Hole To Hole (cm)</th>
-                                    <td ng-show="modalData.PHoleToHole1 != undefined && modalData.PHoleToHole1 != ''">{{modalData.PHoleToHole1}}</td>
-                                    <td ng-show="modalData.PHoleToHole2 != undefined && modalData.PHoleToHole2 != ''">{{modalData.PHoleToHole2}}</td>
-                                    <td ng-show="modalData.PHoleToHole3 != undefined && modalData.PHoleToHole3 != ''">{{modalData.PHoleToHole3}}</td>
-                                    <td ng-show="modalData.PHoleToHole4 != undefined && modalData.PHoleToHole4 != ''">{{modalData.PHoleToHole4}}</td>
+                                    <td ng-show="prodDetailData.PHoleToHole1 != undefined && prodDetailData.PHoleToHole1 != ''">{{prodDetailData.PHoleToHole1}}</td>
+                                    <td ng-show="prodDetailData.PHoleToHole2 != undefined && prodDetailData.PHoleToHole2 != ''">{{prodDetailData.PHoleToHole2}}</td>
+                                    <td ng-show="prodDetailData.PHoleToHole3 != undefined && prodDetailData.PHoleToHole3 != ''">{{prodDetailData.PHoleToHole3}}</td>
+                                    <td ng-show="prodDetailData.PHoleToHole4 != undefined && prodDetailData.PHoleToHole4 != ''">{{prodDetailData.PHoleToHole4}}</td>
                                   </tr>
 
 
                                   <tr><th>Price (Rs.)</th>
-                                    <td ng-show="modalData.PDiscountPrice1 != undefined && modalData.PDiscountPrice1 != ''">{{modalData.PDiscountPrice1}}</td>
-                                    <td ng-show="modalData.PDiscountPrice2 != undefined && modalData.PDiscountPrice2 != ''">{{modalData.PDiscountPrice2}}</td>
-                                    <td ng-show="modalData.PDiscountPrice3 != undefined && modalData.PDiscountPrice3 != ''">{{modalData.PDiscountPrice3}}</td>
-                                    <td ng-show="modalData.PDiscountPrice4 != undefined && modalData.PDiscountPrice4 != ''">{{modalData.PDiscountPrice4}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice1 != undefined && prodDetailData.PDiscountPrice1 != ''">{{prodDetailData.PDiscountPrice1}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice1 == undefined || prodDetailData.PDiscountPrice1 == ''">{{prodDetailData.PPrice1}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice2 != undefined && prodDetailData.PDiscountPrice2 != ''">{{prodDetailData.PDiscountPrice2}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice2 == undefined || prodDetailData.PDiscountPrice2 == ''">{{prodDetailData.PPrice2}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice3 != undefined && prodDetailData.PDiscountPrice3 != ''">{{prodDetailData.PDiscountPrice3}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice3 == undefined || prodDetailData.PDiscountPrice3 == ''">{{prodDetailData.PPrice3}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice4 != undefined && prodDetailData.PDiscountPrice4 != ''">{{prodDetailData.PDiscountPrice4}}</td>
+                                    <td ng-show="prodDetailData.PDiscountPrice4 == undefined || prodDetailData.PDiscountPrice4 == ''">{{prodDetailData.PPrice4}}</td>
                                   </tr>
                                 </table>
 
@@ -107,8 +111,8 @@
 
                                     <div class="sizes">
 
-                                      <div id="quantity1" ng-show="modalData.PSize1 != undefined && modalData.PSize1 !=''">
-                                      <span class="quantSize">{{modalData.PSize1}}''</span>
+                                      <div id="quantity1" ng-show="prodDetailData.PSize1 != undefined && prodDetailData.PSize1 !=''">
+                                      <span class="quantSize">{{prodDetailData.PSize1}}</span>
                                     <div class="input-group" id="quantSelector1">
 
 
@@ -126,11 +130,11 @@
 
 
                                           </div>
-                                          <span class="Max-Min" id="Max-Min">{{modalData.PQuantityMin1}} - {{modalData.PQuantityMax1}}</span>
+                                          <span class="Max-Min" id="Max-Min">{{prodDetailData.PQuantityMin1}} - {{prodDetailData.PQuantityMax1}}</span>
                                         </div>
                                       <br>
-                                      <div id="quantity2" ng-show="modalData.PSize2 != undefined && modalData.PSize2 !=''">
-                                      <span class="quantSize">{{modalData.PSize2}}''</span>
+                                      <div id="quantity2" ng-show="prodDetailData.PSize2 != undefined && prodDetailData.PSize2 !=''">
+                                      <span class="quantSize">{{prodDetailData.PSize2}}</span>
                                     <div class="input-group" id="quantSelector2">
 
                                               <span class="input-group-btn">
@@ -146,11 +150,11 @@
                                                     </span>
 
                                                 </div>
-                                                <span class="Max-Min" id="Max-Min">{{modalData.PQuantityMin2}} - {{modalData.PQuantityMax2}}</span>
+                                                <span class="Max-Min" id="Max-Min">{{prodDetailData.PQuantityMin2}} - {{prodDetailData.PQuantityMax2}}</span>
                                               </div>
                                                 <br>
-                                                <div id="quantity3" ng-show="modalData.PSize3 != undefined && modalData.PSize3 !=''">
-                                                <span class="quantSize">{{modalData.PSize3}}''</span>
+                                                <div id="quantity3" ng-show="prodDetailData.PSize3 != undefined && prodDetailData.PSize3 !=''">
+                                                <span class="quantSize">{{prodDetailData.PSize3}}</span>
                                                 <div class="input-group" id="quantSelector3">
 
                                                           <span class="input-group-btn">
@@ -166,11 +170,11 @@
                                                           </span>
 
                                                       </div>
-                                                      <span class="Max-Min" id="Max-Min">{{modalData.PQuantityMin3}} - {{modalData.PQuantityMax3}}</span>
+                                                      <span class="Max-Min" id="Max-Min">{{prodDetailData.PQuantityMin3}} - {{prodDetailData.PQuantityMax3}}</span>
                                                     </div>
                                                       <br>
-                                                      <div id="quantity4" ng-show="modalData.PSize4 != undefined && modalData.PSize4 !=''">
-                                                      <span class="quantSize">{{modalData.PSize4}}''</span>
+                                                      <div id="quantity4" ng-show="prodDetailData.PSize4 != undefined && prodDetailData.PSize4 !=''">
+                                                      <span class="quantSize">{{prodDetailData.PSize4}}</span>
                                                       <div class="input-group" id="quantSelector4" >
 
                                                                 <span class="input-group-btn">
@@ -186,7 +190,7 @@
                                                                 </span>
 
                                                             </div>
-                                                            <span class="Max-Min" id="Max-Min">  {{modalData.PQuantityMin4}} - {{modalData.PQuantityMax4}}</span>
+                                                            <span class="Max-Min" id="Max-Min">  {{prodDetailData.PQuantityMin4}} - {{prodDetailData.PQuantityMax4}}</span>
                                                           </div>
                                         </div>
 
@@ -195,7 +199,7 @@
                       					</div>
 
                       					<div class="addToCart">
-                      						<a href=""><button class="btn btn-primary" id="addToCartBtn" ng-click = "addToCart(modalData)" >Add to Cart</button></a>
+                      						<a href=""><button class="btn btn-primary" id="addToCartBtn" ng-click = "addToCart(prodDetailData)" >Add to Cart</button></a>
                                   <br>
                                   <span id="prodDetailError"></span>
 
@@ -204,7 +208,7 @@
 
                       					<!-- FlexSlider -->
                               <div class="productDesc">
-<h5><u>Description</u></h5> {{modalData.PDescription}}</div>
+                                <h5><u>Description</u></h5> {{prodDetailData.PDescription}}</div>
                       				<div class="clearfix"></div>
 
 
