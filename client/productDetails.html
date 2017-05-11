@@ -93,13 +93,13 @@
 
                                   <tr><th>Price (Rs.)</th>
                                     <td ng-show="prodDetailData.PDiscountPrice1 != undefined && prodDetailData.PDiscountPrice1 != ''">{{prodDetailData.PDiscountPrice1}}</td>
-                                    <td ng-show="prodDetailData.PDiscountPrice1 == undefined || prodDetailData.PDiscountPrice1 == ''">{{prodDetailData.PPrice1}}</td>
+                                    <td ng-show="(prodDetailData.PDiscountPrice1 == undefined || prodDetailData.PDiscountPrice1 == '') && (prodDetailData.PPrice1 != undefined && prodDetailData.PPrice1 != '')">{{prodDetailData.PPrice1}}</td>
                                     <td ng-show="prodDetailData.PDiscountPrice2 != undefined && prodDetailData.PDiscountPrice2 != ''">{{prodDetailData.PDiscountPrice2}}</td>
-                                    <td ng-show="prodDetailData.PDiscountPrice2 == undefined || prodDetailData.PDiscountPrice2 == ''">{{prodDetailData.PPrice2}}</td>
+                                    <td ng-show="(prodDetailData.PDiscountPrice2 == undefined || prodDetailData.PDiscountPrice2 == '') && (prodDetailData.PPrice2 != undefined && prodDetailData.PPrice2 != '')">{{prodDetailData.PPrice2}}</td>
                                     <td ng-show="prodDetailData.PDiscountPrice3 != undefined && prodDetailData.PDiscountPrice3 != ''">{{prodDetailData.PDiscountPrice3}}</td>
-                                    <td ng-show="prodDetailData.PDiscountPrice3 == undefined || prodDetailData.PDiscountPrice3 == ''">{{prodDetailData.PPrice3}}</td>
+                                    <td ng-show="(prodDetailData.PDiscountPrice3 == undefined || prodDetailData.PDiscountPrice3 == '') && (prodDetailData.PPrice3 != undefined && prodDetailData.PPrice3 != '')">{{prodDetailData.PPrice3}}</td>
                                     <td ng-show="prodDetailData.PDiscountPrice4 != undefined && prodDetailData.PDiscountPrice4 != ''">{{prodDetailData.PDiscountPrice4}}</td>
-                                    <td ng-show="prodDetailData.PDiscountPrice4 == undefined || prodDetailData.PDiscountPrice4 == ''">{{prodDetailData.PPrice4}}</td>
+                                    <td ng-show="(prodDetailData.PDiscountPrice4 == undefined || prodDetailData.PDiscountPrice4 == '') && (prodDetailData.PPrice4 != undefined && prodDetailData.PPrice4 != '')">{{prodDetailData.PPrice4}}</td>
                                   </tr>
                                 </table>
 
@@ -121,7 +121,7 @@
                                                       <span class="glyphicon glyphicon-minus"></span>
                                                   </button>
                                               </span>
-                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="10">
+                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="{{prodDetailData.PQuantityMax1}}">
                                               <span class="input-group-btn">
                                                   <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd1" onclick="changeQuantity(this)" data-type="plus" data-field="quant1[1]">
                                                       <span class="glyphicon glyphicon-plus"></span>
@@ -142,7 +142,7 @@
                                                             <span class="glyphicon glyphicon-minus"></span>
                                                         </button>
                                                     </span>
-                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="10">
+                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="{{prodDetailData.PQuantityMax2}}">
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd2" onclick="changeQuantity(this)" data-type="plus" data-field="quant2[1]">
                                                             <span class="glyphicon glyphicon-plus"></span>
@@ -162,7 +162,7 @@
                                                                   <span class="glyphicon glyphicon-minus"></span>
                                                               </button>
                                                           </span>
-                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="10">
+                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="{{prodDetailData.PQuantityMax3}}">
                                                           <span class="input-group-btn">
                                                               <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd3" onclick="changeQuantity(this)" data-type="plus" data-field="quant3[1]">
                                                                   <span class="glyphicon glyphicon-plus"></span>
@@ -182,7 +182,7 @@
                                                                         <span class="glyphicon glyphicon-minus"></span>
                                                                     </button>
                                                                 </span>
-                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="10">
+                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="{{prodDetailData.PQuantityMax4}}">
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd4" onclick="changeQuantity(this)" data-type="plus" data-field="quant4[1]">
                                                                         <span class="glyphicon glyphicon-plus"></span>

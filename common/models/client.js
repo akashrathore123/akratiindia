@@ -193,6 +193,41 @@ console.log(realm + access_code);
   });
 }
 
+Client.removeFromCart = function(req, cb){
+    var realm = req.header("realm");
+    var access_code = req.header("access_code");
+    if(!access_code || access_code != "onyourown"){
+      cb(util.getGenericError("Error", 405, "Bad Request!"));
+      return;
+    }
+
+    var email = req.header("email");
+    var token = req.header("token");
+    Client.findOne({where:{and:[{client_email : email},{client_token : token}]}, include:{relation:'CartItems'}}, function(err, instance){
+      if(err){
+        cb(util.getGenericError("Error", 500, "Internal Server Error:"+ err));
+        return;
+      }
+      if(instance){
+        var cartItem = req.body;
+        console.log("req cart--"+JSON.stringify(cartItem));
+        console.log("cart id:"+cartItem.id);
+console.log(JSON.stringify(instance.CartItem));
+        instance.CartItems.destroy(cartItem.id, function(err){
+          if(err){
+              cb(util.getGenericError("Error", 500, "Error in creating cart item:"+err));
+              return;
+              //console.log("Error in creating cart item:"+err);
+
+          }
+
+            return;
+
+        });
+      }
+    });
+}
+
 
 
 /* Remote methods registration */
@@ -224,4 +259,13 @@ Client.remoteMethod('addToCart',{
     }
 });
 
+Client.remoteMethod('removeFromCart',{
+
+  description:"Remove product from Cart of Client",
+  http: {path: '/removeFromCart', verb: 'delete'},
+  accepts: {arg: 'data', type: 'object', http: { source: 'req' } },
+  returns: {
+       arg: 'response', type: 'object'
+    }
+});
 };

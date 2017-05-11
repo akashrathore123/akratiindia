@@ -3,14 +3,25 @@
 <div class="cart-top">
    <div class="cart-items">Cart ({{cartCount}} Items)</div>
 <div class="cart-total-price">
-     <div class="cart-total">Total: Rs. {{cartTotal}}</div>
+     <div class="cart-total">Cart Total: Rs. {{cartTotal}}</div>
 
      </div>
    </div>
      <div ng-repeat="item in items">
 
              <div class="cart-block">
+               <div class="cart-right-block">
+               <div class="cart-price">
+            <!--     <div class="cart-discount-price"> Rs. {{item.PDiscountPrice1}}</div><br>
+               <span class="discount">({{item.PDiscount}}% OFF)</span> <Strike> -->
+              Total Amount:  Rs. {{item.PPriceTotalAll}}</Strike>
 
+
+             </div>
+             <div id="cart-remove">
+               <a href="" class="btn btn-primary"  ng-click="removeFromCart(item)">Remove</a>
+             </div>
+           </div>
                <div class="cart-image">
                  <img src="assets/images/{{item.PProduct.PCode}}/{{item.PProduct.PImage1}}"/>
                </div>
@@ -29,43 +40,33 @@
                    <div ng-if = "item.POrderQuant1 > 0">
                      <span>{{item.PProduct.PSize1}}</span>
                      <span>{{item.POrderQuant1}}</span>
-                     <span>{{item.PProduct.PPrice1}}</span>
-                     <span>{{item.PPriceTotal1}}</span>
+                     <span>Rs. {{item.PProduct.PPrice1}}</span>
+                     <span>Rs. {{item.PRupeeTotal1}}</span>
                    </div>
                    <div ng-if ="item.POrderQuant2 > 0">
                      <span>{{item.PProduct.PSize2}}</span>
                      <span>{{item.POrderQuant2}}</span>
-                     <span>{{item.PProduct.PPrice2}}</span>
-                     <span>{{item.PPriceTotal2}}</span>
+                     <span>Rs. {{item.PProduct.PPrice2}}</span>
+                     <span>Rs. {{item.PRupeeTotal2}}</span>
                    </div>
                    <div ng-if ="item.POrderQuant3 > 0">
                      <span>{{item.PProduct.PSize3}}</span>
                      <span>{{item.POrderQuant3}}</span>
-                     <span>{{item.PProduct.PPrice3}}</span>
-                     <span>{{item.PPriceTotal3}}</span>
+                     <span>Rs. {{item.PProduct.PPrice3}}</span>
+                     <span>Rs. {{item.PRupeeTotal3}}</span>
                    </div>
                    <div ng-if ="item.POrderQuant4 > 0">
                      <span>{{item.PProduct.PSize4}}</span>
                      <span>{{item.POrderQuant4}}</span>
-                     <span>{{item.PProduct.PPrice4}}</span>
-                     <span>{{item.PPriceTotal4}}</span>
+                     <span>Rs. {{item.PProduct.PPrice4}}</span>
+                     <span>Rs. {{item.PRupeeTotal4}}</span>
                    </div>
                  </div>
                  </div>
                </div>
-               <div class="cart-right-block">
-               <div class="cart-price">
-            <!--     <div class="cart-discount-price"> Rs. {{item.PDiscountPrice1}}</div><br>
-               <span class="discount">({{item.PDiscount}}% OFF)</span> <Strike> -->
-              Total Amount:  Rs. {{item.PPriceTotalAll}}</Strike>
-
 
              </div>
-             <div id="cart-remove">
-               <a href="" class="btn btn-primary"  ng-click="removeFromCart(item)">Remove</a>
-             </div>
            </div>
-             </div>
-           </div>
+           
          </div>
 </div>

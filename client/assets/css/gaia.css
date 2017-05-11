@@ -3853,7 +3853,7 @@ transition: background .55s ease;
 }
 .mask a.quick{
     position: absolute;
-    left: 121px;
+    left: 73px;
     bottom: 200px;
     display: none;
 
@@ -3888,6 +3888,9 @@ transition: background .55s ease;
 /* Product modal css*/
 
 
+#itemTab{
+  width: 23%;
+}
 #product-modal{
     width: 170%;
     margin-left: -205px;
@@ -4106,10 +4109,11 @@ On click the images will be displayed at normal size to complete the effect
 }
 
 .cart-right-block{
-  width: 30%;
-  float: right;
-  margin-right: -100px;
-  margin-top: -126px;
+
+  position: absolute;
+  margin-left: 46%;
+  margin-top: 10px;
+
 }
 
 /*  Quantity Selector */
@@ -4127,7 +4131,7 @@ On click the images will be displayed at normal size to complete the effect
 }
 
 .Max-Min{
-    margin-left: 182px;
+    margin-left: 190px;
     margin-top: 0px;
     position: absolute;
     font-size: 17px;
@@ -4162,6 +4166,7 @@ On click the images will be displayed at normal size to complete the effect
 width: 21%;
 float: right;
 margin-top: -22%;
+margin-right: 2%;
 }
 
 #Max-Min{
@@ -4170,7 +4175,7 @@ margin-top: -22%;
 
 #addToCartBtn{
   float: right;
-  margin-right: 6%;
+  margin-right: 9%;
 }
 
 .productDesc{

@@ -301,6 +301,33 @@ $http({
            document.getElementById("viewMore").style.display = "none";
 
          }
+         for(i=0;i<data.products.length;i++){
+            data.products[i].PRupee1 = convertToRupee(data.products[i].PPrice1);
+            if(data.products[i].PDiscountPrice1 != undefined && data.products[i].PDiscountPrice1 != ''){
+             data.products[i].PDiscountRupee1 = convertToRupee(data.products[i].PDiscountPrice1);
+            }
+            if(data.products[i].PPrice2 != undefined && data.products[i].PPrice2 != ''){
+             data.products[i].PRupee2 = convertToRupee(data.products[i].PPrice2);
+            }
+            if(data.products[i].PDiscountPrice2 != undefined && data.products[i].PDiscountPrice2 != ''){
+              data.products[i].PDiscountRupee2 = convertToRupee(data.products[i].PDiscountPrice2);
+            }
+
+            if(data.products[i].PPrice3 != undefined && data.products[i].PPrice3 != ''){
+             data.products[i].PRupee3 = convertToRupee(data.products[i].PPrice3);
+            }
+            if(data.products[i].PDiscountPrice3 != undefined && data.products[i].PDiscountPrice3 != ''){
+              data.products[i].PDiscountRupee3 = convertToRupee(data.products[i].PDiscountPrice3);
+            }
+
+            if(data.products[i].PPrice4 != undefined && data.products[i].PPrice4 != ''){
+             data.products[i].PRupee4 = convertToRupee(data.products[i].PPrice4);
+            }
+            if(data.products[i].PDiscountPrice4 != undefined && data.products[i].PDiscountPrice4 != ''){
+              data.products[i].PDiscountRupee4 = convertToRupee(data.products[i].PDiscountPrice4);
+            }
+
+         }
          $scope.products.fields.push(data.products);
 
      }else{
@@ -577,7 +604,7 @@ $scope.addToCart = function(prod){
            data : cartItem
        }).
        success(function(data,status,headers,config){
-        console.log("data---"+JSON.stringify(data.response));
+      //  console.log("data---"+JSON.stringify(data.response));
         localStorage.saveData('cart', data.response);
         updateCart.update();
         document.getElementById("prodDetailError").innerHTML = "Product added to cart Successfully.";
@@ -627,7 +654,7 @@ app.controller('showCartItems',['$http','$scope','$window','localStorage','$loca
 console.log("into cart");
 $scope.cartTotal = 0;
 $scope.cartCount = 0;
-
+updateCart.update();
 manageCart();
 
 function manageCart(){
@@ -645,21 +672,24 @@ for(i=0; i<$scope.cartCount; i++){
   if(parseInt($scope.items[i].POrderQuant1) > 0){
     if($scope.items[i].PProduct.PDiscountPrice1){
         total = total + (parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PDiscountPrice1));
-        $scope.items[i].PPriceTotal1 = parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PDiscountPrice1);
+          $scope.items[i].PPriceTotal1 = parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PDiscountPrice1);
+          $scope.items[i].PRupeeTotal1 = convertToRupee($scope.items[i].PPriceTotal1);
 
   }else{
         total = total + (parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PPrice1));
-        $scope.items[i].PPriceTotal1 = parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PPrice1);
-
+          $scope.items[i].PPriceTotal1 = parseInt($scope.items[i].POrderQuant1) * parseInt($scope.items[i].PProduct.PPrice1);
+          $scope.items[i].PRupeeTotal1 = convertToRupee($scope.items[i].PPriceTotal1);
   }
   }
   if(parseInt($scope.items[i].POrderQuant2) > 0){
     if($scope.items[i].PProduct.PDiscountPrice2){
         total = total + (parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PDiscountPrice2));
-        $scope.items[i].PPriceTotal2 = parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PDiscountPrice2);
+          $scope.items[i].PPriceTotal2 = parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PDiscountPrice2);
+          $scope.items[i].PRupeeTotal2 = convertToRupee($scope.items[i].PPriceTotal2);
     }else{
         total = total + (parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PPrice2));
-        $scope.items[i].PPriceTotal2 = parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PPrice2);
+          $scope.items[i].PPriceTotal2 = parseInt($scope.items[i].POrderQuant2) * parseInt($scope.items[i].PProduct.PPrice2);
+          $scope.items[i].PRupeeTotal2 = convertToRupee($scope.items[i].PPriceTotal2);
 
     }
   }
@@ -667,9 +697,11 @@ for(i=0; i<$scope.cartCount; i++){
       if($scope.items[i].PProduct.PDiscountPrice3){
           total = total + (parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PDiscountPrice3));
           $scope.items[i].PPriceTotal3 = parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PDiscountPrice3);
+          $scope.items[i].PRupeeTotal3 = convertToRupee($scope.items[i].PPriceTotal3);
     }else{
           total = total + (parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PPrice3));
           $scope.items[i].PPriceTotal3 = parseInt($scope.items[i].POrderQuant3) * parseInt($scope.items[i].PProduct.PPrice3);
+          $scope.items[i].PRupeeTotal3 = convertToRupee($scope.items[i].PPriceTotal3);
 
     }
   }
@@ -677,20 +709,49 @@ for(i=0; i<$scope.cartCount; i++){
     if($scope.items[i].PProduct.PDiscountPrice4){
           total = total + (parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PDiscountPrice4));
           $scope.items[i].PPriceTotal4 = parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PDiscountPrice4);
+          $scope.items[i].PRupeeTotal4 = convertToRupee($scope.items[i].PPriceTotal4);
     }else{
           total = total + (parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PPrice4));
           $scope.items[i].PPriceTotal4 = parseInt($scope.items[i].POrderQuant4) * parseInt($scope.items[i].PProduct.PPrice4);
+          $scope.items[i].PRupeeTotal4 = convertToRupee($scope.items[i].PPriceTotal4);
 
     }
   }
 
-  $scope.items[i].PPriceTotalAll = total;
+  $scope.items[i].PPriceTotalAll = convertToRupee(total);
   $scope.cartTotal = $scope.cartTotal + total;
 }
+$scope.cartTotal = convertToRupee($scope.cartTotal);
 }
 
 $scope.removeFromCart = function(item){
   localStorage.deleteData('cart', item);
+  var session = localStorage.getData('User');
+
+  if(session){
+
+
+
+  $http({
+
+
+           method : 'DELETE',
+           url : 'http://localhost:3000/api/Clients/removeFromCart',
+           headers: {'Content-Type': 'application/json',
+                      'token' : session.token,
+                      'email' : session.email,
+                      'realm': 'web'},
+           data : item
+       }).
+       success(function(data,status,headers,config){
+        console.log("removed---"+JSON.stringify(data.response));
+
+
+       })
+  .error(function(data,status,headers,config){
+    return;
+});
+
   manageCart();
   // if(localStorage.getData('cart') != undefined){
   //   $scope.items = localStorage.getData('cart');
@@ -707,6 +768,6 @@ $scope.removeFromCart = function(item){
   // }
 
 updateCart.update();
-
+}
 }
 }]);

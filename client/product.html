@@ -10,21 +10,21 @@
           <div class="products-grid">
     <div ng-repeat="product in products.fields">
       <div ng-repeat="prod in product">
-         					<div class="col-md-4 product simpleCart_shelfItem text-center">
+         					<div class="col-md-4 product simpleCart_shelfItem text-center" id="itemTab">
 
-      						<a href="#productDetails/{{prod.PCode}}" target="_blank"><img src="assets/images/{{prod.PCode}}/{{prod.PImage1}}" alt="" width="290" height="360"></a>
+      						<a href="#productDetails/{{prod.PCode}}" target="_blank"><img src="assets/images/{{prod.PCode}}/{{prod.PImage1}}" alt="" width="100%" height="300"></a>
       						<div class="mask">
       							<a href="" ng-click="setModalData(prod)"  data-toggle="modal" data-target="#myModal" class="quick">Quick View</a>
                   </div>
                     <div ng-show="prod.PDiscount != undefined && prod.PDiscount != ''">
                       <h4>{{prod.PName}}</h4>
-                      <Strike> Rs. {{prod.PPrice1}}</Strike>
+                      <Strike> Rs. {{prod.PRupee1}}</Strike>
                       <span class="discount">({{prod.PDiscount}}% OFF)</span>
-                      <span> Rs. {{prod.PDiscountPrice1}}</span>
+                      <span> Rs. {{prod.PDiscountRupee1}}</span>
                     </div>
                     <div ng-show="prod.PDiscount === undefined || prod.PDiscount === ''">
                       <h4>{{prod.PName}}</h4>
-                      Rs. {{prod.PPrice1}}
+                      Rs. {{prod.PRupee1}}
                     </div>
                           <!-- Product View Modal Core -->
                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -120,14 +120,15 @@
 
 
                                   <tr><th>Price (Rs.)</th>
-                                    <td ng-show="modalData.PDiscountPrice1 != undefined && modalData.PDiscountPrice1 != ''">{{modalData.PDiscountPrice1}}</td>
-                                    <td ng-show="modalData.PDiscountPrice1 == undefined || modalData.PDiscountPrice1 == ''">{{modalData.PPrice1}}</td>
-                                    <td ng-show="modalData.PDiscountPrice2 != undefined && modalData.PDiscountPrice2 != ''">{{modalData.PDiscountPrice2}}</td>
-                                    <td ng-show="modalData.PDiscountPrice2 == undefined || modalData.PDiscountPrice2 == ''">{{modalData.PPrice2}}</td>
-                                    <td ng-show="modalData.PDiscountPrice3 != undefined && modalData.PDiscountPrice3 != ''">{{modalData.PDiscountPrice3}}</td>
-                                    <td ng-show="modalData.PDiscountPrice3 == undefined || modalData.PDiscountPrice3 == ''">{{modalData.PPrice3}}</td>
-                                    <td ng-show="modalData.PDiscountPrice4 != undefined && modalData.PDiscountPrice4 != ''">{{modalData.PDiscountPrice4}}</td>
-                                    <td ng-show="modalData.PDiscountPrice4 == undefined || modalData.PDiscountPrice4 == ''">{{modalData.PPrice4}}</td>
+                                    <td ng-show="modalData.PDiscountPrice1 != undefined && modalData.PDiscountPrice1 != ''">{{modalData.PDiscountRupee1}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice1 == undefined || modalData.PDiscountPrice1 == '') && (modalData.PPrice1 != undefined && modalData.PPrice1 != '')">{{modalData.PRupee1}}</td>
+                                    <td ng-show="modalData.PDiscountPrice2 != undefined && modalData.PDiscountPrice2 != ''">{{modalData.PDiscountRupee2}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice2 == undefined || modalData.PDiscountPrice2 == '') && (modalData.PPrice2 != undefined && modalData.PPrice2 != '')">{{modalData.PRupee2}}</td>
+                                    <td ng-show="modalData.PDiscountPrice3 != undefined && modalData.PDiscountPrice3 != ''">{{modalData.PDiscountPRupee3}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice3 == undefined || modalData.PDiscountPrice3 == '') && (modalData.PPrice3 != undefined && modalData.PPrice3 != '')">{{modalData.PRupee3}}</td>
+                                    <td ng-show="modalData.PDiscountPrice4 != undefined && modalData.PDiscountPrice4 != ''">{{modalData.PDiscountRupee4}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice4 == undefined || modalData.PDiscountPrice4 == '') && (modalData.PPrice4 != undefined && modalData.PPrice4 != '')">{{modalData.PRupee4}}</td>
+
                                 </tr>
                                 </table>
 
@@ -149,7 +150,7 @@
                                                       <span class="glyphicon glyphicon-minus"></span>
                                                   </button>
                                               </span>
-                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="10">
+                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="{{modalData.PQuantityMax1}}">
                                               <span class="input-group-btn">
                                                   <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd1" onclick="changeQuantity(this)" data-type="plus" data-field="quant1[1]">
                                                       <span class="glyphicon glyphicon-plus"></span>
@@ -170,7 +171,7 @@
                                                             <span class="glyphicon glyphicon-minus"></span>
                                                         </button>
                                                     </span>
-                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="10">
+                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="{{modalData.PQuantityMax2}}">
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd2" onclick="changeQuantity(this)" data-type="plus" data-field="quant2[1]">
                                                             <span class="glyphicon glyphicon-plus"></span>
@@ -190,7 +191,7 @@
                                                                   <span class="glyphicon glyphicon-minus"></span>
                                                               </button>
                                                           </span>
-                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="10">
+                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="{{modalData.PQuantityMax3}}">
                                                           <span class="input-group-btn">
                                                               <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd3" onclick="changeQuantity(this)" data-type="plus" data-field="quant3[1]">
                                                                   <span class="glyphicon glyphicon-plus"></span>
@@ -210,7 +211,7 @@
                                                                         <span class="glyphicon glyphicon-minus"></span>
                                                                     </button>
                                                                 </span>
-                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="10">
+                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="{{modalData.PQuantityMax4}}">
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd4" onclick="changeQuantity(this)" data-type="plus" data-field="quant4[1]">
                                                                         <span class="glyphicon glyphicon-plus"></span>
