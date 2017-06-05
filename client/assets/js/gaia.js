@@ -382,5 +382,12 @@ $(".input-number").keydown(function (e) {
     if(otherNumbers != '')
         lastThree = ',' + lastThree;
     var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
-    return res;  
+    return res;
   }
+
+function openDropdown(element){
+  element.className = "dropdown open";
+}
+function closeDropdown(element){
+  element.className = "dropdown";
+}

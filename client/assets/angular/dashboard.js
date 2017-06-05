@@ -106,17 +106,18 @@ app.controller('addProduct',['$scope','$http','$window','uploadFile',function($s
    $scope.addProductItem = function(){
     $scope.addError = "";
     var product = $scope.product;
-      console.log(product);
-      console.log($scope.PImage1);
-    if(!product || !product.PName || !product.PCategory || !product.PCode || !product.PMaterial1 || !product.PCompany || !$scope.PImage1 || !$scope.PImage2 || !$scope.PImage3){
+
+    if(!product || !product.PName || !product.PCategory || !product.PCode || !product.PMaterial1 || !product.PCompany || !$scope.PImage1 || !$scope.PImage2 || !$scope.PImageSmall){
 
   $scope.addError = "Please fill required fields!";
   return;
 }
   product.PImage1 = $scope.PImage1.name;
   product.PImage2 = $scope.PImage2.name;
-  product.PImage3 = $scope.PImage3.name;
-
+  if($scope.PImage3){
+    product.PImage3 = $scope.PImage3.name;
+  }
+  product.PImageSmall = $scope.PImageSmall.name;
   $http({
 
          method : 'POST',
@@ -165,7 +166,7 @@ $http.defaults.headers.common = {'access_code':'onadmin'};
   $scope.getUpdateProduct = function(code){
     $scope.products = "";
     $scope.codeDropdownResult = "";
-    if(code.length > 4){
+    if(code.length >= 4){
     $http.defaults.headers.common = {'access_code':'onadmin'};
         var Pcodes=[];
       $http({
@@ -178,8 +179,6 @@ $http.defaults.headers.common = {'access_code':'onadmin'};
 
       }).
       success(function(data,status,headers,config,statusText){
-    console.log("statusText--"+statusText);
-        console.log("status--"+status);
         if(status == 204){
 
           $scope.codeDropdownResult = "No Product found with Product Code:"+code;
@@ -216,6 +215,9 @@ $http.defaults.headers.common = {'access_code':'onadmin'};
  if($scope.PImage3){
    product.PImage3 = $scope.PImage3.name;
 }
+if($scope.PImageSmall){
+  product.PImageSmall = $scope.PImageSmall.name;
+}
 var productCode = product.PCode;
    $http({
 
@@ -229,9 +231,9 @@ var productCode = product.PCode;
       }).
       success(function(data,status,headers,config){
         /* Update Images */
-        console.log(data);
+        
         if(status == 204){
-          $scoope.updateError = "Product not found!";
+          $scope.updateError = "Product not found!";
         }else{
         if($scope.PImage1){
           uploadFile.upload($scope.PImage1, product.PCode, $http, $scope);
@@ -242,7 +244,9 @@ var productCode = product.PCode;
         if($scope.PImage3){
           uploadFile.upload($scope.PImage3, product.PCode, $http, $scope);
        }
-
+       if($scope.PImageSmall){
+         uploadFile.upload($scope.PImageSmall, product.PCode, $http, $scope);
+       }
          $scope.updateError = "Product Updated successfully!";
          $scope.products = data;
      }

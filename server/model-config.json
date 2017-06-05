@@ -67,5 +67,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "HomeTemplate": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

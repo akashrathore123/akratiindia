@@ -493,8 +493,8 @@ a,
   opacity: 0.8;
   filter: alpha(opacity=80);
   padding: 10px 20px;
-  border-color: #888888;
-  color: #888888;
+  border-color: #333;
+  color: #333;
   text-transform: uppercase;
 }
 .btn:hover, .btn:focus, .btn:active, .btn.active, .open > .btn.dropdown-toggle,
@@ -1366,7 +1366,7 @@ a,
 
 .navbar-transparent {
   padding-top: 15px;
-  background-color: #b5585a;
+  background: none;
   border-bottom: 1px solid transparent;
 }
 
@@ -3853,9 +3853,10 @@ transition: background .55s ease;
 }
 .mask a.quick{
     position: absolute;
-    left: 73px;
-    bottom: 200px;
+    left: 44px;
+    bottom: 106px;
     display: none;
+    height: 9%;
 
 }
 .product {
@@ -3889,7 +3890,7 @@ transition: background .55s ease;
 
 
 #itemTab{
-  width: 23%;
+  width: 21%;
 }
 #product-modal{
     width: 170%;
@@ -3924,6 +3925,12 @@ transition: background .55s ease;
 
 .product-name .price{
   float: left;
+}
+
+.productdetail-name{
+  position: absolute;
+  margin-top: 30px;
+  margin-left: 40%;
 }
 .discount{
   color:red;
@@ -4116,6 +4123,14 @@ On click the images will be displayed at normal size to complete the effect
 
 }
 
+.checkout{
+width: 20%;
+float: right;
+margin-right: 6%;
+margin-top: 1%;
+font-family: initial;
+font-size: small;
+}
 /*  Quantity Selector */
 
 .input-group{
@@ -4154,11 +4169,12 @@ On click the images will be displayed at normal size to complete the effect
 .productContainer{
   width: 95%;
   margin-left: 3%;
+  margin-top: 7%;
 }
 
 #prodDescTable{
   width: 30%;
-  margin-top: -40%;
+  margin-top:  4.5%;
   height: 41%;
 }
 
@@ -4191,4 +4207,140 @@ margin-right: 2%;
   float: right;
   margin-top: 2%;
   margin-right: -11%;
+}
+
+#productContainer{
+  margin-left: 31%;
+  width: 70%;
+
+}
+
+#filter-container{
+  position: absolute;
+  margin-top: 12%;
+  width: 20%;
+  margin-left: 12%;
+}
+
+#topHeaderImage{
+    width: 34%;
+    position: absolute;
+    margin-top: -31px;
+}
+
+#topHeaderLogo{
+  margin-left: 70px;
+}
+
+.opaque {
+  opacity: 1;
+
+}
+
+.nav-opposite {
+  color: #434547 !important;
+  background-color: white;
+}
+
+#navbar-logo{
+  margin-top: 21px;
+}
+
+.product-slider{
+    width: 65%;
+    margin-left: 19%;
+    margin-top: 10%;
+    margin-bottom: 1%;
+}
+.product-container{
+  margin-left: 20px;
+}
+
+.product-header{
+    font-size: x-large;
+    font-family: -webkit-pictograph;
+    margin-left: 10%;
+    position: absolute;
+    margin-top: 2%;
+    color: lightskyblue;
+    width: 30%;
+    height: 2%;
+}
+.product-header-line{
+  margin-top: 4px;
+  width: 39%;
+  position: absolute;
+}
+
+.product-subHeader{
+  position: absolute;
+  margin-top: 10%;
+  color: #7a7974;
+  font-family: -webkit-pictograph;
+  font-weight: 100;
+  margin-left: -39%;
+  font-size: large;
+}
+
+.category-content{
+  margin-top: 5%;
+}
+
+.category-content1{
+  width: 25%;
+  /*border: 1px solid white;*/
+}
+.category-content2{
+  position: absolute;
+  display: inline-block;
+  margin-left: 25%;
+  margin-top: -430px;
+  width: 45%;
+  /*border: 1px solid white;*/
+}
+.category-content3{
+  width: 21%;
+  margin-left: 25%;
+  margin-top: -180px;
+  /*border: 1px solid white;*/
+}
+.category-content4{
+  margin-left: 70%;
+  margin-top: -430px;
+  width: 30%;
+  /*border: 1px solid white;*/
+}
+.category-content5{
+  margin-left: 46%;
+  width: 24%;
+  margin-top: 30px;
+  /*border: 1px solid white;*/
+}
+.category-content6{
+  width: 30%;
+  margin-left: 70%;
+  margin-top: -210px;
+  /*border: 1px solid white;*/
+}
+
+.main-container{
+  min-height: 600px;
+}
+
+.slider-bottom-price{
+  position: absolute;
+  margin-top: 520px;
+  margin-left: 185px;
+  font-weight: 600;
+  font-size: larger;
+  font-family: -webkit-pictograph;
+}
+
+.verticalLine{
+  border-left: 1px solid black;
+  padding-left: 7px;
+  padding-right: 9px;
+}
+.item-discount{
+  display: -webkit-box;
 }

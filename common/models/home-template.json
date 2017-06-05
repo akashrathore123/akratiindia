@@ -1,0 +1,132 @@
+{
+  "name": "HomeTemplate",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Sec1Image": {
+      "type": "string"
+    },
+    "Sec2PCode1": {
+      "type": "string"
+    },
+    "Sec2PCode2": {
+      "type": "string"
+    },
+    "Sec2PCode3": {
+      "type": "string"
+    },
+    "Sec2PCode4": {
+      "type": "string"
+    },
+    "Sec2PCode5": {
+      "type": "string"
+    },
+    "Sec2PCode6": {
+      "type": "string"
+    },
+    "Sec2PCode7": {
+      "type": "string"
+    },
+    "Sec2PCode8": {
+      "type": "string"
+    },
+    "Sec2PCode9": {
+      "type": "string"
+    },
+    "Sec2PCode10": {
+      "type": "string"
+    },
+    "Sec3PCategory1": {
+      "type": "string"
+    },
+    "Sec3PCategory2": {
+      "type": "string"
+    },
+    "Sec3PCategory3": {
+      "type": "string"
+    },
+    "Sec3PCategory4": {
+      "type": "string"
+    },
+    "Sec3PCategory5": {
+      "type": "string"
+    },
+    "Sec3PCategory6": {
+      "type": "string"
+    },
+    "Sec3PImage1": {
+      "type": "string"
+    },
+    "Sec3PImage2": {
+      "type": "string"
+    },
+    "Sec3PImage3": {
+      "type": "string"
+    },
+    "Sec3PImage4": {
+      "type": "string"
+    },
+    "Sec3PImage5": {
+      "type": "string"
+    },
+    "Sec3PImage6": {
+      "type": "string"
+    },
+    "Sec4Image": {
+      "type": "string"
+    },
+    "Sec5Image1": {
+      "type": "string"
+    },
+    "Sec5Image2": {
+      "type": "string"
+    },
+    "Sec5Image3": {
+      "type": "string"
+    },
+    "Sec6Image1": {
+      "type": "string"
+    },
+    "Sec6Image2": {
+      "type": "string"
+    },
+    "Sec6Image3": {
+      "type": "string"
+    },
+    "Sec2PImage1": {
+      "type": "string"
+    },
+    "Sec2PImage3": {
+      "type": "string"
+    },
+    "Sec2PImage4": {
+      "type": "string"
+    },
+    "Sec2PImage5": {
+      "type": "string"
+    },
+    "Sec2PImage6": {
+      "type": "string"
+    },
+    "Sec2PImage7": {
+      "type": "string"
+    },
+    "Sec2PImage8": {
+      "type": "string"
+    },
+    "Sec2PImage9": {
+      "type": "string"
+    },
+    "Sec2PImage10": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

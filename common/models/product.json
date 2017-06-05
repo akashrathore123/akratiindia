@@ -44,28 +44,6 @@
     "PQuantityMin4": {
       "type": "string"
     },
-    "PDiscountPrice2": {
-      "type": "string"
-    },
-    "PDiscountPrice3": {
-      "type": "string"
-    },
-    "PDiscountPrice4": {
-      "type": "string"
-    },
-    "PPrice2": {
-      "type": "string"
-    },
-    "PPrice3": {
-      "type": "string"
-    },
-    "PPrice4": {
-      "type": "string"
-    },
-    "PPrice1": {
-      "type": "string",
-      "required": false
-    },
     "PCategory": {
       "type": "string",
       "required": true
@@ -80,12 +58,6 @@
       "required": true
     },
     "PDescription": {
-      "type": "string"
-    },
-    "PDiscount": {
-      "type": "string"
-    },
-    "PDiscountPrice1": {
       "type": "string"
     },
     "PFinish1": {
@@ -184,6 +156,37 @@
     },
     "PHeight1": {
       "type": "string"
+    },
+    "PImageSmall": {
+      "type": "string"
+    },
+    "PDiscountPrice1": {
+      "type": "string"
+    },
+    "PDiscountPrice2": {
+      "type": "string"
+    },
+    "PDiscountPrice3": {
+      "type": "string"
+    },
+    "PDiscountPrice4": {
+      "type": "string"
+    },
+    "PPrice1": {
+      "type": "number",
+      "required": false
+    },
+    "PDiscount": {
+      "type": "number"
+    },
+    "PPrice2": {
+      "type": "number"
+    },
+    "PPrice3": {
+      "type": "number"
+    },
+    "PPrice4": {
+      "type": "number"
     }
   },
   "validations": [],

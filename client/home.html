@@ -1,14 +1,15 @@
-<div class="section section-header">
-  <div class="parallax filter filter-color-red">
+<div ng-controller="homeData">
+  <div class="section section-header">
+  <div class="parallax filter filter-color-re">
     <div class="image"
-    style="background-image: url('assets/img/header-1.jpeg')">
+    style="background-image: url('assets/images/{{tempData.Sec1Image}}')">
   </div>
   <div class="container">
     <div class="content">
       <div class="title-area">
 
-        <h1 class="title-modern">Akratiindia</h1>
-        <h3>Probably the most stylish locks in the world!</h2>
+        <!-- <h1 class="title-modern">  <span style="color: #0075a6;">akrati</span><span  style="color: #991014;">india</span></h1> -->
+        <font size="40px">Glamorising your home</font>
           <div class="separator line-separator">♦</div>
         </div>
 
@@ -22,43 +23,78 @@
     </div>
   </div>
 </div>
+<div class="bulk-order">
+<img src="assets/images/bulkOrder/{{tempData.Sec4Image}}" width="100%" height="450px" class="bulk-order-image"/>
+ </div>
 
+ <span class="product-header">
+   <span>SOME OF BEST</span>
+   <hr class="product-header-line"/>
+   <span class="product-subHeader"> Brings you the best product globally</span>
+ </span>
+ <div class="product-container">
+<div class="product-slider">
+  <div class="slider-product1"><img src="assets/images/{{tempData.Sec2PCode1}}/{{tempData.Sec2PImage1}}" width="150" height="200" /></div>
+  <div class="slider-product2"><img src="assets/images/{{tempData.Sec2PCode2}}/{{tempData.Sec2PImage2}}" width="150" height="200" /></div>
+  <div class="slider-product3"><img src="assets/images/{{tempData.Sec2PCode3}}/{{tempData.Sec2PImage3}}" width="150" height="200" /></div>
+  <div class="slider-product4"><img src="assets/images/{{tempData.Sec2PCode4}}/{{tempData.Sec2PImage4}}" width="150" height="200" /></div>
+  <div class="slider-product5"><img src="assets/images/{{tempData.Sec2PCode5}}/{{tempData.Sec2PImage5}}" width="150" height="200" /></div>
+  <div class="slider-product6"><img src="assets/images/{{tempData.Sec2PCode6}}/{{tempData.Sec2PImage6}}" width="150" height="200" /></div>
+  <div class="slider-product7"><img src="assets/images/{{tempData.Sec2PCode7}}/{{tempData.Sec2PImage7}}" width="150" height="200" /></div>
+  <div class="slider-product8"><img src="assets/images/{{tempData.Sec2PCode8}}/{{tempData.Sec2PImage8}}" width="150" height="200" /></div>
+  <div class="slider-product9"><img src="assets/images/{{tempData.Sec2PCode9}}/{{tempData.Sec2PImage9}}" width="150" height="200" /></div>
+  <div class="slider-product10"><img src="assets/images/{{tempData.Sec2PCode10}}/{{tempData.Sec2PImage10}}" width="150" height="200" /></div>
+</div>
+</div>
+
+
+ <div class="category-content">
+   <div class="category-content1" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory1}}/{{tempData.Sec3PImage1}}" width="100%" height="430" /></div>
+   <div class="category-content2" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory2}}/{{tempData.Sec3PImage2}}" width="100%" height="250" /></div>
+   <div class="category-content3" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory3}}/{{tempData.Sec3PImage3}}" width="100%" height="180" /></div>
+   <div class="category-content4" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory4}}/{{tempData.Sec3PImage4}}" width="100%" height="220" /></div>
+   <div class="category-content5" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory5}}/{{tempData.Sec3PImage5}}" width="100%" height="180" /></div>
+   <div class="category-content6" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory6}}/{{tempData.Sec3PImage6}}" width="100%" height="210" /></div>
+ </div>
 
 <div class="section">
 
   <div class="container">
     <div class="row">
       <div class="title-area">
-        <h2>Our Services</h2>
+        <h2>We Provide</h2>
         <div class="separator separator-danger">✻</div>
-        <p class="description">We promise you a new look and more importantly, a new attitude. We build that by getting to know you, your needs and creating the best looking clothes.</p>
+        <!-- <p class="description">We promise you a new look and more importantly, a new attitude. We build that by getting to know you, your needs and creating the best looking clothes.</p> -->
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
         <div class="info-icon">
           <div class="icon text-danger">
-            <i class="pe-7s-graph1"></i>
+            <!-- <i class="pe-7s-graph1"></i> -->
+            <img src="assets/images/{{tempData.Sec5Image1}}"></img>
           </div>
-          <h3>Sales</h3>
+          <h3>Secure Payment</h3>
           <p class="description">We make our design perfect for you. Our adjustment turn our clothes into your clothes.</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="info-icon">
           <div class="icon text-danger">
-            <i class="pe-7s-note2"></i>
+            <!-- <i class="pe-7s-note2"></i> -->
+            <img src="assets/images/{{tempData.Sec5Image2}}"></img>
           </div>
-          <h3>Content</h3>
+          <h3>Easy Exchange</h3>
           <p class="description">We create a persona regarding the multiple wardrobe accessories that we provide..</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="info-icon">
           <div class="icon text-danger">
-            <i class="pe-7s-music"></i>
+            <!-- <i class="pe-7s-music"></i> -->
+            <img src="assets/images/{{tempData.Sec5Image3}}"></img>
           </div>
-          <h3>Music</h3>
+          <h3>Order Cancellation</h3>
           <p class="description">We like to present the world with our work, so we make sure we spread the word regarding our clothes.</p>
         </div>
       </div>
@@ -73,13 +109,13 @@
     </div>
     <div class="container">
       <div class="content">
-        <div class="row">
+        <!-- <div class="row">
           <div class="title-area">
             <h2>Who We Are</h2>
             <div class="separator separator-danger">✻</div>
             <p class="description">We promise you a new look and more importantly, a new attitude. We build that by getting to know you, your needs and creating the best looking clothes.</p>
           </div>
-        </div>
+        </div> -->
 
         <div class="team">
           <div class="row">
@@ -94,7 +130,7 @@
                       <div class="description">
                         <h3 class="title">Tina</h3>
                         <p class="small-text">CEO / Co-Founder</p>
-                        <p class="description">I miss the old Kanye I gotta say at that time I’d like to meet Kanye And I promise the power is in the people and I will use the power given by the people to bring everything I have back to the people.</p>
+                        <p class="description">Track your Order</p>
                       </div>
                     </div>
                   </div>
@@ -108,7 +144,7 @@
                       <div class="description">
                         <h3 class="title">Andrew</h3>
                         <p class="small-text">Product Designer</p>
-                        <p class="description">I miss the old Kanye I gotta say at that time I’d like to meet Kanye And I promise the power is in the people and I will use the power given by the people to bring everything I have back to the people.</p>
+                        <p class="description">Android/ios App</p>
                       </div>
                     </div>
                   </div>
@@ -122,7 +158,7 @@
                       <div class="description">
                         <h3 class="title">Michelle</h3>
                         <p class="small-text">Marketing Hacker</p>
-                        <p class="description">I miss the old Kanye I gotta say at that time I’d like to meet Kanye And I promise the power is in the people and I will use the power given by the people to bring everything I have back to the people.</p>
+                        <p class="description">Contact Us</p>
                       </div>
                     </div>
                   </div>
@@ -138,7 +174,7 @@
 </div>
 
 
-<div class="section section-our-clients-freebie">
+<!-- <div class="section section-our-clients-freebie">
   <div class="container">
     <div class="title-area">
       <h5 class="subtitle text-gray">Here are some</h5>
@@ -189,9 +225,9 @@
     </div>
 
   </div>
-</div>
+</div> -->
 
-
+<!--
 <div class="section section-small section-get-started">
   <div class="parallax filter">
     <div class="image"
@@ -209,4 +245,5 @@
     </div>
   </div>
 </div>
+</div> -->
 </div>

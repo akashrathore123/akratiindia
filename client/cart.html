@@ -1,20 +1,53 @@
 
-<div ng-controller="showCartItems" id="cartContainer" class="cart-container">
+<div ng-controller="showCartItems" >
+  <div class="checkout">
+    <div class="price-details">Price Details</div>
+
+    <div class="bag-total"><span>Cart Total</label>
+    <span class="bag-total-value"></span>
+    </div>
+
+    <div class="bag-discount"><span>Cart Discount</span>
+    <span class="bag-discount-value"></span>
+    </div>
+
+    <div class="bag-vat"><span>VAT</span>
+    <span class="bag-vat-value"></span>
+    </div>
+
+    <div class="delivery"><span>Delivery</span>
+    <span class="delivery-value"></span>
+  </div>
+<hr>
+    <div class="order-total"><span>Order Total</span>
+    <span class="order-total-value"></span>
+    </div>
+    <input type="button" class="form-control" value="Place Order"></input>
+  </div>
+  <div class="cart-container" id="cartContainer" >
 <div class="cart-top">
-   <div class="cart-items">Cart ({{cartCount}} Items)</div>
+   <div class="cart-items">My Cart ({{cartCount}} Items)</div>
 <div class="cart-total-price">
-     <div class="cart-total">Cart Total: Rs. {{cartTotal}}</div>
+     <div class="cart-total">Cart Total: Rs. {{cartRupeeTotal}}</div>
 
      </div>
    </div>
      <div ng-repeat="item in items">
-
+{{item}}
              <div class="cart-block">
                <div class="cart-right-block">
                <div class="cart-price">
-            <!--     <div class="cart-discount-price"> Rs. {{item.PDiscountPrice1}}</div><br>
-               <span class="discount">({{item.PDiscount}}% OFF)</span> <Strike> -->
-              Total Amount:  Rs. {{item.PPriceTotalAll}}</Strike>
+               <div  ng-show="item.PProduct.PDiscount != undefined && item.PProduct.PDiscount != 0">
+              Total Amount:  Rs. {{item.PPriceTotalAll}}
+              <div class="item-discount">({{item.PProduct.PDiscount}}% OFF)
+                <div class="verticalLine">
+                  <div class="discount"><strike>Rs. {{item.withoutDiscount}}</strike></div>
+                </div>
+                </div>
+            </div>
+            <div  ng-show="item.PProduct.PDiscount == undefined || item.PProduct.PDiscount == 0">
+           Total Amount:  Rs. {{item.PPriceTotalAll}}
+         </div>
 
 
              </div>
@@ -67,6 +100,7 @@
 
              </div>
            </div>
-           
+
          </div>
+</div>
 </div>

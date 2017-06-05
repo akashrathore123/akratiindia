@@ -9,8 +9,8 @@ Client.userRegister = function(data, cb, next){
 var realm = data.req.header("realm");
 var access_code = data.req.header("access_code");
 
-if(!access_code || access_code != "onyourown"){
-  cb(util.getGenericError("Error", 404, "Bad Request!"));
+if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android")){
+  cb(util.getGenericError("Error", 405, "Bad Request!"));
   return;
 }
 var body = data.req.body;
@@ -88,8 +88,8 @@ Client.login = function(data, cb, next){
 var realm = data.req.header("realm");
 var access_code = data.req.header("access_code");
 
-if(!access_code || access_code != "onyourown"){
-  cb(util.getGenericError("Error", 404, "Bad Request!"));
+if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android")){
+  cb(util.getGenericError("Error", 405, "Bad Request!"));
   return;
 }
 var body = data.req.body.user;
@@ -161,20 +161,22 @@ Client.addToCart = function(data, cb){
 console.log('reached');
   var realm = data.header("realm");
   var access_code = data.header("access_code");
-console.log(realm + access_code);
-  if(!access_code || access_code != "onyourown"){
+  if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android")){
     cb(util.getGenericError("Error", 405, "Bad Request!"));
     return;
   }
 
   var email = data.header("email");
   var token = data.header("token");
+  console.log("email"+email);
+  console.log("token"+token);
   Client.findOne({where:{and:[{client_email : email},{client_token : token}]}}, function(err, instance){
     if(err){
       cb(util.getGenericError("Error", 500, "Internal Server Error:"+ err));
       return;
     }
     if(instance){
+      console.log("instance--"+JSON.stringify(instance));
       var cartItem = data.body;
       cartItem.PClientid = instance.id;
       instance.CartItems.create(cartItem, function(err, cart){
@@ -185,6 +187,7 @@ console.log(realm + access_code);
 
         }
         if(cart){
+          
           cb(null, cart);
           return;
         }
@@ -196,7 +199,7 @@ console.log(realm + access_code);
 Client.removeFromCart = function(req, cb){
     var realm = req.header("realm");
     var access_code = req.header("access_code");
-    if(!access_code || access_code != "onyourown"){
+    if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android")){
       cb(util.getGenericError("Error", 405, "Bad Request!"));
       return;
     }
@@ -210,24 +213,54 @@ Client.removeFromCart = function(req, cb){
       }
       if(instance){
         var cartItem = req.body;
-        console.log("req cart--"+JSON.stringify(cartItem));
-        console.log("cart id:"+cartItem.id);
-console.log(JSON.stringify(instance.CartItem));
+
         instance.CartItems.destroy(cartItem.id, function(err){
           if(err){
-              cb(util.getGenericError("Error", 500, "Error in creating cart item:"+err));
+              cb(util.getGenericError("Error", 500, "Error in deleting cart item:"+err));
               return;
               //console.log("Error in creating cart item:"+err);
 
+          }else{
+            cb(null,"Deleted!");
+            return;
           }
 
-            return;
+
 
         });
+      }else {
+        cb(util.getGenericError("Error",204,"Item not found!"));
       }
     });
 }
 
+
+Client.showCart = function(req,token,cb){
+  var realm = req.header("realm");
+  var access_code = req.header("access_code");
+
+  if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android") || !token){
+    cb(util.getGenericError("Error", 405, "Bad Request!"));
+    return;
+  }
+
+  Client.findOne({where:{client_token:token}, include:{relation:'CartItems'}}, function(err, instance){
+
+    if(err){
+      cb(util.getGenericError("Error", 500, "Internal Server Error!"));
+      return;
+    }
+    if(instance){
+    console.log("instance found");
+      console.log(instance.CartItems[0]);
+      cb(null,instance);
+      return;
+    }else{
+      cb(util.getGenericError("Error", 204, "No content Found!"));
+      return;
+    }
+  })
+}
 
 
 /* Remote methods registration */
@@ -264,6 +297,17 @@ Client.remoteMethod('removeFromCart',{
   description:"Remove product from Cart of Client",
   http: {path: '/removeFromCart', verb: 'delete'},
   accepts: {arg: 'data', type: 'object', http: { source: 'req' } },
+  returns: {
+       arg: 'response', type: 'object'
+    }
+});
+
+Client.remoteMethod('showCart',{
+
+  description:"Show Cart items of Client",
+  http: {path: '/showCart', verb: 'get'},
+  accepts: [{arg: 'data', type: 'object', http: { source: 'req' } },
+           {arg: 'token', type: 'string', http: { source: 'query' } }],
   returns: {
        arg: 'response', type: 'object'
     }

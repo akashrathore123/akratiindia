@@ -9,9 +9,7 @@ Admin.login = function(data, cb, next){
   var accessCode = data.header('access_code');
 
   var realm = data.header('realm');
-console.log(JSON.stringify(data.headers));
-console.log(accessCode+realm+body.email+body.password);
-  if(!body.adminId || !body.password || !accessCode || !realm || accessCode != "onadmin"){
+  if(!body.adminId || !body.password || !accessCode || !realm || accessCode != "onadmin" || (realm != "ios" && realm != "web" && realm != "android")){
     cb(util.getGenericError("Error", 422, "Request Unprocessable"));
     return;
   }

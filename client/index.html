@@ -4,14 +4,22 @@
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/img/logo.png">
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Akratiindia</title>
+  <title>akratiindia</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
   <link href="assets/css/bootstrap.css" rel="stylesheet" />
   <link href="assets/css/gaia.css" rel="stylesheet"/>
   <link href="assets/css/login-register.css" rel="stylesheet" />
+  <link href="assets/css/animate.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+
+
+
+
 
   <!--     Fonts and icons-->
   <link href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600' rel='stylesheet' type='text/css'>
@@ -21,7 +29,7 @@
 
 <body ng-app="main"  ng-controller = "loginCheck">
 
-  <nav class="navbar navbar-default navbar-transparent navbar-fixed-top" color-on-scroll="200">
+  <nav class="navbar navbar-default navbar-transparent navbar-fixed-top" color-on-scroll="200" ng-class="{'nav-opposite':isHome!=true}" ng-controller="showProducts" >
     <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
     <div class="container">
       <div class="navbar-header">
@@ -31,8 +39,10 @@
           <span class="icon-bar bar2"></span>
           <span class="icon-bar bar3"></span>
         </button>
-        <a href="index.html" class="navbar-brand">
-          Akratiindia
+        <a href="index.html" class="navbar-brand opaque" id="navbar-logo">
+          <img src="assets/img/logo.png" id="topHeaderImage" /> <span id="topHeaderLogo" >
+            <span class="logoAkrati" style="color: #0075a6;">akrati</span><span class="logoIndia" style="color: #991014;">india</span>
+          </span>
         </a>
       </div>
 
@@ -40,121 +50,121 @@
         <li>
           <div class="search-box">
             <div class="container-1">
-              <span class="icon"><i class="fa fa-search"></i></span>
-              <input type="search" id="search" placeholder="Search..." />
+              <a href="#product/search={{searchQuery}}"><span class="icon" ><i class="fa fa-search"></i></span></a>
+              <input type="search" id="search" my-enter="searchPressed();" ng-model="searchQuery" placeholder="Search..." />
             </div>
           </div>
         </li>
 
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <li class="dropdown" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+          <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Door Fitting
           </a>
           <ul class="dropdown-menu dropdown-danger">
             <li>
-              <a href="#product/Handles"><i class=""></i> Handles</a>
+              <a href="#product/handles" ng-click="reloadData();"><i class=""></i> Handles</a>
             </li>
             <li>
-              <a href="#product/Khunti" ><i class=""></i> Khunti</a>
+              <a href="#product/Khunti" ng-click="reloadData();"><i class=""></i> Khunti</a>
             </li>
             <li>
-              <a href="#product/Tower Bolt" ><i class=""></i> Tower Bolt</a>
+              <a href="#product/Tower Bolt" ng-click="reloadData();"><i class=""></i> Tower Bolt</a>
             </li>
             <li>
-              <a href="#product/AL-Drop" ><i class=""></i> AL-Drop</a>
+              <a href="#product/AL-Drop" ng-click="reloadData();"><i class=""></i> AL-Drop</a>
             </li>
             <li>
-              <a href="#product/Mortise" ><i class=""></i> Mortise</a>
+              <a href="#product/Mortise" ng-click="reloadData();"><i class=""></i> Mortise</a>
             </li>
             <li>
-              <a href="#product/Bathroom Latch" ><i class=""></i> Bathroom Latch</a>
+              <a href="#product/Bathroom Latch" ng-click="reloadData();"><i class=""></i> Bathroom Latch</a>
             </li>
             <li>
-              <a href="#product/Door Stopper" ><i class=""></i>Door Stopper</a>
+              <a href="#product/Door Stopper" ng-click="reloadData();"><i class=""></i>Door Stopper</a>
             </li>
             <li>
-              <a href="#product/Locks" ><i class=""></i> Locks</a>
+              <a href="#product/Locks" ng-click="reloadData();"><i class=""></i> Locks</a>
             </li>
             <li>
-              <a href="#product/Door Knocker" ><i class=""></i> Door Knocker</a>
+              <a href="#product/Door Knocker" ng-click="reloadData();"><i class=""></i> Door Knocker</a>
             </li>
             <li>
-              <a href="#product/Door Kit" ><i class=""></i> Door Kit</a>
+              <a href="#product/Door Kit" ng-click="reloadData();"><i class=""></i> Door Kit</a>
             </li>
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <li class="dropdown" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+          <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Cub Board Fitting
           </a>
           <ul class="dropdown-menu dropdown-danger">
             <li>
-              <a href="#product/Cup Handles" ><i class=""></i> Handles</a>
+              <a href="#product/Cup Handles" ng-click="reloadData();"><i class=""></i> Handles</a>
             </li>
             <li>
-              <a href="#product/Cup Khuti" ><i class=""></i> Khuti</a>
+              <a href="#product/Cup Khuti" ng-click="reloadData();"><i class=""></i> Khuti</a>
             </li>
             <li>
-              <a href="#product/Cup Lock" ><i class=""></i> Lock</a>
+              <a href="#product/Cup Lock" ng-click="reloadData();"><i class=""></i> Lock</a>
             </li>
             <li>
-              <a href="#product/Cup Channel" ><i class=""></i> Channel</a>
+              <a href="#product/Cup Channel" ng-click="reloadData();"><i class=""></i> Channel</a>
             </li>
             <li>
-              <a href="#product/Cup Tower Bolt" ><i class=""></i> Tower Bolt</a>
+              <a href="#product/Cup Tower Bolt" ng-click="reloadData();"><i class=""></i> Tower Bolt</a>
             </li>
             <li>
-              <a href="#product/Cup Door Catcher" ><i class=""></i> Door Catcher</a>
+              <a href="#product/Cup Door Catcher" ng-click="reloadData();"><i class=""></i> Door Catcher</a>
             </li>
             <li>
-              <a href="#product/Cup Socket" ><i class=""></i> Socket</a>
+              <a href="#product/Cup Socket" ng-click="reloadData();"><i class=""></i> Socket</a>
             </li>
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <li class="dropdown" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+          <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Glass Fitting
           </a>
           <ul class="dropdown-menu dropdown-danger">
             <li>
-              <a href="#product/Glass Handles" ><i class=""></i> Handles</a>
+              <a href="#product/Glass Handles" ng-click="reloadData();"><i class=""></i> Handles</a>
             </li>
             <li>
-              <a href="#product/Glass Bracket" ><i class=""></i> Glass Bracket</a>
+              <a href="#product/Glass Bracket" ng-click="reloadData();"><i class=""></i> Glass Bracket</a>
             </li>
             <li>
-              <a href="#product/Glass Pivot" ><i class=""></i> Glass Pivot</a>
+              <a href="#product/Glass Pivot" ng-click="reloadData();"><i class=""></i> Glass Pivot</a>
             </li>
             <li>
-              <a href="#product/Glass Stand" ><i class=""></i> Glass Stand</a>
+              <a href="#product/Glass Stand" ng-click="reloadData();"><i class=""></i> Glass Stand</a>
             </li>
             <li>
-              <a href="#product/Glass Corner" ><i class=""></i> Glass Corner</a>
+              <a href="#product/Glass Corner" ng-click="reloadData();"><i class=""></i> Glass Corner</a>
             </li>
             <li>
-              <a href="#product/Khuti" ><i class=""></i> Glass Knob</a>
+              <a href="#product/Khuti" ng-click="reloadData();"><i class=""></i> Glass Knob</a>
             </li>
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <li class="dropdown" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+          <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Furniture
           </a>
           <ul class="dropdown-menu dropdown-danger">
             <li>
-              <a href="#product/Furniture Sofa Leg" ><i class=""></i> Sofa Leg</a>
+              <a href="#product/Furniture Sofa Leg" ng-click="reloadData();"><i class=""></i> Sofa Leg</a>
             </li>
             <li>
-              <a href="#product/Furniture Drawer Fitting" ><i class=""></i> Drawer Fitting</a>
+              <a href="#product/Furniture Drawer Fitting" ng-click="reloadData();"><i class=""></i> Drawer Fitting</a>
             </li>
             <li>
-              <a href="#product/Furniture Cable Manager" ><i class=""></i> Cable Manager</a>
+              <a href="#product/Furniture Cable Manager" ng-click="reloadData();"><i class=""></i> Cable Manager</a>
             </li>
             <li>
-              <a href="#product/Furniture Curten Bracket" ><i class=""></i> Curten Bracket</a>
+              <a href="#product/Furniture Curten Bracket" ng-click="reloadData();"><i class=""></i> Curten Bracket</a>
             </li>
           </ul>
         </li>
@@ -162,7 +172,7 @@
         <li class="userIcon"  id="userIcon">
 
           <a href="javascript:void(0)" style="margin-left :7px;">
-            <i class="fa fa-user"></i>
+            <i class="fa fa-user" ng-class="{'nav-opposite':isHome!=true}"></i>
           </a>
           <div class="userTools" id="userTools" style="display: none;">
             <div class="arrow-up"></div>
@@ -186,17 +196,19 @@
 
         <li>
           <a href="#cart" style="margin-left :7px;" >
-            <div><i class="fa fa-cart-arrow-down"></i></div>
+            <div><i class="fa fa-cart-arrow-down" ng-class="{'nav-opposite':isHome!=true}"></i></div>
           </a>
         </li>
         <li>
-            <span  id="cartValue"></span>
+            <span ng-class="{'nav-opposite':isHome!=true}" id="cartValue"></span>
           </li>
       </ul>
     </div>
     <!-- /.navbar-collapse -->
   </div>
 </nav>
+
+
 
 <div class="container" >
 
@@ -272,7 +284,7 @@
   <!-- Modal ends here -->
 
   <div>
-  <a href="#product"><input class="btn btn-default btn-login" type="button" value="route" ></input></a>
+
 
     <div ng-view></div>
   </div>
@@ -286,16 +298,9 @@
           <nav>
             <ul>
               <li>
-                <a href="#">Home</a></li>
-                <li>
-                  <a href="#">Find offers</a>
-                </li>
-                <li>
-                  <a href="#">Discover Projects</a>
-                </li>
-                <li>
-                  <a href="#">Our Portfolio</a>
-                </li>
+                <a href="#">Home</a>
+              </li>
+
                 <li>
                   <a href="#">About Us</a>
                 </li>
@@ -384,18 +389,24 @@
     </div>
   </footer>
 
+
+
 </body>
 
 <!--   core js files -->
 <script src="assets/js/jquery.min.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.js" type="text/javascript"></script>
 <script src="assets/js/login-register.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap-notify.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="slick/slick.min.js"></script>
 
 <!--  js library for devices recognition -->
 <script type="text/javascript" src="assets/js/modernizr.js"></script>
 
 <!--  script for google maps -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
+<!-- script for image slider-->
 
 <!--   file where we handle all the script from the Gaia - Bootstrap Template -->
 <script type="text/javascript" src="assets/js/gaia.js"></script>
