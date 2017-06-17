@@ -90,7 +90,7 @@ applyCompanyFilter.or = [];
 
 }
 
-if(filters.sizes.length == 0 && filters.price.length != 0){
+if(filters.sizes && filters.sizes.length == 0 && filters.price && filters.price.length != 0){
   for(var j = 0; j < filters.price.length; j++){
     applySizePriceFilter.or = [];
     for(var j = 0; j < filters.price.length; j++){
@@ -122,7 +122,7 @@ if(filters.sizes.length == 0 && filters.price.length != 0){
   }
 
 }else{
-  if(filters.sizes.length != 0 && filters.price.length == 0){
+  if(filters.sizes && filters.sizes.length != 0 && filters.price && filters.price.length == 0){
     applySizePriceFilter.or = [];
     for(var j = 0; j < filters.sizes.length; j++){
       var sizeNode = {};
@@ -139,7 +139,7 @@ if(filters.sizes.length == 0 && filters.price.length != 0){
       applySizePriceFilter.or.push(sizeNode);
     }
   }else{
-    if(filters.sizes.length != 0 && filters.price.length != 0){
+    if(filters.sizes && filters.sizes.length != 0 && filters.price && filters.price.length != 0){
       applySizePriceFilter.or = [];
       for(var m = 0; m < filters.price.length; m++){
         for(var n = 0; n < filters.sizes.length; n++){

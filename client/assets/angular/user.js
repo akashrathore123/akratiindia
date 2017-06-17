@@ -1136,7 +1136,17 @@ function manageCart(){
 if(localStorage.getData('cart') != undefined){
   $scope.items = localStorage.getData('cart');
   $scope.cartCount = $scope.items.length;
+}else{
+  $scope.cartCount = 0;
 }
+  $scope.bag = {};
+  $scope.bag.withoutDiscount = 0;
+
+  $scope.bag.discount = 0;
+  $scope.bag.deliveryCharge = 99;
+  $scope.bag.orderTotal = 0;
+  $scope.bag.VAT = 0;
+
 
 for(i=0; i<$scope.cartCount; i++){
   //console.log("Product"+JSON.stringify($scope.items[i]));
@@ -1196,11 +1206,25 @@ for(i=0; i<$scope.cartCount; i++){
 
     }
   }
+  $scope.bag.withoutDiscount = $scope.bag.withoutDiscount + $scope.items[i].withoutDiscount;
   $scope.items[i].withoutDiscount = convertToRupee($scope.items[i].withoutDiscount);
   $scope.items[i].PPriceTotalAll = convertToRupee(total);
   $scope.cartTotal = $scope.cartTotal + total;
 }
+$scope.bag.discount = $scope.bag.withoutDiscount - $scope.cartTotal;
 $scope.cartRupeeTotal = convertToRupee($scope.cartTotal);
+$scope.bag.VAT = 0.28 * ($scope.bag.withoutDiscount - $scope.bag.discount);
+var vatAmountArray = String($scope.bag.VAT).split('.');
+console.log(parseInt($scope.bag.VAT));
+// if(vatAmountArray[1].length > 0 && parseInt(vatAmountArray[1]) != 0){
+// $scope.bag.VAT = vatAmountArray[0] +'.'+ vatAmountArray[1].substr(0,2);
+// }else{
+//   $scope.bag.VAT = vatAmountArray[0];
+// }
+
+$scope.bag.withoutDiscount = convertToRupee($scope.bag.withoutDiscount);
+$scope.bag.orderTotal = convertToRupee($scope.cartTotal + $scope.bag.deliveryCharge + $scope.bag.VAT);
+$scope.bag.VAT = convertToRupee(parseInt($scope.bag.VAT));
 }
 
 
@@ -1320,7 +1344,39 @@ session = JSON.parse(session);
 }
 
 }
+
+$scope.placeOrder = function(){
+console.log(JSON.stringify($scope.items));
+  $http({
+
+           method : 'POST',
+           url : 'http://localhost:3000/api/Orders/placeOrder',
+           headers: {'Content-Type': 'application/json',
+                      'realm': 'web'},
+           data: $scope.items
+
+
+       }).
+       success(function(data,status,headers,config){
+
+         if(status == 204){
+           $scope.productDetailResponse = "Product not found.";
+         }else{
+         $scope.prodDetailData = data.response;
+         //console.log($scope.prodDetailData);
+            return;
+
+  }
+       })
+  .error(function(data,status,headers,config){
+
+    $scope.productDetailResponse  = data.error.message;
+    return;
+  });
+}
 }]);
+
+
 
 app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
   $rootScope.isHome = true;

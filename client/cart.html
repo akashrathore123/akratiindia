@@ -1,29 +1,30 @@
 
 <div ng-controller="showCartItems" >
-  <div class="checkout">
+  <div class="checkout" ng-show="cartCount > 0">
     <div class="price-details">Price Details</div>
 
     <div class="bag-total"><span>Cart Total</label>
-    <span class="bag-total-value"></span>
+    <span class="bag-total-value">{{bag.withoutDiscount}}</span>
     </div>
 
     <div class="bag-discount"><span>Cart Discount</span>
-    <span class="bag-discount-value"></span>
+    <span class="bag-discount-value">{{bag.discount}}</span>
     </div>
 
-    <div class="bag-vat"><span>VAT</span>
-    <span class="bag-vat-value"></span>
+    <div class="bag-vat"><span>GST</span>
+    <span class="bag-vat-value">{{bag.VAT}}</span>
     </div>
 
-    <div class="delivery"><span>Delivery</span>
-    <span class="delivery-value"></span>
+    <div class="bag-delivery"><span>Delivery</span>
+    <span class="bag-delivery-value">{{bag.deliveryCharge}}</span>
   </div>
 <hr>
     <div class="order-total"><span>Order Total</span>
-    <span class="order-total-value"></span>
+    <span class="order-total-value">Rs. {{bag.orderTotal}}</span>
     </div>
-    <input type="button" class="form-control" value="Place Order"></input>
+    <input type="button" class="form-control" value="Place Order" ng-click="placeOrder();"></input>
   </div>
+
   <div class="cart-container" id="cartContainer" >
 <div class="cart-top">
    <div class="cart-items">My Cart ({{cartCount}} Items)</div>
@@ -33,7 +34,6 @@
      </div>
    </div>
      <div ng-repeat="item in items">
-{{item}}
              <div class="cart-block">
                <div class="cart-right-block">
                <div class="cart-price">

@@ -131,8 +131,10 @@ app.controller('addProduct',['$scope','$http','$window','uploadFile',function($s
        /* Add Images */
        uploadFile.upload($scope.PImage1, product.PCode, $http, $scope);
        uploadFile.upload($scope.PImage2, product.PCode, $http, $scope);
+       if($scope.PImage3){
        uploadFile.upload($scope.PImage3, product.PCode, $http, $scope);
-
+       }
+       uploadFile.upload($scope.PImageSmall, product.PCode, $http, $scope);
        $scope.addError = "Product Added successfully!";
      })
      .error(function(data,status,headers,config){
@@ -231,7 +233,7 @@ var productCode = product.PCode;
       }).
       success(function(data,status,headers,config){
         /* Update Images */
-        
+
         if(status == 204){
           $scope.updateError = "Product not found!";
         }else{

@@ -73,5 +73,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "Order": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

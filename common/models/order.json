@@ -1,0 +1,27 @@
+{
+  "name": "Order",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "OrderId": {
+      "type": "string"
+    },
+    "OrderClientId": {
+      "type": "string"
+    },
+    "OrderTotal": {
+      "type": "string"
+    },
+    "propertyName34": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
