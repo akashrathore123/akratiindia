@@ -2,27 +2,27 @@
 <div ng-controller="showCartItems" >
   <div class="checkout" ng-show="cartCount > 0">
     <div class="price-details">Price Details</div>
-
+    <hr style="margin-top:10px;">
     <div class="bag-total"><span>Cart Total</label>
-    <span class="bag-total-value">{{bag.withoutDiscount}}</span>
+    <span class="bag-total-value">Rs. {{bag.withoutDiscount}}</span>
     </div>
 
-    <div class="bag-discount"><span>Cart Discount</span>
-    <span class="bag-discount-value">{{bag.discount}}</span>
+    <div class="bag-discount" ng-show="bag.discount > 0"><span>Cart Discount</span>
+    <span class="bag-discount-value">Rs. {{bag.discount}}</span>
     </div>
 
     <div class="bag-vat"><span>GST</span>
-    <span class="bag-vat-value">{{bag.VAT}}</span>
+    <span class="bag-vat-value">Rs. {{bag.GST}}</span>
     </div>
 
     <div class="bag-delivery"><span>Delivery</span>
-    <span class="bag-delivery-value">{{bag.deliveryCharge}}</span>
+    <span class="bag-delivery-value">Rs. {{bag.deliveryCharge}}</span>
   </div>
-<hr>
+  <hr style="margin-bottom:10px;">
     <div class="order-total"><span>Order Total</span>
     <span class="order-total-value">Rs. {{bag.orderTotal}}</span>
     </div>
-    <input type="button" class="form-control" value="Place Order" ng-click="placeOrder();"></input>
+    <input type="button" id="order-button" class="form-control" value="Place Order" ng-click="placeOrder();"></input>
   </div>
 
   <div class="cart-container" id="cartContainer" >

@@ -79,5 +79,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "Address": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

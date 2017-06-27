@@ -1,6 +1,9 @@
 var util = require("../util/util");
 var validate = require("../util/validation");
 var uuid = require("uuid");
+var nodemailer = require("nodemailer");
+var ejs = require("ejs");
+var path = require("path");
 module.exports = function(Client) {
 
  /* Register new User */
@@ -66,13 +69,13 @@ Client.findOne({where:{client_email:body.email}},function(err,clientInstance){
     };
 console.log(registerData);
 
-  Client.create(registerData,function(err){
+  Client.create(registerData,function(err,instance){
 
     if(err){
        cb(util.getGenericError("Error", 500, "Internal Server Error."));
        return;
     }else{
-      cb(null, registerData);
+      cb(null, instance);
       return;
     }
 
@@ -141,7 +144,7 @@ console.log("user exist");
             return;
           }
           if(instanceNew){
-            console.log("found again");
+            console.log(JSON.stringify(instanceNew));
             cb(null, instanceNew);
             return;
           }
@@ -158,7 +161,7 @@ console.log("user exist");
 });
 }
 Client.addToCart = function(data, cb){
-console.log('reached');
+
   var realm = data.header("realm");
   var access_code = data.header("access_code");
   if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android")){
@@ -187,7 +190,7 @@ console.log('reached');
 
         }
         if(cart){
-          
+
           cb(null, cart);
           return;
         }
@@ -262,6 +265,54 @@ Client.showCart = function(req,token,cb){
   })
 }
 
+Client.submitQuery = function(req,cb){
+  var realm = req.header("realm");
+  var access_code = req.header("access_code");
+  var data = req.body;
+  var user = data.user;
+  var query = data.query;
+
+  if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android")){
+    cb(util.getGenericError("Error", 405, "Bad Request!"));
+    return;
+  }
+
+  let transporter = nodemailer.createTransport({
+
+    ignoreTLS: true,
+    host: 'allied-up.com',
+    port: 587,
+    secure:false,
+
+  auth: {
+      user: 'info@allied-up.com',
+      pass: 'AUPmail*733'
+  }
+});
+
+
+  ejs.renderFile(path.resolve(__dirname , "../util/userQuery.ejs"), {query:query,name:user.fname+' '+user.lname,mail:user.email,mobile:user.mobile,id:user.id }, function (err, data) {
+    if(err){
+        cb(util.getGenericError("Error",500,"Order Confirmation mail can not be sent."))
+      }else{
+        let mailAkrati = {
+          from: 'Akratiindia Query <info@allied-up.com>', // sender address
+          to: 'info@allied-up.com', // list of receivers
+          subject: 'Akratiindia User Query ', // Subject line
+          html: data // html body
+        };
+        transporter.sendMail(mailAkrati, (error, info) => {
+          if (error) {
+            cb(util.getGenericError("Error",500,"Internal Server Error!"))
+          }else{
+            console.log('Message %s sent: %s', info.messageId, info.response);
+            cb(null,"Query submitted");
+            return;
+          }
+        });
+      }
+    });
+}
 
 /* Remote methods registration */
 Client.remoteMethod('userRegister',{
@@ -310,6 +361,16 @@ Client.remoteMethod('showCart',{
            {arg: 'token', type: 'string', http: { source: 'query' } }],
   returns: {
        arg: 'response', type: 'object'
+    }
+});
+
+Client.remoteMethod('submitQuery',{
+
+  description:"Send query on behalf of user.",
+  http: {path: '/submitQuery', verb: 'post'},
+  accepts: {arg: 'data', type: 'object', http: { source: 'req' } },
+  returns: {
+       arg: 'response', type: 'string'
     }
 });
 };

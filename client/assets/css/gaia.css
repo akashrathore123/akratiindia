@@ -3730,6 +3730,9 @@ body {
 
 
 /* Added CSS */
+.img-circle{
+  border-radius: 0;
+}
 .search-box{
   margin: 10px auto;
   width: 300px;
@@ -3833,6 +3836,11 @@ transition: background .55s ease;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 8px solid #fff;
+}
+.mask{
+  position: absolute;
+  margin-left: -1%;
+  width: 87%;
 }
 
 .mask a:hover{
@@ -4128,8 +4136,9 @@ width: 20%;
 float: right;
 margin-right: 6%;
 margin-top: 1%;
-font-family: initial;
+font-family: sans-serif;
 font-size: small;
+
 }
 /*  Quantity Selector */
 
@@ -4285,6 +4294,9 @@ margin-right: 2%;
 .category-content{
   margin-top: 5%;
 }
+.category-content img:hover{
+  opacity: .8;
+}
 
 .category-content1{
   width: 25%;
@@ -4340,6 +4352,7 @@ margin-right: 2%;
   border-left: 1px solid black;
   padding-left: 7px;
   padding-right: 9px;
+  margin-left: 10px;
 }
 .item-discount{
   display: -webkit-box;
@@ -4388,4 +4401,529 @@ margin-right: 2%;
 }
 .order-total-value{
   float: right;
+}
+#order-button{
+  background: #2cd2b1;
+  color: white;
+  border-radius: 0;
+  padding: 0px;
+  font-size: large;
+  font-family: sans-serif;
+}
+
+
+/* Address css */
+.address-boxx > .icon { height: 100%; position: relative; }
+.address-boxx > .icon > .image { position: relative; z-index: 2; margin: auto; width: 88px; height: 88px; border: 8px solid white; line-height: 88px; border-radius: 50%; background: #63B76C; vertical-align: middle; }
+.address-boxx > .icon:hover > .image { background: #333; }
+.address-boxx > .icon > .image > i { font-size: 36px !important; color: #fff !important; }
+.address-boxx > .icon:hover > .image > i { color: white !important; }
+.address-boxx > .icon > .info { height: 100%;margin-top: -24px; background: rgba(0, 0, 0, 0); border: 1px solid #e0e0e0; padding: 15px 0 10px 0; }
+.address-boxx > .icon:hover > .info {  border-color: #e0e0e0; color: black; }
+.address-boxx > .icon > .info > h3.title { font-family: "Roboto",sans-serif !important; font-size: 16px; color: #222; font-weight: 500; }
+.address-boxx > .icon > .info > p { font-family: "Roboto",sans-serif !important; font-size: 13px; color: #666; line-height: 1.5em; margin: 20px;}
+.address-boxx > .icon:hover > .info > h3.title, .box > .icon:hover > .info > p, .address-boxx > .icon:hover > .info > .more > a { color: #222; }
+.address-boxx > .icon > .info > .more a { font-family: "Roboto",sans-serif !important; font-size: 12px; color: #222; line-height: 12px; text-transform: uppercase; text-decoration: none; }
+.address-boxx > .icon:hover > .info > .more > a { color: #fff; padding: 6px 8px; background-color: #63B76C; }
+.address-boxx .space { height: 30px; }
+.address-boxx{
+  width: 27%;
+  margin-top: 4%;
+  margin-left: 4%;
+  height: 290px;
+
+}
+
+.select-address{
+  font-family: sans-serif;
+  width:74%;
+  margin-left: 4%;
+  margin-top: -250px;
+}
+.select-address-header{
+  font-size: x-large;
+  margin-left: 5%;
+  color: steelblue;
+}
+.showAddress{
+  width: 80%;
+  margin-left: 10%;
+}
+.address-container{
+  margin-top: 160px;
+  margin-bottom: 50px;
+}
+.address-option{
+  display: inline-flex;
+}
+.address-radio{
+  position: absolute;
+  margin-left: 15px;
+}
+.address-info{
+  margin-top: 7%;
+  text-align: left;
+  margin-left: 5%;
+  height: 82%;
+  width: 93%;
+  font-weight: 300;
+}
+.remove-address{
+  width: 50%;
+  float: right;
+  text-align: center;
+  font-weight: 300;
+  font-size: large;
+  padding-left: 4%;
+  padding-top: 3%;
+
+}
+.address-name{
+  font-size: x-large;
+  font-family: sans-serif;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.address-street{
+  padding-bottom: 5px;
+  font-size: initial;
+}
+.address-city,.address-mobile,.address-state{
+  padding-bottom: 5px;
+  font-family: sans-serif;
+  font-size: initial;
+}
+.add-address-option{
+  text-align: center;
+  margin-top: 15%;
+  margin-left: 17%;
+  width: 65%;
+  }
+.add-address-line{
+  font-size: large;
+  font-weight: 500;
+}
+.greenBackground{
+  height: 100%;
+  position: relative;
+  background-color: rgba(0, 128, 0, 0.09);;
+}
+.key-input{
+  margin-left: 30px;
+  margin-top: -10px;
+  position: absolute;
+  background: white;
+  font-weight: 100;
+  height: 20px;
+}
+#value-input{
+  border-radius: 0;
+  margin-bottom: 15px;
+}
+.key-input > label{
+  font-weight: 100;
+}
+#city-value-input{
+  width: 50%;
+  border-radius: 0;
+  margin-bottom: 15px;
+}
+#pincode-value-input{
+  width: 49%;
+  margin-left: 50%;
+  margin-top: -56px;
+  float: right;
+  border-radius: 0;
+}
+.pincode-key-input{
+  margin-left: 54%;
+  margin-top: -66px;
+  position: absolute;
+  background: white;
+  font-weight: 100;
+  height: 20px;
+}
+.pincode-key-input > label{
+  font-weight: 100;
+}
+.state-key-input{
+  margin-left: 30px;
+  position: absolute;
+  background: white;
+  font-weight: 100;
+  height: 20px;
+}
+.state-key-input > label{
+  font-weight: 100;
+}
+
+.confirm-order-details{
+  width: 20%;
+  float: right;
+  margin-right: 40px;
+  margin-top: 50px;
+  font-size: 14px;
+}
+.confirm-order-button{
+  float: right;
+  width: 50%;
+  background: #2cd2b1;
+  margin-top: 3%;
+}
+#confirm-order-button:hover{
+
+  background: #2cd2b1;
+}
+
+#confirm-order-button{
+  color: white;
+  border: none;
+  opacity: inherit;
+}
+button#confirm-order-button::selection{
+  background: #2cd2b1;
+  width: 100%;
+}
+
+.address-bag > hr{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.address-bag-left{
+  float: left;
+
+
+}
+.address-bag-right{
+
+  float: right;
+}
+
+
+/* Order Confirm CSS */
+.order-confirm-content{
+  margin-top: 150px;
+  margin-bottom: 100px;
+  width: 49%;
+  height: 350px;
+  margin-left: 30%;
+  border: 1px solid rgba(128, 128, 128, 0.29);
+  box-shadow: 0px 0px 12px -2px #888888;
+  border-style: inset;
+
+}
+.order-confirm-message{
+  height: 75%;
+  width: 60%;
+}
+.confirm-tag{
+  text-align: center;
+  font-size: 2.5vw;
+  color: rgba(43, 182, 115, 0.81);
+  margin-top: 5%;
+}
+.order-success-icon
+{
+  width: 4.3vw;
+  height: 4.5vw;
+  text-align: center;
+  margin-left: 40%;
+}
+.confirm-order-id{
+  padding-left: 13px;
+  font-size: 1.1vw;
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  margin-top: 10px;
+}
+.order-mail-note{
+  width: 75%;
+  margin-left: 14%;
+  margin-top: 2vw;
+
+}
+.order-note{
+  padding-left: 5px;
+}
+.order-note > p{
+  font-size: 0.9vw;
+  width: 98%;
+  padding-left: 2%;
+}
+.order-confirm-details{
+  float: right;
+  width: 40%;
+  margin-top: -34%;
+  height: 58%;
+  text-align: center;
+  font-size: 1.4vw;
+  border-left: 1px solid rgba(128, 128, 128, 0.3);
+}
+.confirm-order-detail{
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.52);
+}
+
+/* Failed order CSS */
+.failed-order-content{
+  width: 35%;
+  margin-top: 10%;
+  margin-bottom: 5%;
+  height: 23.3vw;
+  margin-left: 32.5%;
+  border: 1px solid rgba(128, 128, 128, 0.29);
+  box-shadow: 0px 0px 12px -2px #888888;
+  font-size: 1.1vw;
+
+}
+.failed-order-message{
+  text-align: center;
+  font-size: 2.5vw;
+  color: rgba(189, 5, 5, 0.83);
+  margin-top: 5%;
+}
+.failed-order-icon{
+  margin-left: 45%;
+  width: 10%;
+  height: 15%;
+}
+.failed-order-reason > p{
+  font-weight: 100;
+  font-size: 1.1vw;
+  text-align: center;
+  margin-top: 5%;
+}
+.order-failed-cart{
+  text-align: center;
+  margin-top: 6%;
+}
+.order-failed-button{
+  font-size: 1.5vw;
+  color: white;
+  border: 0;
+  background: #9dd2d8;
+  outline: none;
+}
+.failed-order-note{
+  margin-top: 9%;
+  margin-left: 2%;
+  font-weight: 400;
+  color: rgb(128, 128, 128);
+}
+
+/*About Us CSS */
+.aboutUs-content{
+  margin-top: 10%;
+  margin-bottom: 5%;
+  width: 60%;
+  margin-left: 19%;
+}
+.aboutUs-content > p{
+  font-size: 1.4vw;
+}
+.aboutUs-header{
+  font-size: 2.1vw;
+  color: #46a4dc;
+  display: inline;
+}
+.about-help{
+  float: right;
+  font-size: 1.5vw;
+  color: #b82b25;
+  width: 30%;
+}
+.about-help-text{
+  float: left;
+}
+.help-button{
+  margin-left: 3%;
+  color: black;
+  height: 2.5vw;
+  font-weight: 300;
+  font-size: 1.1vw;
+  width: 41%;
+  border: 0.1px solid grey;
+  border-radius: 6px;
+  background: white;
+  float: right;
+
+}
+.help-button:focus{
+  outline: none;
+}
+a:focus{
+  outline: none;
+}
+
+/* Contact Us CSS */
+.contactUs-content{
+  margin-top: 10%;
+  margin-bottom: 6%;
+
+}
+.contact-query-block{
+  width: 32%;
+  margin-left: 34%;
+  height: 20vw;
+}
+.contact-query-textarea{
+  height: 70%;
+  margin-top: 2%;
+}
+.contact-query-content{
+  height: 100%;
+  width: 100%;
+  border: 0.5px solid rgba(128, 128, 128, 0.42);
+  border-radius: 5px;
+  outline: none;
+}
+.contact-query-content:focus{
+  border: 1px solid rgba(128, 128, 128, 0.81);
+}
+.contact-query-header{
+  font-size: 1.5vw;
+  color: cadetblue;
+}
+.contact-query-submit-button{
+  width: 100%;
+  color: white;
+  font-size: 1.5vw;
+  border: none;
+  background: rgba(255, 0, 0, 0.46);
+  outline: none;
+}
+.contact-query-submit{
+  float: right;
+  width: 25%;
+  margin-top: 2%;
+  height: 13%;
+}
+.contact-call-block{
+  width: 32%;
+  margin-top: 4%;
+  margin-left: 34%;
+  height: 7vw;
+  background: lavender;
+  border-radius: 6px;
+  border-top: 1px solid rgba(128, 128, 128, 0.3);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+.contact-icon{
+  height: 80%;
+  width: 18%;
+  float: left;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+.contact-details{
+  float: right;
+  margin-top: 5%;
+  margin-right: 39%;
+  font-size: 1.2vw;
+}
+.contact-note{
+  margin-left: 10%;
+  font-weight: 300;
+  font-size: 0.9vw;
+}
+.contact-address-block{
+  width: 32%;
+  font-size: 1.1vw;
+  margin-left: 34%;
+  border-radius: 6px;
+  margin-top: 3%;
+  background: rgba(158, 158, 158, 0.12);
+  background-color: rgba(158, 158, 158, 0.13);
+}
+.contact-address-header{
+  padding-left: 2%;
+  padding-top: 1%;
+  font-weight: 500;
+}
+.contact-address-details{
+  padding-left: 4%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+/* Termms and Conditions CSS */
+.terms-conditions{
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+.terms-conditions-content{
+  width: 80%;
+  margin-left: 10%;
+  font-size: 1.2vw;
+  font-family: sans-serif;
+  font-weight: 300;
+}
+.terms-of-use-heading{
+  text-align: center;
+  font-size: 2.1vw;
+  font-family: sans-serif;
+  color: cadetblue;
+}
+.terms-content{
+  padding-top: 0.5%;
+  font-size: 1.2vw;
+  font-weight: 300;
+  padding-bottom: 2%;
+}
+.terms-heading{
+  font-size: 1.7vw;
+  font-weight: 400;
+}
+
+/* Money Back CSS */
+.moneyBack-content{
+  margin-top: 10%;
+  font-size: 1.4vw;
+  margin-bottom: 10%;
+  width: 80%;
+  margin-left: 10%;
+}
+.moneyBack-heading{
+  color: darkcyan;
+  font-size: 2.1vw;
+}
+.moneyBack-terms{
+  padding-top: 2%;
+  font-weight: 400;
+}
+
+/* Company Policy CSS */
+.companyPolicy-content-data{
+  margin-top: 10%;
+  margin-bottom: 10%;
+  font-size: 1.2vw;
+  width: 80%;
+  margin-left: 10%;
+}
+.companyPolicy-content-heading{
+  text-align: center;
+  font-size: 2.6vw;
+  color: brown;
+}
+.companyPolicy-data{
+  padding-top: 1%;
+
+}
+.companyPolicy-heading{
+  font-size: 1.6vw;
+  padding-top: 2%;
+  padding-bottom: 0.5%;
+}
+
+.work-content{
+  margin-top: 10%;
+  font-size: 1.4vw;
+  margin-bottom: 8%;
+  width: 80%;
+  margin-left: 10%;
+}
+.work-heading{
+  font-size: 1.8vw;
+  padding-bottom: 1%;
+  color: cadetblue;
 }

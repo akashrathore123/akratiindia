@@ -1,0 +1,47 @@
+{
+  "name": "Address",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "City": {
+      "type": "string",
+      "required": true
+    },
+    "PinCode": {
+      "type": "string",
+      "required": true
+    },
+    "State": {
+      "type": "string",
+      "required": true
+    },
+    "Mobile": {
+      "type": "string",
+      "required": true
+    },
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Street": {
+      "type": "string",
+      "required": true
+    },
+    "Locality": {
+      "type": "string",
+      "required": true
+    },
+    "PClientId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

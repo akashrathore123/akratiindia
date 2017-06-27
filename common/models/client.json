@@ -29,9 +29,6 @@
       "type": "string",
       "required": true
     },
-    "client_address": {
-      "type": "string"
-    },
     "client_city": {
       "type": "string"
     },
@@ -49,6 +46,11 @@
     "CartItems": {
       "type": "hasMany",
       "model": "CartItem",
+      "foreignKey": "PClientId"
+    },
+    "Address": {
+      "type": "hasMany",
+      "model": "Address",
       "foreignKey": "PClientId"
     }
   },

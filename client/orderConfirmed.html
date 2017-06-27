@@ -1,0 +1,24 @@
+
+  <div class="order-confirm-content" ng-controller="confirmedOrder">
+<div class="order-confirm-message">
+    <div class="confirm-tag">Order Successful</div>
+    <div class="order-success-icon"><img src="assets/img/orderSuccess.png" width = "100%" height = "92%"></div>
+    <div class="confirm-order-id">Order ID: {{confirmedOrder.OrderId}}</div>
+
+    <div class="order-mail-note">
+      Your order is currently being processed. You will receive an order confirmation email shortly.
+    </div>
+
+  </div>
+  <div class="order-confirm-details">
+    <span class="confirm-order-detail">Order Details</span>
+    <div class="confirm-order-items" style="margin-top:10px;">Items:{{confirmedOrder.OrderProducts.length}}</div>
+    <div class="confirm-order-amount" style="margin-top:10px;">Total: Rs. {{confirmedOrder.OrderTotal}}</div>
+
+  </div>
+  <div class="order-note">
+    <p><b>Note:</b> We do not demand your banking and credit card details verbally or telephonically. Please do not divulge your details to fraudsters and imposters falsely claiming to be calling on Akratiindia's behalf.
+    </p>
+  </div>
+
+  </div>

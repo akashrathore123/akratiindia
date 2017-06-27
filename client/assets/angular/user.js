@@ -13,6 +13,33 @@ app.config(function($routeProvider){
   .when('/cart',{
     templateUrl : 'cart.html'
   })
+  .when('/address/:token',{
+    templateUrl : 'address.html'
+  })
+  .when('/orderConfirmed/:orderId',{
+    templateUrl : 'orderConfirmed.html'
+  })
+  .when('/orderFailed',{
+    templateUrl : 'orderFailed.html'
+  })
+  .when('/aboutUs',{
+    templateUrl : 'aboutUs.html'
+  })
+  .when('/contactUs',{
+    templateUrl : 'contactUs.html'
+  })
+  .when('/termsConditions',{
+    templateUrl : 'termsAndCond.html'
+  })
+  .when('/moneyBack',{
+    templateUrl : 'moneyBack.html'
+  })
+  .when('/companyPolicy',{
+    templateUrl : 'companyPolicy.html'
+  })
+  .when('/howWeWork',{
+    templateUrl : 'howWeWork.html'
+  })
   .when('/error500',{
     templateUrl : 'error500.html'
   })
@@ -36,6 +63,40 @@ app.directive('myEnter', function () {
 });
 
 /* Factory methods */
+
+app.factory('notify',function(){
+  var notify = {};
+  notify.showNotification = function(msg,typ){
+    $.notify({
+      // options
+      message: msg
+    },{
+      // settings
+      type: typ,
+      newest_on_top: false,
+       placement: {
+           from: "top",
+             align: "right"
+            },
+       offset: {
+                x: 100,
+                  y: 200
+                },
+        spacing: 10,
+        z_index: 103,
+        delay: 600,
+        timer: 1000,
+        url_target: '_blank',
+        mouse_over: null,
+        animate: {
+            enter: 'animated fadeInDown',
+            exit: 'animated fadeOutUp'
+             }
+    });
+  }
+
+  return notify;
+});
 
 app.factory('localStorage', function($localStorage){
 
@@ -64,6 +125,9 @@ app.factory('localStorage', function($localStorage){
       keyObj.push(data);
       $localStorage.Akratiindia.User = keyObj;
     }
+    if(key == 'order'){
+      $localStorage.Akratiindia.order = data;
+    }
 
 
 
@@ -89,6 +153,11 @@ app.factory('localStorage', function($localStorage){
  if(key == 'User'){
    if(dataObj.User != undefined){
      return dataObj.User;
+   }
+ }
+ if(key == 'order'){
+   if(dataObj.order != undefined){
+     return dataObj.order;
    }
  }
 
@@ -125,6 +194,11 @@ app.factory('localStorage', function($localStorage){
         $localStorage.Akratiindia.User = items;
       }
     }
+    if(key == 'order'){
+      if(dataObj.order != undefined){
+         dataObj.order = undefined;
+      }
+    }
 
 
   }
@@ -156,12 +230,49 @@ app.service('updateCart', function(localStorage){
 }
 });
 
+app.service('spinner', function(){
+   this.startSpin = function(id){
+     $('#body').css({ 'opacity' : 0.7 });
+     var position = $(window).scrollTop()+400+'px';
+     var opts = {
+  lines: 13 // The number of lines to draw
+, length: 0 // The length of each line
+, width: 8 // The line thickness
+, radius: 28 // The radius of the inner circle
+, scale: 1 // Scales overall size of the spinner
+, corners: 1 // Corner roundness (0..1)
+, color: '#000' // #rgb or #rrggbb or array of colors
+, opacity: 0 // Opacity of the lines
+, rotate: 30 // The rotation offset
+, direction: 1 // 1: clockwise, -1: counterclockwise
+, speed: 1.2 // Rounds per second
+, trail: 74 // Afterglow percentage
+, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+, zIndex: 2e9 // The z-index (defaults to 2000000000)
+, className: 'spinner' // The CSS class to assign to the spinner
+, top: position // Top position relative to parent
+, left: '50%' // Left position relative to parent
+, shadow: false // Whether to render a shadow
+, hwaccel: false // Whether to use hardware acceleration
+, position: 'absolute' // Element positioning
+}
+
+var target = document.getElementById(id);
+var spinner = new Spinner(opts).spin(target);
+return spinner;
+}
+this.stopSpin = function(spinner){
+$('#body').css({ 'opacity' : 1 });
+
+spinner.stop();
+}
+});
 
 /* Controllers for app 'main' */
-app.controller('registerAction',['$scope','$http','$window','localStorage',function($scope,$http,$window,localStorage){
+app.controller('registerAction',['$scope','$http','$window','localStorage','spinner',function($scope,$http,$window,localStorage,spinner){
 $http.defaults.headers.common = {'access_code':'onyourown'};
   $scope.userRegister = function(){
-
+ var spinElement = spinner.startSpin('body');
   document.getElementById("registerResponse").innerHTML = "";
 
   var user =JSON.stringify($scope.register);
@@ -182,14 +293,14 @@ if(password1 == password2){
            success(function(data,status,headers,config){
 
                 //console.log(data.response.client_token);
-                var Akratiindia = '{\"token\" :\"'+ data.response.client_token+'\", \"mobile\" : \"'+data.response.client_mobile+'\", \"email\" :\"'+ data.response.client_email+'\" , \"fname\" :\"'+ data.response.client_fname+'\", \"lname\" :\"'+ data.response.client_lname+'\"}';
+                var Akratiindia = '{\"token\" :\"'+ data.response.client_token+'\", \"id\" :\"'+ data.response.id +'\",\"mobile\" : \"'+data.response.client_mobile+'\", \"email\" :\"'+ data.response.client_email+'\" , \"fname\" :\"'+ data.response.client_fname+'\", \"lname\" :\"'+ data.response.client_lname+'\"}';
                 localStorage.saveData('User', Akratiindia);
               //  console.log('cookies'+Akratiindia);
                 document.cookie = Akratiindia;
 
               //  $document.cookie = "token="+data.response.client_token;
 
-
+                spinner.stopSpin(spinElement);
                 $window.location = "index.html";
 
 
@@ -198,7 +309,7 @@ if(password1 == password2){
 
            })
            .error(function(data,status,headers,config){
-
+             spinner.stopSpin(spinElement);
         document.getElementById("registerButton").disabled = false;
         //console.log(data);
         document.getElementById("registerResponse").innerHTML = "<span style='color:red'>*"+data.error.message+"</span>";
@@ -206,14 +317,14 @@ if(password1 == password2){
 }else{
 
         document.getElementById("registerResponse").innerHTML = "<span style='color:red'>*Password not matched</span>";
-
+        spinner.stopSpin(spinElement);
 }
   }
 
 }]);
 
 
-app.controller('loginAction',['$scope', '$http', '$window', 'localStorage', function($scope,$http,$window,localStorage){
+app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spinner', function($scope,$http,$window,localStorage,spinner){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   $scope.userLogin = function(){
       var login =JSON.stringify($scope.login);
@@ -221,10 +332,11 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage', func
       if(cart == undefined){
         cart = {};
       }
+
       // console.log("cart---"+JSON.stringify(cart));
       // console.log(JSON.stringify('{"data":[ {"user" :['+login + '], "cart" :'+ JSON.stringify(cart)+' }]}'));
       var sendData = ' {"user" :'+login + ', "cart" :'+ angular.toJson(cart)+'}';
-
+      var spinElement = spinner.startSpin('body');
       $http({
 
 
@@ -237,23 +349,27 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage', func
            success(function(data,status,headers,config){
              var loginData = data.response[0];
 
-             var User = '{\"token\" :\"'+ loginData.client_token+'\", \"mobile\" : \"'+loginData.client_mobile+'\", \"email\" :\"'+ loginData.client_email+'\" , \"fname\" :\"'+ loginData.client_fname+'\", \"lname\" :\"'+ loginData.client_lname+'\"}';
+             var User = '{\"token\" :\"'+ loginData.client_token+'\", \"id\" :\"'+ loginData.id +'\",\"mobile\" : \"'+loginData.client_mobile+'\", \"email\" :\"'+ loginData.client_email+'\" , \"fname\" :\"'+ loginData.client_fname+'\", \"lname\" :\"'+ loginData.client_lname+'\"}';
              var cartData = loginData.CartItems;
              localStorage.deleteAll('cart');
              localStorage.deleteAll('User')
              for(i=0; i < cartData.length; i++){
                localStorage.saveData('cart', cartData[i]);
+
              }
             // document.getElementById("loginResponse").innerHTML = data.error.message;
              localStorage.saveData('User', User);
              setTimeout(function(){
                $window.location = "index.html";
              }, 300);
+
+             spinner.stopSpin(spinElement);
                 return;
 
            })
       .error(function(data,status,headers,config){
         document.getElementById("loginResponse").innerHTML = "<span style='color:red'>"+data.error.message;
+        spinner.stopSpin(spinElement);
         return;
     });
 
@@ -305,9 +421,8 @@ setTimeout(function(){
 
 
 //Controllers for Product PAGE
-app.controller('showProducts',['$scope','$http','$window','$location','$rootScope','$routeParams','$route','localStorage','updateCart',function($scope,$http,$window,$location,$rootScope,$routeParams,$route,localStorage,updateCart){
+app.controller('showProducts',['$scope','$http','$window','$location','$rootScope','$routeParams','$route','localStorage','updateCart','notify','spinner',function($scope,$http,$window,$location,$rootScope,$routeParams,$route,localStorage,updateCart,notify,spinner){
 $rootScope.isHome = false;
-
 $scope.searchPressed = function(){
 $window.location = "#product/search="+$scope.searchQuery;
 $scope.searchQuery = "";
@@ -342,6 +457,7 @@ $scope.reloadData = function(){
   $scope.filters.searchQuery = false;
 
   $scope.getProducts = function(){
+  var spinElement = spinner.startSpin('body');
   //var category = decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent('category').replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
   var response;
   // if($scope.filterRequest == false){
@@ -512,11 +628,12 @@ $http({
           skip = 0;
         }
      }
+          spinner.stopSpin(spinElement);
           return;
 
      })
 .error(function(data,status,headers,config){
-
+  spinner.stopSpin(spinElement);
   document.getElementById("loginResponse").innerHTML = "<span style='color:red'>"+data.error.message;
   return;
 });
@@ -782,53 +899,14 @@ session = JSON.parse(session);
         localStorage.saveData('cart', data.response);
         updateCart.update();
         document.getElementById("addCartError").innerHTML = "Product added to cart Successfully.";
-        $.notify({
-          // options
-          message: 'Product '+cartItem.PProduct.PName+' added to the cart.'
-        },{
-          // settings
-          type: "success",
-          newest_on_top: false,
-           placement: {
-               from: "top",
-               align: "right"
-                },
+        notify.showNotification('Product '+cartItem.PProduct.PName+' added to the cart.','success');
+        $('#myModal').modal('toggle');
 
-            animate: {
-                enter: 'animated fadeInDown',
-                exit: 'animated fadeOutUp'
-                 }
-        });
 
        })
   .error(function(data,status,headers,config){
     document.getElementById("addCartError").innerHTML = "<span style='color:red'>"+"Error in adding to cart.</span>";
-    $.notify({
-      // options
-      message: 'Issue in removing product '+cartItem.PProduct.PName+' from the cart.'
-    },{
-      // settings
-      type: "danger",
-      newest_on_top: false,
-       placement: {
-           from: "top",
-           align: "right"
-            },
-       offset: {
-                x: 100,
-                  y: 200
-                },
-        spacing: 10,
-        z_index: 103,
-        delay: 900,
-        timer: 1000,
-        url_target: '_blank',
-        mouse_over: null,
-        animate: {
-            enter: 'animated fadeInDown',
-            exit: 'animated fadeOutUp'
-             }
-    });
+    notify.showNotification('Issue in adding product '+cartItem.PProduct.PName+' to the cart.','danger')
     return;
 });
 
@@ -836,35 +914,18 @@ session = JSON.parse(session);
   localStorage.saveData('cart', cartItem);
   updateCart.update();
   document.getElementById("addCartError").innerHTML = "Product added to cart Successfully.";
-  $.notify({
-    // options
-    message: 'Product '+cartItem.PProduct.PName+' added to the cart.'
-  },{
-    // settings
-    type: "success",
-    newest_on_top: false,
-     placement: {
-         from: "top",
-         align: "right"
-          },
+  notify.showNotification('Product '+cartItem.PProduct.PName+' added to the cart.','success');
+  $('#myModal').modal('toggle');
 
-      animate: {
-          enter: 'animated fadeInDown',
-          exit: 'animated fadeOutUp'
-           }
-  });
-
-}
-
-
+  }
 }
 }]);
 
-app.controller('productDetails',['$scope','$http','$window','$location','$routeParams','$rootScope','localStorage','updateCart',function($scope,$http,$window,$location,$routeParams,$rootScope,localStorage,updateCart){
+app.controller('productDetails',['$scope','$http','$window','$location','$routeParams','$rootScope','localStorage','updateCart','notify','spinner',function($scope,$http,$window,$location,$routeParams,$rootScope,localStorage,updateCart,notify,spinner){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   updateCart.update();
   $rootScope.isHome = false;
-
+  var spinElement = spinner.startSpin('body');
   var code = $routeParams.code; //decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent('id').replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 
 $http({
@@ -882,13 +943,14 @@ $http({
          $scope.productDetailResponse = "Product not found.";
        }else{
        $scope.prodDetailData = data.response;
+       spinner.stopSpin(spinElement);
        //console.log($scope.prodDetailData);
           return;
 
 }
      })
 .error(function(data,status,headers,config){
-
+  spinner.stopSpin(spinElement);
   $scope.productDetailResponse  = data.error.message;
   return;
 });
@@ -978,54 +1040,12 @@ session = JSON.parse(session);
         localStorage.saveData('cart', data.response);
         updateCart.update();
         document.getElementById("prodDetailError").innerHTML = "Product added to cart Successfully.";
-        $.notify({
-          // options
-          message: 'Product '+cartItem.PProduct.PName+' added to the cart.'
-        },{
-          // settings
-          type: "success",
-          newest_on_top: false,
-           placement: {
-               from: "top",
-               align: "right"
-                },
-
-            animate: {
-                enter: 'animated fadeInDown',
-                exit: 'animated fadeOutUp'
-                 }
-        });
-
+        notify.showNotification('Product '+cartItem.PProduct.PName+' added to the cart.','success');
 
        })
   .error(function(data,status,headers,config){
     document.getElementById("prodDetailError").innerHTML = "<span style='color:red'>"+"Error in adding to cart.</span>";
-    $.notify({
-      // options
-      message: 'Issue in removing product '+cartItem.PProduct.PName+' from the cart.'
-    },{
-      // settings
-      type: "danger",
-      newest_on_top: false,
-       placement: {
-           from: "top",
-           align: "right"
-            },
-       offset: {
-                x: 100,
-                  y: 200
-                },
-        spacing: 10,
-        z_index: 103,
-        delay: 900,
-        timer: 1000,
-        url_target: '_blank',
-        mouse_over: null,
-        animate: {
-            enter: 'animated fadeInDown',
-            exit: 'animated fadeOutUp'
-             }
-    });
+    notify.showNotification('Issue in adding product '+cartItem.PProduct.PName+' to the cart.','danger');
     return;
 });
 
@@ -1033,27 +1053,9 @@ session = JSON.parse(session);
   localStorage.saveData('cart', cartItem);
   updateCart.update();
   document.getElementById("prodDetailError").innerHTML = "Product added to cart Successfully.";
-  $.notify({
-    // options
-    message: 'Product '+cartItem.PProduct.PName+' added to the cart.'
-  },{
-    // settings
-    type: "success",
-    newest_on_top: false,
-     placement: {
-         from: "top",
-         align: "right"
-          },
+  notify.showNotification('Product '+cartItem.PProduct.PName+' added to the cart.','success');
 
-      animate: {
-          enter: 'animated fadeInDown',
-          exit: 'animated fadeOutUp'
-           }
-  });
-
-}
-  //console.log(localStorage.getData('cart'));
-
+  }
 
 }
 }]);
@@ -1079,13 +1081,15 @@ function getCookie(cname) {
 
 /* cart controllers */
 
-app.controller('showCartItems',['$http','$scope','$window','localStorage','$rootScope','updateCart', function($http, $scope, $window, localStorage,$rootScope, updateCart){
+app.controller('showCartItems',['$http','$scope','$window','localStorage','$rootScope','updateCart','notify','spinner', function($http, $scope, $window, localStorage,$rootScope, updateCart,notify,spinner){
 //console.log("into cart");
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
 
+
 $scope.cartTotal = 0;
 $scope.cartCount = 0;
+var spinElement = spinner.startSpin('body');
 var session = localStorage.getData('User');
 if(session){
   session = JSON.parse(session);
@@ -1109,13 +1113,13 @@ $http({
     }
     updateCart.update();
     manageCart();
-
+    spinner.stopSpin(spinElement);
     //  document.getElementById("prodDetailError").innerHTML = "Product added to cart Successfully.";
 
 
      })
 .error(function(data,status,headers,config){
-  alert("error");
+    spinner.stopSpin(spinElement);
   //document.getElementById("prodDetailError").innerHTML = "<span style='color:red'>"+"Error in adding to cart.</span>";
   return;
 });
@@ -1123,7 +1127,7 @@ $http({
 }else{
   updateCart.update();
   manageCart();
-
+  spinner.stopSpin(spinElement);
 }
 
 
@@ -1213,18 +1217,11 @@ for(i=0; i<$scope.cartCount; i++){
 }
 $scope.bag.discount = $scope.bag.withoutDiscount - $scope.cartTotal;
 $scope.cartRupeeTotal = convertToRupee($scope.cartTotal);
-$scope.bag.VAT = 0.28 * ($scope.bag.withoutDiscount - $scope.bag.discount);
-var vatAmountArray = String($scope.bag.VAT).split('.');
-console.log(parseInt($scope.bag.VAT));
-// if(vatAmountArray[1].length > 0 && parseInt(vatAmountArray[1]) != 0){
-// $scope.bag.VAT = vatAmountArray[0] +'.'+ vatAmountArray[1].substr(0,2);
-// }else{
-//   $scope.bag.VAT = vatAmountArray[0];
-// }
+$scope.bag.GST = 0.28 * ($scope.bag.withoutDiscount - $scope.bag.discount);
 
 $scope.bag.withoutDiscount = convertToRupee($scope.bag.withoutDiscount);
-$scope.bag.orderTotal = convertToRupee($scope.cartTotal + $scope.bag.deliveryCharge + $scope.bag.VAT);
-$scope.bag.VAT = convertToRupee(parseInt($scope.bag.VAT));
+$scope.bag.orderTotal = convertToRupee(parseInt($scope.cartTotal + $scope.bag.deliveryCharge + $scope.bag.GST));
+$scope.bag.GST = convertToRupee(parseInt($scope.bag.GST));
 }
 
 
@@ -1249,138 +1246,342 @@ session = JSON.parse(session);
            data : item
        }).
        success(function(data,status,headers,config){
-        $.notify({
-        	// options
-        	message: 'Product '+item.PProduct.PName+' Removed from the cart.'
-        },{
-        	// settings
-          type: "success",
-          newest_on_top: false,
-	         placement: {
-		           from: "top",
-		           align: "right"
-	              },
-           offset: {
-		                x: 100,
-		                y: 200
-	                  },
-	          spacing: 10,
-	          z_index: 103,
-	          delay: 1000,
-	          timer: 1000,
-	          url_target: '_blank',
-	          mouse_over: null,
-	          animate: {
-		            enter: 'animated fadeInDown',
-		            exit: 'animated fadeOutUp'
-	               }
-        });
-   localStorage.deleteData('cart', item);
-   $scope.items = localStorage.getData('cart');
-   manageCart();
-   updateCart.update();
+        notify.showNotification('Product '+item.PProduct.PName+' Removed from the cart.','success');
+
+        localStorage.deleteData('cart', item);
+        $scope.items = localStorage.getData('cart');
+        manageCart();
+        updateCart.update();
        })
   .error(function(data,status,headers,config){
-    $.notify({
-      // options
-      message: 'Issue in removing product '+item.PProduct.PName+' from the cart.'
-    },{
-      // settings
-      type: "danger",
-      newest_on_top: false,
-       placement: {
-           from: "top",
-           align: "right"
-            },
-       offset: {
-                x: 100,
-                  y: 200
-                },
-        spacing: 10,
-        z_index: 103,
-        delay: 900,
-        timer: 1000,
-        url_target: '_blank',
-        mouse_over: null,
-        animate: {
-            enter: 'animated fadeInDown',
-            exit: 'animated fadeOutUp'
-             }
-    });
+    notify.showNotification('Issue in removing product '+item.PProduct.PName+' from the cart.','danger');
     return;
 });
 
 }else{
-  $.notify({
-    // options
-    message: 'Product '+item.PProduct.PName+' Removed from the cart.'
-  },{
-    // settings
-    type: "success",
-    newest_on_top: false,
-     placement: {
-         from: "top",
-           align: "right"
-          },
-     offset: {
-              x: 100,
-                y: 200
-              },
-      spacing: 10,
-      z_index: 103,
-      delay: 900,
-      timer: 1000,
-      url_target: '_blank',
-      mouse_over: null,
-      animate: {
-          enter: 'animated fadeInDown',
-          exit: 'animated fadeOutUp'
-           }
-  });
+
   localStorage.deleteData('cart', item);
   $scope.items = localStorage.getData('cart');
   manageCart();
   updateCart.update();
+  notify.showNotification('Product '+item.PProduct.PName+' Removed from the cart.','success');
 }
 
 }
 
 $scope.placeOrder = function(){
-console.log(JSON.stringify($scope.items));
-  $http({
 
-           method : 'POST',
-           url : 'http://localhost:3000/api/Orders/placeOrder',
-           headers: {'Content-Type': 'application/json',
-                      'realm': 'web'},
-           data: $scope.items
+  var session = localStorage.getData('User');
+
+  if(session){
 
 
-       }).
-       success(function(data,status,headers,config){
+    session = JSON.parse(session);
+    var orderDetails = {};
+    orderDetails.withoutDiscount = $scope.bag.withoutDiscount;
+    orderDetails.discount = $scope.bag.discount;
+    orderDetails.deliveryCharge = $scope.bag.deliveryCharge;
+    orderDetails.orderTotal = $scope.bag.orderTotal;
+    orderDetails.GST = $scope.bag.GST;
+    orderDetails.buyerId = session.token;
+    orderDetails.orderAddress = {};
+    var orderItems = [];
+    for(var i = 0; i < $scope.items.length; i++){
+      orderItems.push($scope.items[i]);
 
-         if(status == 204){
-           $scope.productDetailResponse = "Product not found.";
-         }else{
-         $scope.prodDetailData = data.response;
-         //console.log($scope.prodDetailData);
-            return;
+    }
+    var user = {};
+    user.token = session.token;
+    user.email = session.email;
+    user.fname = session.fname;
+    user.lname = session.lname;
+    user.mobile = session.mobile;
 
-  }
-       })
-  .error(function(data,status,headers,config){
-
-    $scope.productDetailResponse  = data.error.message;
+    console.log(JSON.stringify(orderDetails));
+    var requestData = {};
+    requestData.orderItems = orderItems;
+    requestData.orderDetails = orderDetails;
+    requestData.user = user;
+    requestData.orderAddress = {};//"{\"orderItems\":"+JSON.stringify(orderItems)+", \"orderDetails\":"+JSON.stringify(orderDetails)+",\"user\":"+JSON.stringify(user)+"}";
+    localStorage.saveData('order',requestData);
+    $window.location = "#address/"+user.token;
     return;
-  });
+
+}else{
+
+  $('#loginModal').modal('show');
+
+}
+
+
 }
 }]);
 
+app.controller('showAddress',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner){
+//console.log("into cart");
+$http.defaults.headers.common = {'access_code':'onyourown'};
+$rootScope.isHome = false;
+
+$scope.getAddresses = function(){
+var spinElement = spinner.startSpin('body');
+$scope.Addresses = [];
+var session = localStorage.getData('User');
+console.log(session);
 
 
-app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+if(session && localStorage.getData('order')){
+  var order = localStorage.getData('order');
+  order = angular.fromJson(order);
+  console.log(order);
+  $scope.AddressBag = {};
+  $scope.AddressBag.count = order.orderItems.length;
+  $scope.AddressBag.totalAmount = order.orderDetails.withoutDiscount;
+  $scope.AddressBag.discount = order.orderDetails.discount;
+  $scope.AddressBag.deliveryCharge = order.orderDetails.deliveryCharge;
+  $scope.AddressBag.totalPayable = order.orderDetails.orderTotal;
+  var totalArray = order.orderDetails.withoutDiscount.split(",");
+  var totalAmount = 0;
+  for(var i = 0; i < totalArray.length; i++){
+    totalAmount += totalArray[i];
+  }
+  totalAmount = parseInt(totalAmount);
+  var totalGST = order.orderDetails.GST.split(",");
+  var totalGSTAmount = 0;
+  for(var i = 0; i < totalArray.length; i++){
+    totalGSTAmount += totalGST[i];
+  }
+  totalGSTAmount = parseInt(totalGSTAmount);
+  $scope.AddressBag.totalAmount = convertToRupee(totalAmount + totalGSTAmount);
+
+  var token = $routeParams.token;
+  $http({
+
+           method : 'GET',
+           url : 'http://localhost:3000/api/Addresses/getAddresses',
+           headers: {'Content-Type': 'application/json',
+                      'realm': 'web',
+                      'PClientId':token},
+
+       }).
+       success(function(data,status,headers,config){
+          $scope.Addresses = data.response.Addresses;
+          for(var i = 0; i < $scope.Addresses.length; i++){
+
+            $scope.Addresses[i].selected = false;
+          }
+          if($scope.Addresses[0]){
+            $scope.Addresses[0].selected = $scope.Addresses[0].id;
+            $localStorage.orderAddress = $scope.Addresses[0];
+            console.log(JSON.stringify($localStorage.orderAddress));
+          }
+          spinner.stopSpin(spinElement);
+
+            return;
+
+
+       })
+  .error(function(data,status,headers,config){
+
+    spinner.stopSpin(spinElement);
+    return;
+  });
+
+
+}else{
+  spinner.stopSpin(spinElement);
+  $window.location = "/";
+}
+}
+
+$scope.getAddresses();
+
+$scope.changeBackground = function(Address){
+for(var i=0;i < $scope.Addresses.length; i++){
+  if($scope.Addresses[i] != Address){
+    $scope.Addresses[i].selected = false;
+  }else{
+    $localStorage.orderAddress = $scope.Addresses[i];
+  }
+}
+}
+
+$scope.removeAddress = function(addressId){
+  var spinElement = spinner.startSpin('body');
+  $http({
+
+           method : 'DELETE',
+           url : 'http://localhost:3000/api/Addresses/removeAddress',
+           headers: {'Content-Type': 'application/json',
+                      'realm': 'web',
+                      'addressId':addressId},
+
+       }).
+       success(function(data,status,headers,config){
+         console.log(JSON.stringify(data));
+         spinner.stopSpin(spinElement);
+         $scope.getAddresses();
+       })
+       .error(function(data,status,headers,config){
+         console.log(JSON.stringify(data));
+         spinner.stopSpin(spinElement);
+         notify.showNotification('Address could not be removed at now.','danger');
+
+         return;
+  });
+
+}
+
+$scope.showAddressModal = function(){
+  $('#addAddressModal').modal('show');
+}
+
+$scope.saveAddress = function(){
+  var session = localStorage.getData('User');
+  if(session){
+    var spinElement = spinner.startSpin('body');
+    session = JSON.parse(session);
+    console.log(session.token);
+    $scope.newAdd.PClientId = session.token;
+    var requestData = $scope.newAdd;
+    console.log(JSON.stringify(requestData));
+  $http({
+
+           method : 'POST',
+           url : 'http://localhost:3000/api/Addresses/saveAddress',
+           headers: {'Content-Type': 'application/json',
+                      'realm': 'web'},
+           data: requestData
+
+       }).
+       success(function(data,status,headers,config){
+         console.log(JSON.stringify(data));
+         $scope.newAdd = {};
+         $scope.getAddresses();
+         $('#addAddressModal').modal('toggle');
+         spinner.stopSpin(spinElement);
+         notify.showNotification('Address added.','success');
+
+       })
+       .error(function(data,status,headers,config){
+         console.log(JSON.stringify(data));
+         spinner.stopSpin(spinElement);
+         notify.showNotification('Address could not be added.','danger');
+         return;
+    });
+  }else{
+    notify.showNotification('Address could not be added.','danger');
+
+  }
+}
+
+$scope.proceedOrder = function(){
+  var session = localStorage.getData('User');
+  var spinElement = spinner.startSpin('body');
+  document.getElementById("confirm-order-button").disabled = true;
+  if(session && $localStorage.orderAddress && localStorage.getData('order')){
+    session = JSON.parse(session);
+    var order = localStorage.getData('order');
+    console.log(JSON.stringify(order));
+    order = angular.fromJson(order);
+    order.orderAddress = $localStorage.orderAddress;
+
+    $http({
+
+             method : 'POST',
+             url : 'http://localhost:3000/api/Orders/placeOrder',
+             headers: {'Content-Type': 'application/json',
+                        'realm': 'web'},
+             data: order
+           }).
+         success(function(data,status,headers,config){
+                var order = data.response;
+
+                console.log(JSON.stringify(order));
+               $http({
+
+                        method : 'DELETE',
+                        url : 'http://localhost:3000/api/CartItems/deleteCart',
+                        headers: {'Content-Type': 'application/json',
+                                   'realm': 'web',
+                                   'PClientId':session.id}
+                      }).
+                    success(function(data,status,headers,config){
+                      localStorage.deleteAll('cart');
+                      localStorage.deleteData('order')
+                      $localStorage.orderAddress = undefined;
+                      updateCart.update();
+                      spinner.stopSpin(spinElement);
+                      $window.location = "#orderConfirmed/"+order.OrderId;
+
+                    })
+                    .error(function(data,status,headers,config){
+                      document.getElementById("confirm-order-button").disabled = true;
+                      spinner.stopSpin(spinElement);
+                      $window.location = "#error500";
+
+                    });
+
+              return;
+
+
+         })
+    .error(function(data,status,headers,config){
+      spinner.stopSpin(spinElement);
+      $window.location = "#orderFailed";
+      return;
+    });
+  }else{
+    $('#loginModal').modal('show');
+  }
+
+}
+
+}]);
+
+app.controller('confirmedOrder',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner){
+//console.log("into cart");
+$http.defaults.headers.common = {'access_code':'onyourown'};
+$rootScope.isHome = false;
+var orderId = $routeParams.orderId;
+var session = localStorage.getData('User');
+var spinElement = spinner.startSpin('body');
+if(session && orderId){
+  session = JSON.parse(session);
+  $http({
+
+           method : 'get',
+           url : 'http://localhost:3000/api/Orders/getOrder',
+           headers: {'Content-Type': 'application/json',
+                      'realm': 'web',
+                      'OrderId':orderId,
+                      'PClientId':session.token}
+         }).
+       success(function(data,status,headers,config){
+         if(status == "204"){
+           spinner.stopSpin(spinElement);
+            $window.location = "#cart";
+         }
+         spinner.stopSpin(spinElement);
+         $scope.confirmedOrder = data.response;
+       })
+       .error(function(data,status,headers,config){
+         $window.location = "#error500";
+         spinner.stopSpin(spinElement);
+       });
+
+
+}else{
+  spinner.stopSpin(spinElement);
+  $window.location = "#cart";
+}
+
+
+}]);
+
+app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage','updateCart','spinner', function($http, $scope, $window, $rootScope, localStorage, updateCart,spinner){
   $rootScope.isHome = true;
   $scope.tempData  = '';
+  var spinElement = spinner.startSpin('body');
   $http({
 
 
@@ -1395,8 +1596,8 @@ app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage
        $scope.tempData = data.response;
        $(document).ready(function(){
        $('.product-slider').slick({
-         slidesToShow: 3,
-         slidesToScroll: 1,
+         slidesToShow: 4,
+         slidesToScroll: 2,
          autoplay: true,
          autoplaySpeed: 2000,
          arrow:true,
@@ -1411,7 +1612,7 @@ app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage
         //    });
        });
 
-console.log($scope.tempData.Sec2PCode1);
+      spinner.stopSpin(spinElement);
        })
   .error(function(data,status,headers,config){
     $window.location = "#error500";
@@ -1420,4 +1621,66 @@ console.log($scope.tempData.Sec2PCode1);
 
 
 
+}]);
+
+app.controller('aboutUs',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+  $rootScope.isHome = false;
+}]);
+
+app.controller('termsConditions',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+  $rootScope.isHome = false;
+}]);
+
+app.controller('moneyBack',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+  $rootScope.isHome = false;
+}]);
+
+app.controller('companyPolicy',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+  $rootScope.isHome = false;
+}]);
+
+app.controller('howWeWork',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+  $rootScope.isHome = false;
+}]);
+
+app.controller('contactUs',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify){
+//console.log("into cart");
+$http.defaults.headers.common = {'access_code':'onyourown'};
+$rootScope.isHome = false;
+
+  $scope.submitQuery = function(){
+    var session = localStorage.getData('User');
+    if(session){
+      session = JSON.parse(session);
+
+      if($scope.contactQuery && $scope.contactQuery.length > 5){
+        var requestData = {};
+        requestData.user = session;
+        requestData.query = $scope.contactQuery;
+        $http({
+
+                 method : 'post',
+                 url : 'http://localhost:3000/api/Clients/submitQuery',
+                 headers: {'Content-Type': 'application/json',
+                            'realm': 'web',
+                          },
+                  data:requestData
+               }).
+             success(function(data,status,headers,config){
+               $scope.contactQuery = "";
+               notify.showNotification("Your query is submitted.We will respond you soon.","success");
+
+             })
+             .error(function(data,status,headers,config){
+               notify.showNotification("Issue in processing your query.Try later.",'warning');
+
+             });
+      }else{
+        notify.showNotification("Please enter your query",'warning');
+      }
+
+    }else{
+      $('#loginModal').modal('show');
+    }
+  }
 }]);

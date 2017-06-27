@@ -1,0 +1,139 @@
+<div ng-controller="showAddress" class="address-container">
+  <div class="confirm-order-details">
+    <div class="address-bag">
+      <div class="address-bag-count">{{AddressBag.count}} Items</div>
+      <hr>
+      <div class="address-bag-total" style="height:25px;">
+        <div class="address-bag-left">Order Total</div>
+        <div class="address-bag-right">Rs. {{AddressBag.totalAmount}}</div>
+    </div>
+    <div class="address-bag-discount" style="height:25px;" ng-show="AddressBag.discount > 0">
+      <div class="address-bag-left">Discount</div>
+      <div class="address-bag-right">Rs. {{AddressBag.discount}}</div>
+    </div>
+    <div class="address-bag-delivery" style="height:25px;">
+      <div class="address-bag-left">Delivery</div>
+      <div class="address-bag-right">Rs. {{AddressBag.deliveryCharge}}</div>
+    </div>
+    <hr>
+    <div class="address-bag-payable" style="height:25px;">
+      <div class="address-bag-left">Total Payable</div>
+      <div class="address-bag-right">{{AddressBag.totalPayable}}</div>
+    </div>
+    </div>
+    <div class="confirm-order-button">
+    <button type="button" class="btn btn-primary" id="confirm-order-button" style="" ng-click="proceedOrder();">Confirm Order</button>
+  </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="select-address">
+<span class="select-address-header">Select Delivery Address</span>
+
+<div class="addresses-option" >
+
+  <div class="address-boxx col-md-4" ng-repeat="Address in Addresses">
+      <div class="icon" ng-class="{greenBackground:Address.selected != false}">
+        <div class="info" >
+          <div class="address-radio">
+          <input type="radio" ng-model="Address.selected" value="{{Address.id}}" checked="true" name="select-radio" ng-click="changeBackground(Address);">
+        </div>
+        <div class="address-info">
+        <div class="address-name">
+          <span class="address-name-value">{{Address.Name}}</span>
+        </div>
+        <div class="address-street">
+          <span class"address-street-value">{{Address.Street}}</span>
+        </div>
+        <div class="address-locality">
+          <span class"address-locality-value">{{Address.Locality}}</span>
+        </div>
+        <div class="address-city">
+          <span class"address-city-value">{{Address.City}}</span>-<span class="adress-pincode-value">{{Address.PinCode}}</span>
+        </div>
+        <div class="address-state">
+          <span class"address-state-value">{{Address.State}}</span>
+        </div>
+        <div class="address-mobile">
+          <span class"address-mobile-value">Mobile: +91 {{Address.Mobile}}</span>
+        </div>
+        </div>
+        <div class="remove-address">
+          <a href="" ng-click="removeAddress(Address.id)"><img src="assets/img/cross-icon.png" width="18%"> Remove</a>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="address-boxx col-md-4">
+        <div class="icon">
+          <div class="info">
+            <div class="add-address-option">
+              <a href="" ng-click="showAddressModal()">
+                <img src="assets/img/addAddress.png" width="50%">
+                <div class="add-address-line">Add new Address</div>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+  </div>
+
+  <div class="modal fade" id="addAddressModal" role="dialog">
+    <div class="modal-dialog" role="document" style="margin-top:5%;width: 33%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="font-family: sans-serif;">Add New Address</h5>
+      </div>
+      <div class="modal-body">
+        <div class="address-form">
+          <div class="name-input">
+            <div class="key-input"><label>Name*</label>
+            </div>
+            <input type="text" class="form-control" id="value-input" ng-model="newAdd.Name">
+          </div>
+          <div class="street-input">
+            <div class="key-input"><label>Address*</label>
+            </div>
+            <textarea class="form-control" id="value-input" ng-model="newAdd.Street"></textarea>
+          </div>
+          <div class="locality-input">
+            <div class="key-input"><label>Locality/Town*</label>
+            </div>
+            <input type="text" class="form-control" id="value-input" ng-model="newAdd.Locality">
+          </div>
+
+          <div class="city-input">
+            <div class="key-input"><label>City/District*</label>
+            </div>
+            <input type="text" class="form-control" id="city-value-input" ng-model="newAdd.City">
+          </div>
+          <div class="pincode-input">
+            <div class="pincode-key-input"><label>Pin Code*</label>
+            </div>
+            <input type="text" class="form-control" id="pincode-value-input" ng-model="newAdd.PinCode">
+          </div>
+          <div class="state-input">
+            <div class="state-key-input"><label>State*</label>
+            </div>
+            <input type="text" class="form-control" id="value-input" ng-model="newAdd.State">
+          </div>
+          <div class="mobile-input">
+            <div class="key-input"><label>Mobile*</label>
+            </div>
+            <input type="text" class="form-control" id="value-input" ng-model="newAdd.Mobile">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:25%;">Cancel</button>
+        <button type="button" class="btn btn-primary" style="width:25%;" ng-click="saveAddress();">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+  </div>

@@ -1,0 +1,228 @@
+<html>
+<style type="text/css">
+.orderContent{
+    width: 45%;
+    margin-left: 25%;
+}
+.topHeaderLogo{
+  margin-top: 36px;
+  position: absolute;
+  padding-left: 3px;
+}
+.logoAkrati{
+  font-size: x-large;
+  text-decoration: none;
+}
+.logoIndia{
+  font-size: x-large;
+}
+.orderHeader{
+    border: 1px solid white;
+    width: 100%;
+    height: 68px;
+
+    font-size: -webkit-xxx-large;
+    font-family: -webkit-pictograph;
+    background-color: aliceblue;
+    text-align: center;
+    color: darkcyan;
+}
+
+.userContent{
+    background-color: cornsilk;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 95px;
+}
+.userGreeting{
+  color: rgba(10, 10, 10, 0.8);
+}
+.thankNote{
+  position: absolute;
+  margin-top: 10px;
+  color: rgba(10, 10, 10, 0.8);
+}
+.orderNumber{
+  position: absolute;
+  margin-top: 25px;
+  color: rgba(56, 53, 53, 0.66);
+}
+.orderDate{
+  position: absolute;
+  margin-top: 30px;
+  color: rgba(56, 53, 53, 0.66);
+}
+.orderItems{
+  background-color: rgba(158, 158, 158, 0.3);
+  padding-top: 20px;
+  padding-bottom: 15px;
+  font-size: medium;
+  padding-left: 20px;
+  color: rgba(37, 36, 35, 0.57);
+  font-size: large;
+}
+.orderCount{
+  padding-top: 20px;
+}
+.orderTotal{
+  float: right;
+  padding-right: 10px;
+}
+.item{
+  background-color: white;
+  width: 98%;
+  margin-left: -5px;
+}
+.productName{
+  position: absolute;
+  margin-left: 10px;
+}
+.itemDetails{
+  margin-left: 155px;
+  margin-top: -135px;
+  position: absolute;
+}
+.productTable{
+  font-family: arial,sans-serif;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.66);
+}
+.itemTotal{
+  position: absolute;
+  margin-top: 6px;
+}
+.delivery{
+  margin-top: 10px;
+}
+.deliveryDetails{
+  background: white;
+  width: 96%;
+  margin-left: -4px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-radius: 12px;
+
+}
+.userName{
+  color: black;
+}
+.bill{
+  margin-top: 15px;
+}
+.billDetails{
+  background: white;
+  width: 96%;
+  margin-left: -4px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-radius: 12px;
+
+}
+.orderAmountValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderDiscountValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderGSTValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderDeliveryValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderTotalValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+
+</style>
+<body>
+  <div class="logo">
+  <a href="index.html">
+    <img src="assets/img/logo.png" id="topHeaderImage"  width="64px" height="67px">
+    <span class = "topHeaderLogo" id="topHeaderLogo" >
+      <span class="logoAkrati" style="color: #0075a6;">akrati</span><span class="logoIndia" style="color: #991014;">india</span>
+    </span>
+  </a>
+</div>
+<div class="orderContent">
+<div class="orderHeader">
+  Order Received
+</div>
+<div class="userContent">
+<span class="userGreeting">Hi <%= name %></span>
+<br>
+<span class="thankNote">Thank you for shopping on Akratiindia.</span>
+<br>
+<span class="orderNumber">Order Number: <%=orderId%></span>
+<br>
+<span class="orderDate">Received on: <%=orderDate%></span>
+</div>
+<div class="orderItems">
+  <span class="orderCount">Total Items: <%=orderCount%></span>
+  <span class="orderTotal">Total: Rs. <%=orderTotal%></span>
+  <div class="item">
+    <img src = "<%= productImage %>" height="160px" width="135px">
+    <span class="productName"><%=productName%></span>
+    <div class="itemDetails">
+      <table class="productTable">
+        <th>Size</th>
+        <th>Qty.</th>
+        <th>Price</th>
+        <tr>
+          <td><%=productSize%></td>
+          <td><%=productQuantity%></td>
+          <td><%=productPrice%></td>
+        </tr>
+      </table>
+      <span class="itemTotal"><%=productTotal%><strike><%=withoutDiscount%></strike></span>
+      <!-- <span class="withoutDiscount"><%=withoutDiscount%></span> -->
+    </div>
+  </div>
+
+  <div class="delivery">
+    Delivery Details
+    <div class="deliveryDetails">
+    <span class="userName"><%=addressName%></span>
+    <br>
+    <span class="userStreet"><%=addressStreet%></span>
+    <br>
+    <span class="addressCity"><%=addressCity%> - <%=addressPin%></span>
+    <br>
+    <span class="addressState"><%=addressState%></span>
+    <br>
+    <span class="addressMobile">Mobile: <%=addressMobile%></span>
+  </div>
+</div>
+<div class="bill">
+  Bill Details
+  <div class="billDetails">
+  <span class="orderAmount">Order value</span><span class="orderAmountValue"><%=orderAmount%></span>
+  <br>
+  <span class="orderDiscount">Discount</span><span class="orderDiscountValue"><%=orderDiscount%></span>
+  <br>
+  <span class="orderGST">GST</span><span class="orderGSTValue"><%=orderGST%></span>
+  <br>
+  <span class="orderDelivery">Delivery Charge</span><span class="orderDeliveryValue"><%=orderDelivery%></span>
+  <hr>
+  <span class="orderTotalAmount"> Total </span><span class="orderTotalValue"><%=orderTotal%></span>
+
+</div>
+</div>
+
+</div>
+</div>
+</body>
+</html>

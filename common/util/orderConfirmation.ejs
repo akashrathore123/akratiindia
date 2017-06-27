@@ -1,0 +1,179 @@
+
+<style type="text/css">
+.orderContent{
+    width: 38%;
+    margin-left: 25%;
+}
+.topHeaderLogo{
+  margin-top: 36px;
+  position: absolute;
+  padding-left: 3px;
+}
+.logoAkrati{
+  font-size: x-large;
+  text-decoration: none;
+}
+.logoIndia{
+  font-size: x-large;
+}
+.orderHeader{
+    border: 1px solid white;
+    width: 100%;
+    height: 68px;
+
+    font-size: -webkit-xxx-large;
+    font-family: -webkit-pictograph;
+    background-color: aliceblue;
+    text-align: center;
+    color: darkcyan;
+}
+
+.userContent{
+    background-color: cornsilk;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 95px;
+}
+.userGreeting{
+  color: rgba(10, 10, 10, 0.8);
+}
+.thankNote{
+  position: absolute;
+  margin-top: 10px;
+  color: rgba(10, 10, 10, 0.8);
+}
+.orderNumber{
+  position: absolute;
+  margin-top: 25px;
+  color: rgba(56, 53, 53, 0.66);
+}
+.orderDate{
+  position: absolute;
+  margin-top: 30px;
+  color: rgba(56, 53, 53, 0.66);
+}
+.orderItems{
+  background-color: rgba(158, 158, 158, 0.3);
+  padding-top: 20px;
+  padding-bottom: 15px;
+  font-size: medium;
+  padding-left: 20px;
+  color: rgba(37, 36, 35, 0.57);
+  font-size: large;
+}
+.orderCount{
+  padding-top: 20px;
+}
+.orderTotal{
+  float: right;
+  padding-right: 10px;
+}
+.item{
+  background-color: white;
+  width: 98%;
+  margin-left: -5px;
+}
+.productName{
+  position: absolute;
+  margin-left: 10px;
+}
+.itemDetails{
+  margin-left: 155px;
+  margin-top: -135px;
+  position: absolute;
+}
+.productTable{
+  font-family: arial,sans-serif;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.66);
+}
+.itemTotal{
+  position: absolute;
+  margin-top: 6px;
+}
+.delivery{
+  margin-top: 10px;
+}
+.deliveryDetails{
+  background: white;
+  width: 96%;
+  margin-left: -4px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-radius: 12px;
+
+}
+.userName{
+  color: black;
+}
+.bill{
+  margin-top: 15px;
+}
+.billDetails{
+  background: white;
+  width: 96%;
+  margin-left: -4px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-radius: 12px;
+
+}
+.orderAmountValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderDiscountValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderGSTValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderDeliveryValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+.orderTotalValue{
+  float: right;
+  padding-right: 10px;
+  color: black;
+}
+@media only screen and (font-size: 100%) {
+
+   .orderHeader { font-size: 500%; }
+
+}
+</style>
+
+   <div class="logo">
+  <a href="<%=homeURL%>" style="text-decoration: none;">
+    <img src=<%=logo%> id="topHeaderImage"  width="64px" height="67px">
+    <span class = "topHeaderLogo" id="topHeaderLogo" style="margin-top: 36px;position: absolute;padding-left: 3px;">
+      <span class="logoAkrati" style="color: #0075a6;font-size: x-large;text-decoration: none;">akrati</span><span class="logoIndia" style="color: #991014;font-size: x-large;text-decoration: none;">india</span>
+    </span>
+  </a>
+</div>
+<div class="orderContent" style="width:60%;margin-left20%;">
+<div class="orderHeader" style="font-size:3.5vw;font-size:100%;border: 1px solid white;width: 100%;height: 68px;font-family: -webkit-pictograph;background-color: aliceblue;text-align: center;color: darkcyan;">
+<img src="assets/img/orderReceived.png" width="100%" height="100%">  <!-- <span style="width:60%;">Order Received</span> -->
+</div>
+<div class="userContent" style="background-color: cornsilk;padding-left: 20px;padding-top: 10px;padding-bottom: 10px;">
+<span class="userGreeting" style="color: rgba(10, 10, 10, 0.8);">Hi <%= name %></span>
+<br><br>
+<span class="thankNote" style="position: absolute;margin-top: 10px;color: rgba(10, 10, 10, 0.8);">Thank you for shopping on Akratiindia.</span>
+<br><br>
+<span class="orderNumber" style="position: absolute;margin-top: 25px;color: rgba(56, 53, 53, 0.66);">Order ID: <%=orderid%></span>
+<br>
+<span class="orderDate" style="position: absolute;margin-top: 30px;color: rgba(56, 53, 53, 0.66);">Received on: <%=orderDate%></span>
+</div>
+<div class="orderItems" style="background-color: rgba(158, 158, 158, 0.3);padding-top: 20px;padding-bottom: 15px;padding-left: 20px;color: rgba(37, 36, 35, 0.57);font-size: large;">
+  <span class="orderCount" style="font-size:90%;padding-top:20px;">Items: <%=orderCount%></span>
+  <span class="orderTotal" style="font-size:90%;margin-right:4%;float:right;">Total: <%=orderTotal%></span>

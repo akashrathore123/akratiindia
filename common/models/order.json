@@ -7,16 +7,45 @@
     "validateUpsert": true
   },
   "properties": {
-    "OrderId": {
+    "OrderDiscount": {
       "type": "string"
+    },
+    "OrderGST": {
+      "type": "string"
+    },
+    "OrderDeliveryCharge": {
+      "type": "string"
+    },
+    "OrderAddress": {
+      "type": "Address",
+      "required": false
+    },
+    "OrderAmount": {
+      "type": "string",
+      "required": false
     },
     "OrderClientId": {
-      "type": "string"
+      "type": "string",
+      "required": false
+    },
+    "OrderId": {
+      "type": "string",
+      "required": false
     },
     "OrderTotal": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
-    "propertyName34": {
+    "OrderProducts": {
+      "type": [
+        "any"
+      ],
+      "required": false
+    },
+    "OrderDate": {
+      "type": "date"
+    },
+    "OrderStatus": {
       "type": "string"
     }
   },

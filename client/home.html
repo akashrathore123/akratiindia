@@ -6,7 +6,7 @@
   </div>
   <div class="container">
     <div class="content">
-      <div class="title-area">
+      <div class="title-area" id="spinnerPosition">
 
         <!-- <h1 class="title-modern">  <span style="color: #0075a6;">akrati</span><span  style="color: #991014;">india</span></h1> -->
         <font size="40px">Glamorising your home</font>
@@ -23,9 +23,7 @@
     </div>
   </div>
 </div>
-<div class="bulk-order">
-<img src="assets/images/bulkOrder/{{tempData.Sec4Image}}" width="100%" height="450px" class="bulk-order-image"/>
- </div>
+
 
  <span class="product-header">
    <span>SOME OF BEST</span>
@@ -34,27 +32,31 @@
  </span>
  <div class="product-container">
 <div class="product-slider">
-  <div class="slider-product1"><img src="assets/images/{{tempData.Sec2PCode1}}/{{tempData.Sec2PImage1}}" width="150" height="200" /></div>
-  <div class="slider-product2"><img src="assets/images/{{tempData.Sec2PCode2}}/{{tempData.Sec2PImage2}}" width="150" height="200" /></div>
-  <div class="slider-product3"><img src="assets/images/{{tempData.Sec2PCode3}}/{{tempData.Sec2PImage3}}" width="150" height="200" /></div>
-  <div class="slider-product4"><img src="assets/images/{{tempData.Sec2PCode4}}/{{tempData.Sec2PImage4}}" width="150" height="200" /></div>
-  <div class="slider-product5"><img src="assets/images/{{tempData.Sec2PCode5}}/{{tempData.Sec2PImage5}}" width="150" height="200" /></div>
-  <div class="slider-product6"><img src="assets/images/{{tempData.Sec2PCode6}}/{{tempData.Sec2PImage6}}" width="150" height="200" /></div>
-  <div class="slider-product7"><img src="assets/images/{{tempData.Sec2PCode7}}/{{tempData.Sec2PImage7}}" width="150" height="200" /></div>
-  <div class="slider-product8"><img src="assets/images/{{tempData.Sec2PCode8}}/{{tempData.Sec2PImage8}}" width="150" height="200" /></div>
-  <div class="slider-product9"><img src="assets/images/{{tempData.Sec2PCode9}}/{{tempData.Sec2PImage9}}" width="150" height="200" /></div>
-  <div class="slider-product10"><img src="assets/images/{{tempData.Sec2PCode10}}/{{tempData.Sec2PImage10}}" width="150" height="200" /></div>
+  <div class="slider-product1"><a href="#productDetails/{{tempData.Sec2PCode1}}" ><img src="assets/images/{{tempData.Sec2PCode1}}/{{tempData.Sec2PImage1}}" width="150" height="200" /></a></div>
+  <div class="slider-product2"><a href="#productDetails/{{tempData.Sec2PCode2}}" ><img src="assets/images/{{tempData.Sec2PCode2}}/{{tempData.Sec2PImage2}}" width="150" height="200" /></a></div>
+  <div class="slider-product3"><a href="#productDetails/{{tempData.Sec2PCode3}}" ><img src="assets/images/{{tempData.Sec2PCode3}}/{{tempData.Sec2PImage3}}" width="150" height="200" /></a></div>
+  <div class="slider-product4"><a href="#productDetails/{{tempData.Sec2PCode4}}" ><img src="assets/images/{{tempData.Sec2PCode4}}/{{tempData.Sec2PImage4}}" width="150" height="200" /></a></div>
+  <div class="slider-product5"><a href="#productDetails/{{tempData.Sec2PCode5}}" ><img src="assets/images/{{tempData.Sec2PCode5}}/{{tempData.Sec2PImage5}}" width="150" height="200" /></a></div>
+  <div class="slider-product6"><a href="#productDetails/{{tempData.Sec2PCode6}}" ><img src="assets/images/{{tempData.Sec2PCode6}}/{{tempData.Sec2PImage6}}" width="150" height="200" /></a></div>
+  <div class="slider-product7"><a href="#productDetails/{{tempData.Sec2PCode7}}" ><img src="assets/images/{{tempData.Sec2PCode7}}/{{tempData.Sec2PImage7}}" width="150" height="200" /></a></div>
+  <div class="slider-product8"><a href="#productDetails/{{tempData.Sec2PCode8}}" ><img src="assets/images/{{tempData.Sec2PCode8}}/{{tempData.Sec2PImage8}}" width="150" height="200" /></a></div>
+  <div class="slider-product9"><a href="#productDetails/{{tempData.Sec2PCode9}}" ><img src="assets/images/{{tempData.Sec2PCode9}}/{{tempData.Sec2PImage9}}" width="150" height="200" /></a></div>
+  <div class="slider-product10"><a href="#productDetails/{{tempData.Sec2PCode10}}"><img src="assets/images/{{tempData.Sec2PCode10}}/{{tempData.Sec2PImage10}}" width="150" height="200" /></a></div>
 </div>
 </div>
 
 
  <div class="category-content">
-   <div class="category-content1" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory1}}/{{tempData.Sec3PImage1}}" width="100%" height="430" /></div>
-   <div class="category-content2" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory2}}/{{tempData.Sec3PImage2}}" width="100%" height="250" /></div>
-   <div class="category-content3" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory3}}/{{tempData.Sec3PImage3}}" width="100%" height="180" /></div>
-   <div class="category-content4" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory4}}/{{tempData.Sec3PImage4}}" width="100%" height="220" /></div>
-   <div class="category-content5" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory5}}/{{tempData.Sec3PImage5}}" width="100%" height="180" /></div>
-   <div class="category-content6" ><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory6}}/{{tempData.Sec3PImage6}}" width="100%" height="210" /></div>
+   <div class="category-content1" ><a href="#product/{{tempData.Sec3PCategory1}}" style="opacity:1;"><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory1}}/{{tempData.Sec3PImage1}}" width="100%" height="430" /></a></div>
+   <div class="category-content2" ><a href="#product/{{tempData.Sec3PCategory2}}" style="opacity:1;"><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory2}}/{{tempData.Sec3PImage2}}" width="100%" height="250" /></a></div>
+   <div class="category-content3" ><a href="#product/{{tempData.Sec3PCategory3}}" style="opacity:1;"><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory3}}/{{tempData.Sec3PImage3}}" width="100%" height="180" /></a></div>
+   <div class="category-content4" ><a href="#product/{{tempData.Sec3PCategory4}}" style="opacity:1;"><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory4}}/{{tempData.Sec3PImage4}}" width="100%" height="220" /></a></div>
+   <div class="category-content5" ><a href="#product/{{tempData.Sec3PCategory5}}" style="opacity:1;"><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory5}}/{{tempData.Sec3PImage5}}" width="100%" height="180" /></a></div>
+   <div class="category-content6" ><a href="#product/{{tempData.Sec3PCategory6}}" style="opacity:1;"><img style="border: 1px solid white;" src="assets/images/{{tempData.Sec3PCategory6}}/{{tempData.Sec3PImage6}}" width="100%" height="210" /></a></div>
+ </div>
+
+ <div class="bulk-order">
+ <img src="assets/images/bulkOrder/{{tempData.Sec4Image}}" width="100%" height="12%" class="bulk-order-image"/>
  </div>
 
 <div class="section">
@@ -105,7 +107,7 @@
 
 <div class="section section-our-team-freebie">
   <div class="parallax filter filter-color-black">
-    <div class="image" style="background-image:url('assets/img/header-2.jpeg')">
+    <div class="image" style="background-image:url('assets/images/header-2.jpeg')">
     </div>
     <div class="container">
       <div class="content">
@@ -124,13 +126,12 @@
                 <div class="col-md-4">
                   <div class="card card-member">
                     <div class="content">
-                      <div class="avatar avatar-danger">
-                        <img alt="..." class="img-circle" src="assets/img/faces/face_1.jpg"/>
+                      <div class="avatar-danger">
+                        <img alt="..." class="img-circle" src="assets/images/{{tempData.Sec6Image1}}"/>
                       </div>
                       <div class="description">
-                        <h3 class="title">Tina</h3>
-                        <p class="small-text">CEO / Co-Founder</p>
-                        <p class="description">Track your Order</p>
+                        <h3 class="title">Track your Order</h3>
+
                       </div>
                     </div>
                   </div>
@@ -138,13 +139,12 @@
                 <div class="col-md-4">
                   <div class="card card-member">
                     <div class="content">
-                      <div class="avatar avatar-danger">
-                        <img alt="..." class="img-circle" src="assets/img/faces/face_4.jpg"/>
+                      <div class="avatar-danger" style="width:72%">
+                        <img alt="..." class="img-circle" src="assets/images/{{tempData.Sec6Image2}}" style="margin-left:18%;"/>
                       </div>
                       <div class="description">
-                        <h3 class="title">Andrew</h3>
-                        <p class="small-text">Product Designer</p>
-                        <p class="description">Android/ios App</p>
+                        <h3 class="title">Android/ios App</h3>
+
                       </div>
                     </div>
                   </div>
@@ -152,13 +152,12 @@
                 <div class="col-md-4">
                   <div class="card card-member">
                     <div class="content">
-                      <div class="avatar avatar-danger">
-                        <img alt="..." class="img-circle" src="assets/img/faces/face_3.jpg"/>
+                      <div class="avatar-danger" style="width: 40%;margin-left: 28%;">
+                        <img alt="..." class="img-circle" src="assets/images/{{tempData.Sec6Image3}}"/>
                       </div>
                       <div class="description">
-                        <h3 class="title">Michelle</h3>
-                        <p class="small-text">Marketing Hacker</p>
-                        <p class="description">Contact Us</p>
+                        <h3 class="title">Contact Us</h3>
+
                       </div>
                     </div>
                   </div>
