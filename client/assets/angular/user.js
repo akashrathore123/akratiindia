@@ -1,5 +1,6 @@
 var app = angular.module('main',['ngStorage','ngRoute']);
 app.config(function($routeProvider){
+
   $routeProvider
   .when('/',{
     templateUrl : 'home.html'
@@ -40,6 +41,9 @@ app.config(function($routeProvider){
   .when('/howWeWork',{
     templateUrl : 'howWeWork.html'
   })
+  .when('/my/:category',{
+    templateUrl : 'profile.html'
+  })
   .when('/error500',{
     templateUrl : 'error500.html'
   })
@@ -63,6 +67,11 @@ app.directive('myEnter', function () {
 });
 
 /* Factory methods */
+
+app.factory('baseAPIUrl',function(){
+    var baseURL = "http://139.59.23.178/api/";
+    return baseURL;
+});
 
 app.factory('notify',function(){
   var notify = {};
@@ -119,15 +128,15 @@ app.factory('localStorage', function($localStorage){
       $localStorage.Akratiindia.cart = keyObj;
     }
     if(key == 'User'){
-      if(dataObj.User != undefined && dataObj.User != ""){
-        keyObj = dataObj.User;
-      }
-      keyObj.push(data);
-      $localStorage.Akratiindia.User = keyObj;
+      $localStorage.Akratiindia.User = data;
     }
     if(key == 'order'){
       $localStorage.Akratiindia.order = data;
     }
+    if(key == 'OTP'){
+      $localStorage.Akratiindia.otp = data;
+    }
+
 
 
 
@@ -190,13 +199,18 @@ app.factory('localStorage', function($localStorage){
     if (key == 'User') {
       var items = dataObj.User;
       if(items != undefined){
-        items.pop(data);
-        $localStorage.Akratiindia.User = items;
+      //  items.pop(data);
+        $localStorage.Akratiindia.User = undefined;
       }
     }
     if(key == 'order'){
       if(dataObj.order != undefined){
          dataObj.order = undefined;
+      }
+    }
+    if(key == 'OTP'){
+      if(dataObj.otp != undefined){
+         dataObj.otp = undefined;
       }
     }
 
@@ -269,7 +283,7 @@ spinner.stop();
 });
 
 /* Controllers for app 'main' */
-app.controller('registerAction',['$scope','$http','$window','localStorage','spinner',function($scope,$http,$window,localStorage,spinner){
+app.controller('registerAction',['$scope','$http','$window','localStorage','spinner','baseAPIUrl',function($scope,$http,$window,localStorage,spinner,baseAPIUrl){
 $http.defaults.headers.common = {'access_code':'onyourown'};
   $scope.userRegister = function(){
  var spinElement = spinner.startSpin('body');
@@ -279,13 +293,18 @@ $http.defaults.headers.common = {'access_code':'onyourown'};
 
 var password1 = $scope.register.password;
 var password2 = $scope.register.confirmPassword;
+var mobile = $scope.register.mobile;
+var email = $scope.register.email;
+if(!mobile || !password1 || !password2 || !email){
+   document.getElementById("registerResponse").innerHTML = "<span style='color:red'>*All fields are required.</span>";
+}
 if(password1 == password2){
   document.getElementById("registerButton").disabled = true;
       $http({
 
 
                method : 'POST',
-               url : 'http://localhost:3000/api/Clients/userRegister',
+               url : baseAPIUrl+'Clients/userRegister',
                headers: {'Content-Type': 'application/json',
                           'realm': 'web'},
                data : user
@@ -293,15 +312,15 @@ if(password1 == password2){
            success(function(data,status,headers,config){
 
                 //console.log(data.response.client_token);
-                var Akratiindia = '{\"token\" :\"'+ data.response.client_token+'\", \"id\" :\"'+ data.response.id +'\",\"mobile\" : \"'+data.response.client_mobile+'\", \"email\" :\"'+ data.response.client_email+'\" , \"fname\" :\"'+ data.response.client_fname+'\", \"lname\" :\"'+ data.response.client_lname+'\"}';
-                localStorage.saveData('User', Akratiindia);
-              //  console.log('cookies'+Akratiindia);
-                document.cookie = Akratiindia;
 
+              //  console.log(data.response.otp);
+                $scope.OTP = true;
+                $scope.userToken = data.response.client_token;
+              //  localStorage.saveData('OTP');
               //  $document.cookie = "token="+data.response.client_token;
 
                 spinner.stopSpin(spinElement);
-                $window.location = "index.html";
+              //  $window.location = "index.html";
 
 
 
@@ -320,11 +339,52 @@ if(password1 == password2){
         spinner.stopSpin(spinElement);
 }
   }
+  $scope.submitOTP = function(){
+    if(!$scope.register.otp){
+      document.getElementById("registerResponse").innerHTML = "<span style='color:red'>*Enter OTP</span>";
+
+    }else{
+    document.getElementById("otpButton").disabled = true;
+    var requestData = {};
+    requestData.OTP = $scope.register.otp;
+    requestData.clientId = $scope.userToken;
+    $http({
+
+
+             method : 'POST',
+             url : baseAPIUrl+'Clients/submitOTP',
+             headers: {'Content-Type': 'application/json',
+                        'realm': 'web'},
+             data : requestData
+         }).
+         success(function(data,status,headers,config){
+              $scope.OTP = false;
+              $scope.register = {};
+              //console.log(data.response.client_token);
+              var Akratiindia = '{\"token\" :\"'+ data.response.client_token+'\", \"id\" :\"'+ data.response.id +'\",\"mobile\" : \"'+data.response.client_mobile+'\", \"email\" :\"'+ data.response.client_email+'\" , \"fname\" :\"'+ data.response.client_fname+'\", \"lname\" :\"'+ data.response.client_lname+'\"}';
+              localStorage.saveData('User', Akratiindia);
+            //  console.log('cookies'+Akratiindia);
+              document.cookie = Akratiindia;
+            //  console.log(data.response.otp);
+              $scope.OTP = false;
+              $window.location = "index.html";
+
+              return;
+
+         })
+         .error(function(data,status,headers,config){
+
+      document.getElementById("otpButton").disabled = false;
+      //console.log(data);
+      document.getElementById("registerResponse").innerHTML = "<span style='color:red'>*"+data.error.message+"</span>";
+      });
+    }
+  }
 
 }]);
 
 
-app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spinner', function($scope,$http,$window,localStorage,spinner){
+app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spinner','baseAPIUrl', function($scope,$http,$window,localStorage,spinner,baseAPIUrl){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   $scope.userLogin = function(){
       var login =JSON.stringify($scope.login);
@@ -341,7 +401,7 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spin
 
 
                method : 'POST',
-               url : 'http://localhost:3000/api/Clients/login',
+               url : baseAPIUrl+'Clients/login',
                headers: {'Content-Type': 'application/json',
                          'realm': 'web'},
                data : sendData
@@ -377,7 +437,7 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spin
 
 }]);
 
-app.controller('loginCheck',['$scope','$http','$window','updateCart','localStorage', function($scope,$http,$window,updateCart,localStorage){
+app.controller('loginCheck',['$scope','$http','$window','updateCart','localStorage','baseAPIUrl', function($scope,$http,$window,updateCart,localStorage,baseAPIUrl){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   updateCart.update();
   $scope.checkSession = function(){
@@ -421,7 +481,7 @@ setTimeout(function(){
 
 
 //Controllers for Product PAGE
-app.controller('showProducts',['$scope','$http','$window','$location','$rootScope','$routeParams','$route','localStorage','updateCart','notify','spinner',function($scope,$http,$window,$location,$rootScope,$routeParams,$route,localStorage,updateCart,notify,spinner){
+app.controller('showProducts',['$scope','$http','$window','$location','$rootScope','$routeParams','$route','localStorage','updateCart','notify','spinner','baseAPIUrl',function($scope,$http,$window,$location,$rootScope,$routeParams,$route,localStorage,updateCart,notify,spinner,baseAPIUrl){
 $rootScope.isHome = false;
 $scope.searchPressed = function(){
 $window.location = "#product/search="+$scope.searchQuery;
@@ -435,6 +495,7 @@ $scope.reloadData = function(){
   $scope.firstRequest = true;
   $scope.firstRequestCompanies = [];
   $scope.firstRequestSizes = [];
+  $scope.firstRequestMaterials = [];
   $scope.filters = {};
   $scope.filters.sizes = [];
   $scope.filters.materials = [];
@@ -457,6 +518,7 @@ $scope.reloadData = function(){
   $scope.filters.searchQuery = false;
 
   $scope.getProducts = function(){
+  $scope.noContent = false;
   var spinElement = spinner.startSpin('body');
   //var category = decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent('category').replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
   var response;
@@ -478,10 +540,10 @@ if($routeParams.category != undefined && $routeParams.category.includes("search=
   category = searchInput[1];
 
   if(category.length < 3){
-    $window.location = "#error204";
+    $scope.noContent=true;
     return;
   }
-  console.log("category search"+$routeParams.category);
+//  console.log("category search"+$routeParams.category);
 }else{
   $scope.filters.searchQuery = false;
   category = $routeParams.category;
@@ -489,7 +551,7 @@ if($routeParams.category != undefined && $routeParams.category.includes("search=
 $http({
 
          method : 'POST',
-         url : 'http://localhost:3000/api/Products/showProducts?category='+category,
+         url : baseAPIUrl+'Products/showProducts?category='+category,
          headers: {'Content-Type': 'application/json',
                     'skip': skip,
                     'realm': 'web'},
@@ -497,13 +559,15 @@ $http({
 
      }).
      success(function(data,status,headers,config){
-       console.log(JSON.stringify(data));
+
+       //console.log(JSON.stringify(data));
        response = JSON.stringify(data.response.products).slice(1,JSON.stringify(data.response.products).length-1);
        skip = skip + 52;
 
        if($scope.firstRequest == true){
          $scope.firstRequestCompanies = data.response.filterData.companies;
          $scope.firstRequestSizes = data.response.filterData.sizes;
+         $scope.firstRequestMaterials = data.response.filterData.materials;
          $scope.firstRequest = false;
        }
 
@@ -607,8 +671,15 @@ $http({
         //   $scope.filterData.sizes = $scope.firstRequestSizes;
         // }
 
-
+        if($scope.filters.price.length == 0 && $scope.filters.companies.length == 0 && $scope.filters.sizes.length == 0 && $scope.filters.discount.length == 0){
+          $scope.filterData.materials = $scope.firstRequestMaterials;
+        }else{
         $scope.filterData.materials = data.response.filterData.materials;
+        for(var j =0; j < $scope.filterData.materials.length; j++){
+          $scope.filterData.materials[j].checked = false;
+        }
+          }
+
 
 
 
@@ -624,7 +695,7 @@ $http({
         }
         if(skip == 52){
           $scope.products.fields = [];
-          $window.location = "#error204";
+          $scope.noContent = true;
           skip = 0;
         }
      }
@@ -634,7 +705,7 @@ $http({
      })
 .error(function(data,status,headers,config){
   spinner.stopSpin(spinElement);
-  document.getElementById("loginResponse").innerHTML = "<span style='color:red'>"+data.error.message;
+  $window.location = "#error500";
   return;
 });
 }
@@ -807,17 +878,9 @@ $scope.setModalData = function(prod){
 
 
 $scope.addToCart = function(prod){
-//  console.log("addtocart--"+angular.toJson(prod));
+
   var cart;
-  // if(localStorage.getData('cart') != undefined){
-  //   cart = localStorage.getData('cart');
-  // }
-  // console.log("cart--"+ cart);
-  // if(cart != undefined){
-  //   cart.push(prod);
-  // }else {
-  //   cart = prod;
-  // }
+
   var order1 = 0;
   var order2 = 0;
   var order3 = 0;
@@ -835,6 +898,16 @@ $scope.addToCart = function(prod){
   if(document.getElementById("quantValue4") != undefined){
     order4 = Number(document.getElementById("quantValue4").value);
   }
+
+  if(isNaN(order1) || isNaN(order2)  || isNaN(order3) || isNaN(order4)){
+    document.getElementById("addCartError").innerHTML = "Enter valid quantity of Product";
+    return;
+  }
+  if(String(order1).includes(".") || String(order2).includes(".")  || String(order3).includes(".")  || String(order4).includes(".") ){
+    document.getElementById("addCartError").innerHTML = "Enter valid quantity of Product";
+    return;
+  }
+
 
   if(order1 == 0 && order2 == 0 && order3 == 0 && order4 == 0){
     document.getElementById("addCartError").innerHTML = "Select Quantity of Product";
@@ -888,7 +961,7 @@ session = JSON.parse(session);
 
 
            method : 'POST',
-           url : 'http://localhost:3000/api/Clients/addToCart',
+           url : baseAPIUrl+'Clients/addToCart',
            headers: {'Content-Type': 'application/json',
                       'token' : session.token,
                       'email' : session.email,
@@ -898,7 +971,7 @@ session = JSON.parse(session);
        success(function(data,status,headers,config){
         localStorage.saveData('cart', data.response);
         updateCart.update();
-        document.getElementById("addCartError").innerHTML = "Product added to cart Successfully.";
+        //document.getElementById("addCartError").innerHTML = "Product added to cart Successfully.";
         notify.showNotification('Product '+cartItem.PProduct.PName+' added to the cart.','success');
         $('#myModal').modal('toggle');
 
@@ -921,7 +994,7 @@ session = JSON.parse(session);
 }
 }]);
 
-app.controller('productDetails',['$scope','$http','$window','$location','$routeParams','$rootScope','localStorage','updateCart','notify','spinner',function($scope,$http,$window,$location,$routeParams,$rootScope,localStorage,updateCart,notify,spinner){
+app.controller('productDetails',['$scope','$http','$window','$location','$routeParams','$rootScope','localStorage','updateCart','notify','spinner','baseAPIUrl',function($scope,$http,$window,$location,$routeParams,$rootScope,localStorage,updateCart,notify,spinner,baseAPIUrl){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   updateCart.update();
   $rootScope.isHome = false;
@@ -931,7 +1004,7 @@ app.controller('productDetails',['$scope','$http','$window','$location','$routeP
 $http({
 
          method : 'GET',
-         url : 'http://localhost:3000/api/Products/productDetails',
+         url : baseAPIUrl+'Products/productDetails',
          headers: {'Content-Type': 'application/json',
                     'realm': 'web',
                      'code': code},
@@ -977,6 +1050,15 @@ $scope.addToCart = function(prod){
   }
   if(document.getElementById("quantValue4") != undefined){
     order4 = Number(document.getElementById("quantValue4").value);
+  }
+
+  if(isNaN(order1) || isNaN(order2)  || isNaN(order3) || isNaN(order4)){
+    document.getElementById("addCartError").innerHTML = "Enter valid quantity of Product";
+    return;
+  }
+  if(String(order1).includes(".") || String(order2).includes(".")  || String(order3).includes(".")  || String(order4).includes(".") ){
+    document.getElementById("addCartError").innerHTML = "Enter valid quantity of Product";
+    return;
   }
 
   if(order1 == 0 && order2 == 0 && order3 == 0 && order4 == 0){
@@ -1028,7 +1110,7 @@ session = JSON.parse(session);
 
 
            method : 'POST',
-           url : 'http://localhost:3000/api/Clients/addToCart',
+           url : baseAPIUrl+'Clients/addToCart',
            headers: {'Content-Type': 'application/json',
                       'token' : session.token,
                       'email' : session.email,
@@ -1039,7 +1121,6 @@ session = JSON.parse(session);
       //  console.log("data---"+JSON.stringify(data.response));
         localStorage.saveData('cart', data.response);
         updateCart.update();
-        document.getElementById("prodDetailError").innerHTML = "Product added to cart Successfully.";
         notify.showNotification('Product '+cartItem.PProduct.PName+' added to the cart.','success');
 
        })
@@ -1081,7 +1162,7 @@ function getCookie(cname) {
 
 /* cart controllers */
 
-app.controller('showCartItems',['$http','$scope','$window','localStorage','$rootScope','updateCart','notify','spinner', function($http, $scope, $window, localStorage,$rootScope, updateCart,notify,spinner){
+app.controller('showCartItems',['$http','$scope','$window','localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl', function($http, $scope, $window, localStorage,$rootScope, updateCart,notify,spinner,baseAPIUrl){
 //console.log("into cart");
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
@@ -1099,7 +1180,7 @@ $http({
 
 
          method : 'GET',
-         url : 'http://localhost:3000/api/Clients/showCart?token='+token,
+         url : baseAPIUrl+'Clients/showCart?token='+token,
          headers: {'Content-Type': 'application/json',
                     'realm': 'web'}
 
@@ -1226,7 +1307,7 @@ $scope.bag.GST = convertToRupee(parseInt($scope.bag.GST));
 
 
 $scope.removeFromCart = function(item){
-console.log("item to remove"+JSON.stringify(item));
+//console.log("item to remove"+JSON.stringify(item));
   var session = localStorage.getData('User');
 
   if(session){
@@ -1238,7 +1319,7 @@ session = JSON.parse(session);
 
 
            method : 'DELETE',
-           url : 'http://localhost:3000/api/Clients/removeFromCart',
+           url : baseAPIUrl+'Clients/removeFromCart',
            headers: {'Content-Type': 'application/json',
                       'token' : session.token,
                       'email' : session.email,
@@ -1317,7 +1398,7 @@ $scope.placeOrder = function(){
 }
 }]);
 
-app.controller('showAddress',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner){
+app.controller('showAddress',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner,baseAPIUrl){
 //console.log("into cart");
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
@@ -1326,13 +1407,13 @@ $scope.getAddresses = function(){
 var spinElement = spinner.startSpin('body');
 $scope.Addresses = [];
 var session = localStorage.getData('User');
-console.log(session);
+//console.log(session);
 
 
 if(session && localStorage.getData('order')){
   var order = localStorage.getData('order');
   order = angular.fromJson(order);
-  console.log(order);
+  //console.log(order);
   $scope.AddressBag = {};
   $scope.AddressBag.count = order.orderItems.length;
   $scope.AddressBag.totalAmount = order.orderDetails.withoutDiscount;
@@ -1357,7 +1438,7 @@ if(session && localStorage.getData('order')){
   $http({
 
            method : 'GET',
-           url : 'http://localhost:3000/api/Addresses/getAddresses',
+           url : baseAPIUrl+'Addresses/getAddresses',
            headers: {'Content-Type': 'application/json',
                       'realm': 'web',
                       'PClientId':token},
@@ -1372,7 +1453,7 @@ if(session && localStorage.getData('order')){
           if($scope.Addresses[0]){
             $scope.Addresses[0].selected = $scope.Addresses[0].id;
             $localStorage.orderAddress = $scope.Addresses[0];
-            console.log(JSON.stringify($localStorage.orderAddress));
+          //  console.log(JSON.stringify($localStorage.orderAddress));
           }
           spinner.stopSpin(spinElement);
 
@@ -1410,19 +1491,19 @@ $scope.removeAddress = function(addressId){
   $http({
 
            method : 'DELETE',
-           url : 'http://localhost:3000/api/Addresses/removeAddress',
+           url : baseAPIUrl+'Addresses/removeAddress',
            headers: {'Content-Type': 'application/json',
                       'realm': 'web',
                       'addressId':addressId},
 
        }).
        success(function(data,status,headers,config){
-         console.log(JSON.stringify(data));
+         //console.log(JSON.stringify(data));
          spinner.stopSpin(spinElement);
          $scope.getAddresses();
        })
        .error(function(data,status,headers,config){
-         console.log(JSON.stringify(data));
+        // console.log(JSON.stringify(data));
          spinner.stopSpin(spinElement);
          notify.showNotification('Address could not be removed at now.','danger');
 
@@ -1440,21 +1521,21 @@ $scope.saveAddress = function(){
   if(session){
     var spinElement = spinner.startSpin('body');
     session = JSON.parse(session);
-    console.log(session.token);
+    //console.log(session.token);
     $scope.newAdd.PClientId = session.token;
     var requestData = $scope.newAdd;
-    console.log(JSON.stringify(requestData));
+    //console.log(JSON.stringify(requestData));
   $http({
 
            method : 'POST',
-           url : 'http://localhost:3000/api/Addresses/saveAddress',
+           url : baseAPIUrl+'Addresses/saveAddress',
            headers: {'Content-Type': 'application/json',
                       'realm': 'web'},
            data: requestData
 
        }).
        success(function(data,status,headers,config){
-         console.log(JSON.stringify(data));
+        // console.log(JSON.stringify(data));
          $scope.newAdd = {};
          $scope.getAddresses();
          $('#addAddressModal').modal('toggle');
@@ -1463,7 +1544,7 @@ $scope.saveAddress = function(){
 
        })
        .error(function(data,status,headers,config){
-         console.log(JSON.stringify(data));
+         //console.log(JSON.stringify(data));
          spinner.stopSpin(spinElement);
          notify.showNotification('Address could not be added.','danger');
          return;
@@ -1479,16 +1560,17 @@ $scope.proceedOrder = function(){
   var spinElement = spinner.startSpin('body');
   document.getElementById("confirm-order-button").disabled = true;
   if(session && $localStorage.orderAddress && localStorage.getData('order')){
+    document.getElementById("confirm-order-button").disabled = true;
     session = JSON.parse(session);
     var order = localStorage.getData('order');
-    console.log(JSON.stringify(order));
+  //  console.log(JSON.stringify(order));
     order = angular.fromJson(order);
     order.orderAddress = $localStorage.orderAddress;
 
     $http({
 
              method : 'POST',
-             url : 'http://localhost:3000/api/Orders/placeOrder',
+             url : baseAPIUrl+'Orders/placeOrder',
              headers: {'Content-Type': 'application/json',
                         'realm': 'web'},
              data: order
@@ -1496,11 +1578,11 @@ $scope.proceedOrder = function(){
          success(function(data,status,headers,config){
                 var order = data.response;
 
-                console.log(JSON.stringify(order));
+              //  console.log(JSON.stringify(order));
                $http({
 
                         method : 'DELETE',
-                        url : 'http://localhost:3000/api/CartItems/deleteCart',
+                        url : baseAPIUrl+'CartItems/deleteCart',
                         headers: {'Content-Type': 'application/json',
                                    'realm': 'web',
                                    'PClientId':session.id}
@@ -1531,14 +1613,19 @@ $scope.proceedOrder = function(){
       return;
     });
   }else{
+    if(!$localStorage.orderAddress){
+      spinner.stopSpin(spinElement);
+      notify.showNotification("Add Address for order","danger");
+    }else{
+    spinner.stopSpin(spinElement);
     $('#loginModal').modal('show');
+    }
   }
-
 }
 
 }]);
 
-app.controller('confirmedOrder',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner){
+app.controller('confirmedOrder',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner,baseAPIUrl){
 //console.log("into cart");
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
@@ -1550,7 +1637,7 @@ if(session && orderId){
   $http({
 
            method : 'get',
-           url : 'http://localhost:3000/api/Orders/getOrder',
+           url : baseAPIUrl+'Orders/getOrder',
            headers: {'Content-Type': 'application/json',
                       'realm': 'web',
                       'OrderId':orderId,
@@ -1578,7 +1665,7 @@ if(session && orderId){
 
 }]);
 
-app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage','updateCart','spinner', function($http, $scope, $window, $rootScope, localStorage, updateCart,spinner){
+app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage','updateCart','spinner','baseAPIUrl', function($http, $scope, $window, $rootScope, localStorage, updateCart,spinner,baseAPIUrl){
   $rootScope.isHome = true;
   $scope.tempData  = '';
   var spinElement = spinner.startSpin('body');
@@ -1586,13 +1673,13 @@ app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage
 
 
            method : 'GET',
-           url : 'http://localhost:3000/api/HomeTemplates/getTempData',
+           url : baseAPIUrl+'HomeTemplates/getTempData',
            headers: {'Content-Type': 'application/json',
                       'realm': 'web'}
 
        }).
        success(function(data,status,headers,config){
-       console.log(JSON.stringify(data.response));
+       //console.log(JSON.stringify(data.response));
        $scope.tempData = data.response;
        $(document).ready(function(){
        $('.product-slider').slick({
@@ -1615,6 +1702,7 @@ app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage
       spinner.stopSpin(spinElement);
        })
   .error(function(data,status,headers,config){
+    spinner.stopSpin(spinElement);
     $window.location = "#error500";
     return;
   });
@@ -1643,7 +1731,7 @@ app.controller('howWeWork',['$http','$scope','$window','$rootScope','localStorag
   $rootScope.isHome = false;
 }]);
 
-app.controller('contactUs',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify){
+app.controller('contactUs',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','baseAPIUrl', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify, baseAPIUrl){
 //console.log("into cart");
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
@@ -1660,7 +1748,7 @@ $rootScope.isHome = false;
         $http({
 
                  method : 'post',
-                 url : 'http://localhost:3000/api/Clients/submitQuery',
+                 url : baseAPIUrl+'Clients/submitQuery',
                  headers: {'Content-Type': 'application/json',
                             'realm': 'web',
                           },
@@ -1683,4 +1771,310 @@ $rootScope.isHome = false;
       $('#loginModal').modal('show');
     }
   }
+}]);
+
+app.controller('userProfile',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify, spinner, baseAPIUrl){
+//console.log("into cart");
+$http.defaults.headers.common = {'access_code':'onyourown'};
+$rootScope.isHome = false;
+$scope.category = $routeParams.category.toLowerCase();
+
+$scope.getProfile = function(){
+  var spinElement = spinner.startSpin('body');
+  var session = localStorage.getData('User');
+
+      if(session){
+        session = JSON.parse(session);
+        $http({
+
+                 method : 'get',
+                 url : baseAPIUrl+'Clients/getProfile',
+                 headers: {'Content-Type': 'application/json',
+                            'realm': 'web',
+                            'token': session.token
+                          }
+               }).
+             success(function(data,status,headers,config){
+               if(status == 204){
+                 spinner.stopSpin(spinElement);
+                 $window.location = "#error204";
+               }else {
+                 $scope.profileData = data.response;
+                 spinner.stopSpin(spinElement);
+             }
+
+             })
+             .error(function(data,status,headers,config){
+               spinner.stopSpin(spinElement);
+               $window.location = "#error500";
+
+             });
+
+      }else{
+        spinner.stopSpin(spinElement);
+        $window.location = "#";
+      }
+}
+
+$scope.myOrders = function(){
+$scope.ordersSkip = 0;
+$scope.getOrders();
+}
+
+$scope.getMoreOrders = function(){
+  $scope.ordersSkip += 4;
+  $scope.getOrders();
+}
+$scope.getOrders = function(){
+  var spinElement = spinner.startSpin('body');
+  var session = localStorage.getData('User');
+  $scope.noOrders = false;
+  $scope.moreOrders = false;
+      if(session){
+        session = JSON.parse(session);
+        $http({
+
+                 method : 'get',
+                 url : baseAPIUrl+'Orders/getOrders',
+                 headers: {'Content-Type': 'application/json',
+                            'realm': 'web',
+                            'token': session.token,
+                            'skip': $scope.ordersSkip
+                          }
+               }).
+             success(function(data,status,headers,config){
+               if(status == 204){
+                  spinner.stopSpin(spinElement);
+
+               }else {
+                 for(var i = 0; i < data.response.length; i++){
+                   var orderDate = new Date(data.response[i].OrderDate);
+                   var actionDate = new Date(data.response[i].OrderActionDate);
+                   data.response[i].OrderActionDate = actionDate;
+                   data.response[i].OrderDate = orderDate;
+
+                 }
+
+                 if($scope.ordersSkip == 0){
+                   //console.log(JSON.stringify(data.response));
+                   $scope.orderData = data.response;
+                   if($scope.orderData.length == 0){
+                     $scope.noOrders = true;
+                   }
+
+               }else{
+                 for(var i = 0; i < data.response.length; i++){
+                   $scope.orderData.push(data.response[i]);
+                 }
+               }
+               if(data.response.length == 4){
+                 $scope.moreOrders = true;
+               }else {
+                 $scope.moreOrders = false;
+               }
+                 spinner.stopSpin(spinElement);
+             }
+
+             })
+             .error(function(data,status,headers,config){
+               spinner.stopSpin(spinElement);
+               $window.location = "#error500";
+
+             });
+
+      }else{
+        spinner.stopSpin(spinElement);
+        $window.location = "#";
+      }
+
+}
+
+$scope.cancelOrder =  function(orderId){
+  var spinElement = spinner.startSpin('body');
+  var session = localStorage.getData('User');
+
+      if(session){
+        session = JSON.parse(session);
+        $http({
+
+                 method : 'get',
+                 url : baseAPIUrl+'Orders/cancelOrder',
+                 headers: {'Content-Type': 'application/json',
+                            'realm': 'web',
+                            'token': session.token,
+                            'orderId': orderId,
+                            'email':session.email
+                          }
+               }).
+             success(function(data,status,headers,config){
+               if(status == 204){
+                 $window.location="#error204";
+               }
+                 $scope.myOrders();
+                 spinner.stopSpin(spinElement);
+
+
+             })
+             .error(function(data,status,headers,config){
+               spinner.stopSpin(spinElement);
+               $window.location = "#error500";
+
+             });
+
+      }else{
+        spinner.stopSpin(spinElement);
+        $window.location = "#";
+      }
+
+}
+
+
+
+$scope.getProfile();
+$scope.myOrders();
+
+
+$scope.openProfileEditModal = function(){
+  var myCalendar;
+  $scope.myCalendar = new dhtmlXCalendarObject("showCalendar");
+  $scope.myCalendar.attachObj({input: "calendar_input", button: "calendar_icon"});
+  $scope.myCalendar.setParent("showCalendar");
+  $scope.myCalendar.setPosition(0,0);
+  $scope.myCalendar.setDateFormat("%d-%M-%Y");
+
+  $scope.editProfileData = $scope.profileData;
+  if($scope.editProfileData.client_gender){
+    if($scope.editProfileData.client_gender == 'Male'){
+      $scope.editProfileData.client_gender_male = 'male';
+    }
+    if($scope.editProfileData.client_gender == 'Female'){
+      $scope.editProfileData.client_gender_female = 'female';
+    }
+  }
+  $('#profileEditModal').modal('show');
+
+
+}
+
+$scope.maleGenderSelected = function(){
+  $scope.editProfileData.client_gender_female = undefined;
+}
+
+$scope.femaleGenderSelected = function(){
+  $scope.editProfileData.client_gender_male = undefined;
+}
+
+$scope.saveProfileData = function(){
+
+  var requestData = $scope.editProfileData;
+  if($scope.editProfileData.client_gender_male){
+    requestData.client_gender = "Male";
+  }else{
+    requestData.client_gender = "Female";
+  }
+  requestData.client_gender_male = undefined;
+  requestData.client_gender_female = undefined;
+  if($scope.myCalendar){
+    if($scope.myCalendar.getFormatedDate("%d-%M-%Y")){
+      requestData.client_dob = document.getElementById("calendar_input").value;
+
+    }
+  }
+  requestData.error = undefined;
+
+  var spinElement = spinner.startSpin('body');
+  $http({
+
+           method : 'patch',
+           url : baseAPIUrl+'Clients/updateProfile',
+           headers: {'Content-Type': 'application/json',
+                      'realm': 'web',
+                      'id': $scope.profileData.id
+                    },
+           data:requestData
+         }).
+       success(function(data,status,headers,config){
+         $scope.profileData = data.response;
+         $('#profileEditModal').modal('hide');
+         spinner.stopSpin(spinElement);
+         notify.showNotification("Profile updated successfully","success");
+
+       })
+       .error(function(data,status,headers,config){
+          spinner.stopSpin(spinElement);
+           $scope.editProfileData.error = "Error occured! Try later","danger";
+
+       });
+}
+
+
+$scope.openChangePasswordModal = function(){
+  $('#changePasswordModal').modal('show');
+}
+
+
+$scope.changeUserPassword = function(){
+  if($scope.changePassword){
+  $scope.changePassword.error = "";
+}else{
+  $scope.changePassword = {};
+}
+  var oldPassword = $scope.changePassword.old;
+  var newPassword = $scope.changePassword.new;
+  var confirmPassword = $scope.changePassword.confirm;
+
+  if(!oldPassword){
+    $scope.changePassword.error = "Enter old password";
+    return;
+  }else{
+  if(!newPassword){
+    $scope.changePassword.error = "Enter new password";
+    return;
+  }else{
+  if(!confirmPassword){
+    $scope.changePassword.error = "Enter confirm password";
+    return;
+      }
+    }
+  }
+  if(oldPassword.length < 8 || newPassword.length < 8 || confirmPassword.length < 8){
+    $scope.changePassword.error = "Password must be atleast of 8 characters";
+    return;
+  }
+  if(newPassword != confirmPassword){
+    $scope.changePassword.error = "Password does not match";
+    return;
+  }
+  if($scope.profileData.client_password != oldPassword){
+    $scope.changePassword.error = "Wrong old password";
+    return;
+  }
+  var spinElement = spinner.startSpin('body');
+  var requestData = {};
+  requestData.client_password = newPassword;
+  $http({
+
+           method : 'patch',
+           url : baseAPIUrl+'Clients/updateProfile',
+           headers: {'Content-Type': 'application/json',
+                      'realm': 'web',
+                      'id': $scope.profileData.id
+                    },
+           data:requestData
+         }).
+       success(function(data,status,headers,config){
+         $scope.profileData = data.response;
+         $scope.changePassword = {};
+         $('#changePasswordModal').modal('hide');
+         $('#profileEditModal').modal('hide');
+         spinner.stopSpin(spinElement);
+         notify.showNotification("Password changed successfully","success");
+
+       })
+       .error(function(data,status,headers,config){
+          spinner.stopSpin(spinElement);
+          $scope.changePassword.error = "Error occured! Try later"
+
+       });
+}
 }]);

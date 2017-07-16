@@ -1,0 +1,11 @@
+<div class="upload-sheet-container">
+  <div class="upload-sheet" ng-controller="uploadSheetController">
+    <label>Select Sheet:</label>
+<input class="form-control" type="file" file-model="productSheet">
+<div class="upload-sheet-button">
+<button type="button" value="uploadSheet" ng-click="uploadSheet()">Upload Sheet</button>
+
+</div>
+<span class="uploadSheetError">{{uploadSheetError}}</span>
+<span class="uploadSheetSuccess">{{uploadSheetSuccess}}</span>
+</div></div>

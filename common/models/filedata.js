@@ -7,7 +7,7 @@ module.exports = function(Filedata) {
 
         if(!options) options = {};
         ctx.req.params.container = ctx.req.header('container');
-      
+
         // Filedata.app.models.Container.createContainer("../assets/images/"+ctx.req.header('container'),function(err,container){
         //
         //   if(err){
@@ -38,7 +38,17 @@ module.exports = function(Filedata) {
                     }
                 });
             }
+            if(ctx.req.header('container') == "ProductSheets"){
+
+              ctx.fileName = fileInfo.name;
+              Filedata.app.models.Product.uploadSheet(ctx,function(err,instance){
+                if(err){
+                  cb(util.getGenericError("Error",500,"Internal Server Error"));
+                }
+              })
+            }
         });
+
     };
 
     Filedata.remoteMethod(

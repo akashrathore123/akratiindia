@@ -34,9 +34,33 @@ order.OrderTotal = orderDetails.orderTotal;
 order.OrderAmount = orderDetails.withoutDiscount;
 order.OrderDeliveryCharge = orderDetails.deliveryCharge;
 order.OrderStatus = 'Placed';
-var orderId = uuid.v4();
+
+var orderId =  Math.floor((Math.random() * 1000000000000));
+var orderFound = undefined;
+console.log(orderId);
+do{
+  orderFound = undefined;
+  Order.findOne({where:{OrderId:orderId}},function(err,instance){
+  if(err){
+    cb(util.getGenericError('Error',403,'Error occured'));
+  }
+  if(instance){
+    console.log("instance------>"+JSON.stringify(instance));
+    orderId =  Math.floor((Math.random() * 1000000000000));
+    console.log("order id-"+orderId);
+    orderFound = instance;
+  }else{
+
+  }
+});
+}while(orderFound);
+
+if(!orderFound){
+
 order.OrderId = orderId;
-order.OrderDate = Date.now();
+var placedDate = new Date();
+order.OrderDate = placedDate;
+order.OrderActionDate = new Date().setDate(new Date().getDate() + 7);
 order.OrderProducts = [];
 
 for(var i = 0; i < orderItems.length; i++){
@@ -124,26 +148,22 @@ Order.create(order,function(err,instance){
 
     }
 //console.log('items data---'+ itemsData);
-    let transporter = nodemailer.createTransport({
-      // service:'Gmail',
-      // port: 465,
-       ignoreTLS: true,
-      host: 'allied-up.com',
-      port: 587,
-      // greetingTimeout: 3000,
-      secure:false,
-    // secure: true, // secure:true for port 465, secure:false for port 587
-    auth: {
-      // user: 'akash.rathore1924@gmail.com',
-      // pass: 'Myjelvin123_'
-        user: 'info@allied-up.com',
-        pass: 'AUPmail*733'
-    }
-});
-  console.log('transporter created'+user.email);
+
+      var transporter = nodemailer.createTransport({
+        ignoreTLS: true,
+        host: 'allied-up.com',
+        port: 587,
+        secure:false,
+        auth: {
+
+          user: 'info@allied-up.com',
+          pass: 'AUPmail*733'
+      }
+  });
+
 
 // setup email data with unicode symbols
-ejs.renderFile(path.resolve(__dirname , "../util/orderConfirmation.ejs"), {homeURL:util.DOMAIN+'index.html', name: address.Name,logo: util.DOMAIN+"assets/img/logo.png",orderid: orderId, orderDate: dateFormat(Date.now(), "fullDate"), orderCount: orderItems.length,
+ejs.renderFile(path.resolve(__dirname , "../util/orderConfirmation.ejs"), {homeURL:util.DOMAIN+'index.html', name: address.Name,logo: util.DOMAIN+"assets/img/logo.png",orderid: order.orderId, orderDate: dateFormat(order.OrderDate, "fullDate"), orderCount: orderItems.length,
                 orderTotal:'Rs. '+ order.OrderTotal }, function (err, data) {
 if(err){
     cb(util.getGenericError("Error",500,"Order Confirmation mail can not be sent."))
@@ -162,13 +182,13 @@ if(err){
       if(err){
           cb(util.getGenericError("Error",500,"Order Confirmation mail can not be sent."))
         }else{
-          let mailClient = {
+          var mailClient = {
             from: 'Akratiindia Updates <info@allied-up.com>', // sender address
             to: [user.email,'akash.rathore1924@gmail.com'], // list of receivers
             subject: 'Your Akratiindia Order Confirmation ( '+ orderId +' ) ', // Subject line
             html: data+itemsData+data1 // html body
           };
-          let mailAkrati = {
+          var mailAkrati = {
             from: 'Akratiindia Updates <info@allied-up.com>', // sender address
             to: 'sanketgoel12345@gmail.com', // list of receivers
             subject: 'Akratiindia Order Confirmation ( '+ orderId +' ) ', // Subject line
@@ -186,12 +206,7 @@ if(err){
 
             }
           });
-          // transporter.sendMail(mailAkrati, (error, info) => {
-          //   if (error) {
-          //     return console.log(error);
-          //   }
-          //   console.log('Message %s sent: %s', info.messageId, info.response);
-          // });
+
 
         }
       });
@@ -201,7 +216,8 @@ if(err){
 
   }
 });
-};
+}
+}
 
   Order.getOrder = function(ctx,cb){
     var realm = ctx.req.header('realm');
@@ -217,7 +233,6 @@ if(err){
       if(err){
         cb(util.getGenericError("Error",500,"Internal Server Error!"));
       }
-      console.log("instance orderId:--"+JSON.stringify(instance));
 
       if(instance[0].OrderId){
         cb(null,instance[0]);
@@ -226,6 +241,174 @@ if(err){
         cb(null);
       }
     });
+  }
+
+  Order.getOrders = function(ctx,cb){
+    var realm = ctx.req.header('realm');
+    var access_code = ctx.req.header('access_code');
+    var skipOrder = ctx.req.header('skip');
+    var clientId = ctx.req.header('token');
+
+    if(!realm || !access_code || access_code != "onyourown" || (realm != "ios" && realm != "web" && realm != "android") || !skipOrder || !clientId){
+      cb(util.getGenericError('Error',400,'Bad Request!'));
+      return;
+    }
+
+    Order.find({where:{OrderClientId:clientId},skip:skipOrder,limit:4,order:'OrderDate DESC'},function(err,instance){
+      if(err){
+        cb(util.getGenericError("Error",500,"Internal Server Error"));
+      }
+      if(instance){
+        for(var i=0;i<instance.length;i++){
+
+        //  instance[i].OrderDate = dateFormat(instance[i].OrderDate,'fulldate');
+        //  instance[i].OrderActionDate = dateFormat(instance[i].OrderActionDate,'fulldate');
+        }
+        cb(null,instance);
+      }else{
+        ctx.res.statusCode = 204;
+        ctx.res.statusText = "No Order Found.";
+        cb(null);
+      }
+    });
+  }
+
+  Order.cancelOrder = function(ctx,cb){
+    var realm = ctx.req.header('realm');
+    var access_code = ctx.req.header('access_code');
+    var orderId = ctx.req.header('orderId');
+    var clientId = ctx.req.header('token');
+    var email = ctx.req.header('email');
+
+    if(!realm || !access_code || access_code != "onyourown" || (realm != "ios" && realm != "web" && realm != "android") || !orderId || !clientId || !email){
+      cb(util.getGenericError('Error',400,'Bad Request!'));
+      return;
+    }
+    var order = {};
+    order.OrderStatus = "Cancelled";
+    order.OrderActionDate = new Date();
+    Order.upsertWithWhere({OrderId:orderId},order,function(err,instance){
+      if(err){
+        cb(util.getGenericError("Error",500,"Internal Server Error"));
+      }
+      if(instance){
+
+        cb(null,instance);
+        var data = '';
+
+        for(var i=0;i<instance.OrderProducts.length;i++){
+
+         data += '<div class="orderDetail" style="width: 84%;margin-left: 5%;border: 1px solid rgba(128, 128, 128, 0.38);border-radius: 8px;padding-left: 2%;padding-bottom: 1%;padding-top: 1%;height:14vw;padding-right: 2%;font-size: 0.8vw;margin-top: 1%;">'+
+             '<div class="orderImage" style="width: 15%;height: 12vw;float:left;">'+
+               '<img src="assets/images/'+instance.OrderProducts[i].PProduct.PCode+'/'+instance.OrderProducts[i].PProduct.PImageSmall+'" width="100%" height="100%">'+
+             '</div>'+
+             '<div class="productName" style="width: 80%;float: right;font-size: 1.5vw;">'+
+               instance.OrderProducts[i].PProduct.PName+
+             '</div><div class="sizeQty" style="width: 40%;float: left;margin-left: 5%;">'+
+               '<table class="sizeTable" style="width: 20%;font-size:1.5vw;">'+
+                 '<th style="text-align: left;font-size=80%;padding: 0;margin: 0;">Size</th><th style="text-align: left;font-size=80%;padding: 0;margin: 0;">Qty</th>';
+                 if(instance.OrderProducts[i].POrderQuant1 > 0){
+
+                   data += '<tr>'+
+                                 '<td style="font-size:80%;padding: 0;margin: 0;">'+instance.OrderProducts[i].PProduct.PSize1+'</td>'+
+                                 '<td style="font-size:80%;padding: 0;margin: 0;">'+instance.OrderProducts[i].POrderQuant1+'</td>'+
+                                 '</tr>';
+
+                 }
+                 if(instance.OrderProducts[i].POrderQuant2 > 0){
+
+                   data += '<tr>'+
+                                 '<td style="font-size:80%;padding: 0;margin: 0;">'+instance.OrderProducts[i].PProduct.PSize2+'</td>'+
+                                 '<td style="font-size:80%;padding: 0;margin: 0;">'+instance.OrderProducts[i].POrderQuant2+'</td>'+
+                                 '</tr>';
+                 }
+                 if(instance.OrderProducts[i].POrderQuant3 > 0){
+
+                   data += '<tr>'+
+                                 '<td style="font-size:80%";padding: 0;margin: 0;>'+instance.OrderProducts[i].PProduct.PSize3+'</td>'+
+                                 '<td style="font-size:80%;padding: 0;margin: 0;">'+instance.OrderProducts[i].POrderQuant3+'</td>'+
+                                 '</tr>';
+                 }
+                 if(instance.OrderProducts[i].POrderQuant4 > 0){
+
+                   data += '<tr>'+
+                                 '<td style="font-size:80%;padding: 0;margin: 0;">'+instance.OrderProducts[i].PProduct.PSize4+'</td>'+
+                                 '<td style="font-size:80%;padding: 0;margin: 0;">'+instance.OrderProducts[i].POrderQuant4+'</td>'+
+                                 '</tr>';
+                 }
+               data += '</table>'+
+               '</div><div class="price" style="width: 40%;float: right;margin-top: 1%;font-size: 1.7vw;">'+
+               'Price: Rs. '+instance.OrderProducts[i].PPriceTotalAll+
+             '</div></div> ';
+           }
+           data += '<div class="orderValue" style="width: 90%;margin-left: 5%;float: left;margin-bottom: 5%;font-size: 1.8vw;">'+
+              ' <div class="valueHeading" style="font-size: 2vw;padding-left: 1%;padding-top: 1%;padding-bottom: 1%;color: brown;">'+
+                 'Your Order Value:'+
+               '</div><div class="orderPrice" style="width: 40%;float: left;padding-left: 8%;">Order Value</div>'+
+               '<div class="orderPriceValue" style="width: 40%;text-align: right;margin-right: 8%;float: right;">Rs. '+instance.OrderAmount+'</div>'+
+               '<hr style="width:84%;"><div class="otherPrice" style="width: 40%;float: left;padding-left: 8%;">Other Charges</div>'+
+               '<div class="otherPriceValue" style="width: 40%;text-align: right;margin-right: 8%;float: right;">'+
+                 'Rs. '+instance.OrderGST+' + Rs. '+instance.OrderDeliveryCharge+'</div>'+
+               '<hr style="width:84%;"><div class="totalPrice" style="width: 40%;float: left;padding-left: 8%;">Total Value </div>'+
+               '<div class="totalPriceValue" style="width: 40%;text-align: right;margin-right: 8%;float: right;">Rs. '+instance.OrderTotal+'</div>'+
+             '</div>  </div></div></div> </div>';
+
+        var transporter = nodemailer.createTransport({
+          ignoreTLS: true,
+          host: 'allied-up.com',
+          port: 587,
+          secure:false,
+          auth: {
+
+            user: 'info@allied-up.com',
+            pass: 'AUPmail*733'
+        }
+    });
+
+
+        ejs.renderFile(path.resolve(__dirname , "../util/orderCancelation.ejs"), {orderId:instance.OrderId }, function (err, data1) {
+          if(err){
+              cb(util.getGenericError("Error",500,"Order Cancellation mail can not be sent."))
+            }else{
+              var mailClient = {
+                from: 'Akratiindia Updates <info@allied-up.com>', // sender address
+                to: [email,'akash.rathore1924@gmail.com'], // list of receivers
+                subject: 'Your Akratiindia Order Cancelled Successfully ( '+ orderId +' ) ', // Subject line
+                html: data1+data // html body
+              };
+              var mailAkrati = {
+                from: 'Akratiindia Updates <info@allied-up.com>', // sender address
+                to: 'sanketgoel12345@gmail.com', // list of receivers
+                subject: 'Akratiindia Order Cancelled Successfully ( '+ orderId +' ) ', // Subject line
+                html: data1+data // html body
+              };
+
+              //send mail with defined transport object
+              transporter.sendMail(mailClient, (error, info) => {
+                if (error) {
+                  return console.log(error);
+                  cb(util.getGenericError("Error",500,"Internal Server Error!"))
+                }else{
+                  console.log('Message %s sent: %s', info.messageId, info.response);
+
+
+                }
+              });
+              // transporter.sendMail(mailAkrati, (error, info) => {
+              //   if (error) {
+              //     return console.log(error);
+              //   }
+              //   console.log('Message %s sent: %s', info.messageId, info.response);
+              // });
+
+            }
+          });
+
+
+
+      }
+    });
+
   }
 
   Order.remoteMethod('placeOrder',{
@@ -241,8 +424,30 @@ if(err){
 
   Order.remoteMethod('getOrder',{
 
-    description:"Method to create order",
+    description:"Method to fetch one order",
     http: {path: '/getOrder', verb: 'get'},
+    accepts: [{arg: 'ctx', type: 'object', http: { source: 'context' } }
+  ],
+    returns: {
+        arg: 'response',type: 'object'
+      }
+  });
+
+  Order.remoteMethod('getOrders',{
+
+    description:"Method to fetch orders",
+    http: {path: '/getOrders', verb: 'get'},
+    accepts: [{arg: 'ctx', type: 'object', http: { source: 'context' } }
+  ],
+    returns: {
+        arg: 'response',type: 'object'
+      }
+  });
+
+  Order.remoteMethod('cancelOrder',{
+
+    description:"Method to cancel order",
+    http: {path: '/cancelOrder', verb: 'get'},
     accepts: [{arg: 'ctx', type: 'object', http: { source: 'context' } }
   ],
     returns: {

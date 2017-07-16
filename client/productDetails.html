@@ -121,7 +121,7 @@
                                                       <span class="glyphicon glyphicon-minus"></span>
                                                   </button>
                                               </span>
-                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="{{prodDetailData.PQuantityMax1}}">
+                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="{{prodDetailData.PQuantityMax1}}" style="padding: 3px;">
                                               <span class="input-group-btn">
                                                   <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd1" onclick="changeQuantity(this)" data-type="plus" data-field="quant1[1]">
                                                       <span class="glyphicon glyphicon-plus"></span>
@@ -142,7 +142,7 @@
                                                             <span class="glyphicon glyphicon-minus"></span>
                                                         </button>
                                                     </span>
-                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="{{prodDetailData.PQuantityMax2}}">
+                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="{{prodDetailData.PQuantityMax2}}" style="padding: 3px;">
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd2" onclick="changeQuantity(this)" data-type="plus" data-field="quant2[1]">
                                                             <span class="glyphicon glyphicon-plus"></span>
@@ -162,7 +162,7 @@
                                                                   <span class="glyphicon glyphicon-minus"></span>
                                                               </button>
                                                           </span>
-                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="{{prodDetailData.PQuantityMax3}}">
+                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="{{prodDetailData.PQuantityMax3}}" style="padding: 3px;">
                                                           <span class="input-group-btn">
                                                               <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd3" onclick="changeQuantity(this)" data-type="plus" data-field="quant3[1]">
                                                                   <span class="glyphicon glyphicon-plus"></span>
@@ -182,7 +182,7 @@
                                                                         <span class="glyphicon glyphicon-minus"></span>
                                                                     </button>
                                                                 </span>
-                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="{{prodDetailData.PQuantityMax4}}">
+                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="{{prodDetailData.PQuantityMax4}}" style="padding: 3px;">
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd4" onclick="changeQuantity(this)" data-type="plus" data-field="quant4[1]">
                                                                         <span class="glyphicon glyphicon-plus"></span>
@@ -201,7 +201,7 @@
                       					<div class="addToCart">
                       						<a href=""><button class="btn btn-primary" id="addToCartBtn" ng-click = "addToCart(prodDetailData)" >Add to Cart</button></a>
                                   <br>
-                                  <span id="prodDetailError"></span>
+                                  <span id="prodDetailError" style="color:red;"></span>
 
                                   <br>
                       					</div>

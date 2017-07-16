@@ -1,0 +1,242 @@
+<div ng-controller="userProfile">
+
+  <!-- Profile HTML Template -->
+  <div class="profile-content">
+    <div class="profile-header">
+      <span class="account-header">Account</span>
+      <div class="account-holder-name">{{profileData.client_fname}}</div>
+      <hr>
+    </div>
+
+    <div class="profile-side-nav">
+      <a href="#my/profile"><div class="side-nav-profile">Profile</div></a>
+      <hr style="width:80%">
+      <a href="#my/orders"><div class="side-nav-orders">Orders</div></a>
+    </div>
+
+    <div class="primary-information">
+      <!-- User  info HTML Template -->
+      <div class="user-information-block" ng-show="category == 'profile'">
+      <div class="primary-header">
+        Personal Information
+        <hr>
+      </div>
+
+      <table class="information-table">
+        <tr class="information-row">
+          <td>
+      <div class="fname-label">First Name</div></td>
+      <td>
+      <div class="fname-value">{{profileData.client_fname}}</div></td>
+    </tr>
+    <tr class="information-row">
+      <td>
+    <div class="lname-label">Last Name</div></td>
+    <td>
+    <div class="lname-value">{{profileData.client_lname}}</div></td>
+  </tr>
+  <tr class="information-row">
+    <td>
+    <div class="gender-label">Gender</div></td>
+    <td>
+    <div class="gender-value">{{profileData.client_gender}}</div></td>
+  </tr>
+  <tr class="information-row">
+    <td>
+    <div class="dob-label">Date Of Birth</div></td>
+    <td>
+    <div class="dob-value">{{profileData.client_dob}}</div></td>
+  </tr>
+  <tr class="information-row">
+    <td>
+    <div class="mobile-label">Mobile</div></td>
+    <td>
+    <div class="mobile-value">{{profileData.client_mobile}}</div></td>
+  </tr>
+  <tr class="information-row">
+    <td>
+    <div class="location-label">Location</div></td>
+    <td>
+    <div class="location-value">{{profileData.client_city}}</div></td>
+  </tr>
+  <tr class="information-row">
+    <td>
+    <div class="email-label">Email</div></td>
+    <td>
+    <div class="email-value">{{profileData.client_email}}</div></td>
+  </tr>
+  <tr class="information-row">
+    <td>
+      <button class="edit-information" ng-click="openProfileEditModal();">Edit</button>
+
+    </td>
+  </tr>
+</table>
+
+  </div>
+
+  <!-- Orders HTML Template -->
+  <div class="orders-content" ng-show="category == 'orders'">
+    <div class="orders-header">
+      Orders
+    </div>
+    <hr style="width:91%;">
+<div class="noOrder-content" ng-show="noOrders == true">
+<div class="noOrder-header">
+You have not ordered anything till now
+</div>
+<div class="go-to-cart-button">
+<a href="#cart"><button type="button" class="go-to-cart">Go To Cart</button></a>
+</div>
+</div>
+  <div ng-repeat="order in orderData" class="profile-order-detail">
+    <div ng-class="order.OrderStatus">{{order.OrderStatus}}</div>
+    <div class="profile-order-number">Order Id: {{order.OrderId}}</div>
+    <div class="profile-order-placed" ng-show="order.OrderStatus == 'Placed'">Placed on {{order.OrderDate.toDateString()}} / Expected Delivery by {{order.OrderActionDate.toDateString()}} </div>
+    <div class="profile-order-cancelled" ng-show="order.OrderStatus == 'Cancelled'">Placed on {{order.OrderDate.toDateString()}} / Cancelled on {{order.OrderActionDate.toDateString()}} </div>
+    <div class="profile-order-delivered" ng-show="order.OrderStatus == 'Delivered'">Placed on {{order.OrderDate.toDateString()}} / Delivered on {{order.OrderActionDate.toDateString()}} </div>
+
+    <hr style="width: 90%;">
+    <div class="profile-order-items">Items : {{order.OrderProducts.length}}
+      <span ng-show="order.OrderProducts.length != 1">Items</span>
+      <span ng-show="order.OrderProducts.length == 1">Item</span>/ Rs. {{order.OrderTotal}}</div>
+      <div ng-repeat="product in order.OrderProducts" class="profile-orders-image">
+        <img src="assets/images/{{product.PCode}}/{{product.PProduct.PImageSmall}}" width="100%" height="100%">
+      </div>
+      <div class="clearfix"></div>
+      <div class="order-action-placed" ng-show="order.OrderStatus == 'Placed'">
+        <div class="order-cancel">
+          <button type="button" class="cancel-order-button" ng-click="cancelOrder(order.OrderId)">Cancel Order</button>
+        </div>
+
+      </div>
+
+  </div>
+  <button type="button" class="more-order-button" ng-click="getMoreOrders()" ng-show="moreOrders == true">More Orders</div>
+  </div>
+
+</div>
+<div class="clearfix"></div>
+
+
+
+
+
+
+<div class="modal fade" id="profileEditModal" role="dialog">
+  <div class="modal-dialog" role="document" style="margin-top:8%;width: 41%;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle" style="font-family: sans-serif;"> Profile Details</h5>
+    </div>
+    <div class="modal-body">
+      <div class="account-details">
+        <div class="account-mobile-detail">
+          <div class="account-mobile-label">Mobile <sup>*</sup></div>
+          <div class="account-mobile-input">
+            <input type="text" ng-model="editProfileData.client_mobile" readonly="true" style="width:96%;background:aliceblue;" class="profile-input">
+          </div>
+        </div>
+        <div class="account-password-detail">
+          <div class="account-password-label">Password <sup>*</sup></div>
+          <div class="account-password-change"><a href="" ng-click="openChangePasswordModal();">Change Password</a></div>
+          <div class="account-password-input">
+            <input type="password" ng-model="editProfileData.client_password" readonly="true" style="width:96%;background:aliceblue;" class="profile-input">
+          </div>
+        </div>
+
+          <div class="account-fname-detail">
+            <div class="account-fname-label">First Name</div>
+            <div class="account-fname-input">
+              <input type="text" ng-model="editProfileData.client_fname"  class="profile-input">
+            </div>
+          </div>
+          <div class="account-lname-detail">
+            <div class="account-lname-label">Last Name</div>
+            <div class="account-lname-input">
+              <input type="text" ng-model="editProfileData.client_lname"   class="profile-input">
+            </div>
+          </div>
+          <div class="account-email-detail">
+            <div class="account-email-label">Email<sup>*</sup></div>
+            <div class="account-email-input">
+              <input type="text" ng-model="editProfileData.client_email" readonly="true" style="background:aliceblue;" class="profile-input">
+            </div>
+          </div>
+          <div class="account-dob-detail">
+            <div class="account-dob-label">Date of Birth</div>
+            <div class="account-dob-input">
+              <div style="position:relative;height:62px;">
+              <input type="text" id="calendar_input" ng-model="editProfileData.client_dob" readonly="readonly">
+              <span><img id="calendar_icon" src="assets/img/calendar.png" border="0"></span>
+              </div>
+              <div id="showCalendar" style="position:relative;"></div>
+
+
+            </div>
+          </div>
+          <div class="account-location-detail">
+            <div class="account-location-label">Loctation</div>
+            <div class="account-location-input">
+              <input type="text" ng-model="editProfileData.client_city" class="profile-input">
+            </div>
+          </div>
+          <div class="account-gender-detail">
+            <div class="account-gender-label">Gender</div>
+            <div style="margin-top: 1%;">
+            <div class="account-gender-male">
+              <input type="radio" ng-model="editProfileData.client_gender_male" value="male" name="gender"  style="width: 12%;height: 1.5vw;" class="profile-input" ng-click="maleGenderSelected();">
+              <span>Male</span>
+            </div>
+            <div class="account-gender-female">
+              <input type="radio" ng-model="editProfileData.client_gender_female" value="female" name="gender"  style="width: 12%;height: 1.5vw;" class="profile-input" ng-click="femaleGenderSelected();">
+              <span>Female</span>
+            </div>
+          </div>
+        </div>
+        <div class="editProfile-error">{{editProfileData.error}}</div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="cancel-profile-button" data-dismiss="modal" style="width:25%;">Cancel</button>
+      <button type="button" class="save-profile-button" style="width:25%;" ng-click="saveProfileData();">Save</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" role="dialog">
+  <div class="modal-dialog" role="document" style="margin-top: 15%;margin-left: 51%;width: 20%;">
+  <div class="modal-content" style="height: 22vw;">
+    <div class="modal-body">
+      <div class="change-password-label">
+        Old Password <sup>*</sup>
+      </div>
+      <div class="change-password-old-value">
+        <input type="password" ng-model="changePassword.old" class="profile-input">
+      </div>
+      <div class="change-password-label">
+        New Password <sup>*</sup>
+      </div>
+      <div class="change-password-new-value">
+        <input type="password" ng-model="changePassword.new" class="profile-input">
+      </div>
+      <div class="change-password-label">
+        Confirm New Password <sup>*</sup>
+      </div>
+      <div class="change-password-confirm-value">
+        <input type="password" ng-model="changePassword.confirm" class="profile-input">
+      </div>
+      <div class="changePassword-button">
+        <button type="button" class="change-password-button" ng-click="changeUserPassword();">Change Password</button>
+      </div>
+      <div class="change-password-error">{{changePassword.error}}</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+</div>

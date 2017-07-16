@@ -25,14 +25,22 @@
     <input type="button" id="order-button" class="form-control" value="Place Order" ng-click="placeOrder();"></input>
   </div>
 
+<div ng-show="cartCount == 0" class="empty-cart-container">
+<div class="empty-cart-header">Your Cart is empty</div>
+</div>
+<div class="empty-cart-button" ng-show="cartCount == 0">
+<a href="#product/search=all"><button type="button" class="empty-cart-add">Add Items</button></a>
+</div>
+
   <div class="cart-container" id="cartContainer" >
-<div class="cart-top">
-   <div class="cart-items">My Cart ({{cartCount}} Items)</div>
-<div class="cart-total-price">
+    <div class="cart-top" ng-show="cartCount > 0">
+    <div class="cart-items">My Cart ({{cartCount}} Items)</div>
+    <div class="cart-total-price">
      <div class="cart-total">Cart Total: Rs. {{cartRupeeTotal}}</div>
 
      </div>
    </div>
+   <div class="clearfix" style="height:1px;"></div>
      <div ng-repeat="item in items">
              <div class="cart-block">
                <div class="cart-right-block">
@@ -61,40 +69,43 @@
 
                <div class="cart-item-content">
               <div class="cart-left-block">
-               <div class="cart-title"> <b>{{item.PProduct.PName}}</b> </div>
-               <div class="cart-quantity"><b>Qty:</b>
-                <div class="cart-price-header">
-                   <span> Size</span>
-                   <span> No. of Units </span>
-                   <span> Unit Price </span>
-                   <span> Total Price </span>
-                 </div>
+               <div class="cart-title"> {{item.PProduct.PName}}</div>
+               <div class="cart-quantity">
+                 <table style="width: 95%;    margin-top: 5%;">
+                   <tr>
+                   <th> Size</th>
+                   <th> Units </th>
+                   <th> Price </th>
+                   <th> Total Price </th></tr>
+
                  <div>
-                   <div ng-if = "item.POrderQuant1 > 0">
-                     <span>{{item.PProduct.PSize1}}</span>
-                     <span>{{item.POrderQuant1}}</span>
-                     <span>Rs. {{item.PProduct.PPrice1}}</span>
-                     <span>Rs. {{item.PRupeeTotal1}}</span>
-                   </div>
-                   <div ng-if ="item.POrderQuant2 > 0">
-                     <span>{{item.PProduct.PSize2}}</span>
-                     <span>{{item.POrderQuant2}}</span>
-                     <span>Rs. {{item.PProduct.PPrice2}}</span>
-                     <span>Rs. {{item.PRupeeTotal2}}</span>
-                   </div>
-                   <div ng-if ="item.POrderQuant3 > 0">
-                     <span>{{item.PProduct.PSize3}}</span>
-                     <span>{{item.POrderQuant3}}</span>
-                     <span>Rs. {{item.PProduct.PPrice3}}</span>
-                     <span>Rs. {{item.PRupeeTotal3}}</span>
-                   </div>
-                   <div ng-if ="item.POrderQuant4 > 0">
-                     <span>{{item.PProduct.PSize4}}</span>
-                     <span>{{item.POrderQuant4}}</span>
-                     <span>Rs. {{item.PProduct.PPrice4}}</span>
-                     <span>Rs. {{item.PRupeeTotal4}}</span>
+
+                     <tr ng-if = "item.POrderQuant1 > 0">
+                     <td>{{item.PProduct.PSize1}}</td>
+                     <td>{{item.POrderQuant1}}</td>
+                     <td>Rs. {{item.PProduct.PPrice1}}</td>
+                     <td>Rs. {{item.PRupeeTotal1}}</td></tr>
+
+                     <tr ng-if ="item.POrderQuant2 > 0">
+                     <td>{{item.PProduct.PSize2}}</td>
+                     <td>{{item.POrderQuant2}}</td>
+                     <td>Rs. {{item.PProduct.PPrice2}}</td>
+                     <td>Rs. {{item.PRupeeTotal2}}</td></tr>
+
+                     <tr ng-if ="item.POrderQuant3 > 0">
+                     <td>{{item.PProduct.PSize3}}</td>
+                     <td>{{item.POrderQuant3}}</td>
+                     <td>Rs. {{item.PProduct.PPrice3}}</td>
+                     <td>Rs. {{item.PRupeeTotal3}}</td></tr>
+
+                     <tr ng-if ="item.POrderQuant4 > 0">
+                     <td>{{item.PProduct.PSize4}}</td>
+                     <td>{{item.POrderQuant4}}</td>
+                     <td>Rs. {{item.PProduct.PPrice4}}</td>
+                     <td>Rs. {{item.PRupeeTotal4}}</td></tr>
                    </div>
                  </div>
+               </table>
                  </div>
                </div>
 

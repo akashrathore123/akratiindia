@@ -16,37 +16,43 @@
     "OrderDeliveryCharge": {
       "type": "string"
     },
-    "OrderAddress": {
-      "type": "Address",
-      "required": false
-    },
-    "OrderAmount": {
+    "OrderStatus": {
       "type": "string",
-      "required": false
+      "required": true
     },
-    "OrderClientId": {
-      "type": "string",
-      "required": false
+    "OrderActionDate": {
+      "type": "date",
+      "required": true
     },
     "OrderId": {
       "type": "string",
-      "required": false
+      "required": true
     },
-    "OrderTotal": {
+    "OrderDate": {
+      "type": "date",
+      "required": true
+    },
+    "OrderClientId": {
       "type": "string",
-      "required": false
+      "required": true
+    },
+    "OrderAddress": {
+      "type": "Address",
+      "required": true
+    },
+    "OrderAmount": {
+      "type": "string",
+      "required": true
     },
     "OrderProducts": {
       "type": [
         "any"
       ],
-      "required": false
+      "required": true
     },
-    "OrderDate": {
-      "type": "date"
-    },
-    "OrderStatus": {
-      "type": "string"
+    "OrderTotal": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],

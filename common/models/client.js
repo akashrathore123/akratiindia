@@ -4,6 +4,7 @@ var uuid = require("uuid");
 var nodemailer = require("nodemailer");
 var ejs = require("ejs");
 var path = require("path");
+var http = require("https");
 module.exports = function(Client) {
 
  /* Register new User */
@@ -19,7 +20,7 @@ if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && re
 var body = data.req.body;
 if(!body.email || !body.mobile || !body.password || !realm){
 
-  cb(util.getGenericError("Error",422,"Request Unprocessable"));
+  cb(util.getGenericError("Error",422,"All fields are required"));
   return;
 }
 if(!validate.isEmail(body.email)){
@@ -45,22 +46,38 @@ if(realm != 'web' && realm != 'ios' && realm != 'android'){
 
 }
 
-Client.findOne({where:{client_email:body.email}},function(err,clientInstance){
+Client.findOne({where:{and:[{client_email:body.email},{client_verified:{like:'YES'}}]}},function(err,clientInstance){
     if(err){
-      cb(util.getGenericError("Error", 500, "Internal Server Error"));
+      cb(util.getGenericError("Error", 500, "Error occured.Try Again!"));
       return;
     }
     if(clientInstance){
       cb(util.getGenericError("Error", 402, "Email already registered."));
       return;
     }
+  else{
+
+    Client.findOne({where:{and:[{client_mobile:body.mobile},{client_verified:{like:'YES'}}]}},function(err,clientInstance){
+        if(err){
+          cb(util.getGenericError("Error", 500, "Error occured.Try Again!"));
+          return;
+        }
+        if(clientInstance){
+          cb(util.getGenericError("Error", 402, "Mobile number already registered."));
+          return;
+        }
+        else{
     var uuid5 = uuid.v4() + body.mobile.charAt(3);
     console.log(uuid5);
+
+    var otp = Math.floor((Math.random() * 10000));
+
+
     var registerData = {
                   "client_mobile": body.mobile,
                   "client_email": body.email,
                   "client_password": body.password,
-                  "client_verified": "NO",
+                  "client_verified": otp,
                   "client_token": uuid5,
                   "client_realm": realm,
                   "client_fname": "",
@@ -69,21 +86,82 @@ Client.findOne({where:{client_email:body.email}},function(err,clientInstance){
     };
 console.log(registerData);
 
-  Client.create(registerData,function(err,instance){
+  Client.upsert(registerData,function(err,instance){
 
     if(err){
-       cb(util.getGenericError("Error", 500, "Internal Server Error."));
+       cb(util.getGenericError("Error", 500, "Error occured.Try Again!"));
        return;
-    }else{
+    }
+    if(instance){
+      console.log("instance---"+JSON.stringify(instance));
+      console.log("sending sms");
+      http.get('https://rest.nexmo.com/sms/json' +
+      '?api_key=f2bdd581&api_secret=1b9c05087557ccb1' +
+      '&from=Akratiindia&to=9557404911' +
+      '&text=Akratiindia+verification+code+is '+otp,function() {
+    console.log("sms sent");
+    data.res.on('data', function(data) {
+    console.log("data------------------------"+JSON.stringify(data));
+
+    });
+  }
+).on('error', function() {
+  console.log("Error in sending sms");
+});
       cb(null, instance);
+      return;
+    }else{
+      cb(util.getGenericError("Error", 500, "Error occured.Try Again!"));
       return;
     }
 
   });
+}
+});
+}
 });
 
 
 }
+
+Client.submitOTP = function(ctx,cb){
+  var realm = ctx.req.header("realm");
+  var access_code = ctx.req.header("access_code");
+  var data = ctx.req.body;
+
+  if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android") || !data.clientId || !data.OTP){
+    cb(util.getGenericError("Error", 405, "Bad Request!"));
+
+  }else{
+    Client.findOne({where:{client_token:data.clientId}},function(err,instance){
+      if(err){
+        cb(util.getGenericError("Error", 500, "Internal server error"));
+      }
+      if(instance){
+         if(instance.client_verified == data.OTP){
+           instance.client_verified == "YES";
+           instance.updateAttribute('client_verified',"YES",function(err,instanceUpdated){
+             if(err){
+               cb(util.getGenericError("Error", 500, "Error occured.Try again!"));
+             }
+             if(instanceUpdated){
+               cb(null,instanceUpdated);
+             }else{
+               cb(util.getGenericError("Error", 500, "Error occured.Try again!"));
+             }
+
+           })
+
+         }else{
+               cb(util.getGenericError("Error", 405, "Enter correct OTP"));
+             }
+       }else{
+         cb(util.getGenericError("Error",405,"User not found"));
+       }
+        })
+      }
+  }
+
 
  /* Login user */
 Client.login = function(data, cb, next){
@@ -277,7 +355,7 @@ Client.submitQuery = function(req,cb){
     return;
   }
 
-  let transporter = nodemailer.createTransport({
+  var transporter = nodemailer.createTransport({
 
     ignoreTLS: true,
     host: 'allied-up.com',
@@ -295,7 +373,7 @@ Client.submitQuery = function(req,cb){
     if(err){
         cb(util.getGenericError("Error",500,"Order Confirmation mail can not be sent."))
       }else{
-        let mailAkrati = {
+        var mailAkrati = {
           from: 'Akratiindia Query <info@allied-up.com>', // sender address
           to: 'info@allied-up.com', // list of receivers
           subject: 'Akratiindia User Query ', // Subject line
@@ -314,6 +392,61 @@ Client.submitQuery = function(req,cb){
     });
 }
 
+Client.getProfile = function(data,cb){
+  var req = data.req;
+  var realm = req.header("realm");
+  var access_code = req.header("access_code");
+  var token = req.header("token");
+
+  if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android") || !token){
+    cb(util.getGenericError("Error", 405, "Bad Request!"));
+    return;
+  }
+
+  Client.findOne({where:{client_token:token}},function(err,instance){
+    if(err){
+      cb(util.getGenericError("Error", 500, "Internal Server Error!"));
+      return;
+
+    }
+    if(instance){
+      cb(null,instance);
+    }else{
+      data.res.statusCode = 204;
+      data.res.statusText = "No User Found";
+      data.res.data = {};
+      cb(null,data.res.data);
+
+    }
+  })
+}
+
+Client.updateProfile = function(ctx,cb){
+  var req = ctx.req;
+  var realm = req.header("realm");
+  var access_code = req.header("access_code");
+  var clientId = req.header("id");
+
+  if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android") || !clientId){
+    cb(util.getGenericError("Error", 405, "Bad Request!"));
+    return;
+  }
+  var requestData = {};
+  console.log(req.body);
+  requestData = req.body;
+  Client.upsertWithWhere({id:clientId},requestData,function(err,instance){
+    if(err){
+      console.log(err);
+      cb(util.getGenericError("Error", 500, "Internal Server Error!"));
+      return;
+    }
+    if(instance){
+      console.log(JSON.stringify(instance));
+      cb(null,instance);
+    }
+  })
+}
+
 /* Remote methods registration */
 Client.remoteMethod('userRegister',{
 
@@ -324,6 +457,16 @@ Client.remoteMethod('userRegister',{
       arg: 'response',type: 'object'
     }
 });
+Client.remoteMethod('submitOTP',{
+
+  description:"Verify mobile using OTP",
+  http: {path: '/submitOTP', verb: 'post'},
+  accepts: {arg: 'data', type: 'object', http: { source: 'context' } },
+  returns: {
+      arg: 'response',type: 'object'
+    }
+});
+
 Client.remoteMethod('login',{
 
   description:"Login User ",
@@ -373,4 +516,24 @@ Client.remoteMethod('submitQuery',{
        arg: 'response', type: 'string'
     }
 });
+
+Client.remoteMethod('getProfile',{
+
+  description:"Fetch user details by user token",
+  http: {path: '/getProfile', verb: 'get'},
+  accepts: {arg: 'data', type: 'object', http: { source: 'context' } },
+  returns: {
+       arg: 'response', type: 'object'
+    }
+});
+
+Client.remoteMethod('updateProfile',{
+  description:"Update Profile data using client id",
+  http: {path: '/updateProfile', verb: 'patch'},
+  accepts: {arg: 'data', type: 'object', http: { source: 'context' } },
+  returns: {
+       arg: 'response', type: 'object'
+    }
+})
+
 };

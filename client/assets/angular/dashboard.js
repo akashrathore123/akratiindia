@@ -17,6 +17,11 @@ app.directive('fileModel', ['$parse', function ($parse) {
            };
         }]);
 
+app.factory('baseAPIUrl',function(){
+      var baseURL = "http://139.59.23.178/api/";
+      return baseURL;
+  });
+
 app.service('uploadFile',function(){
 
   this.upload = function(file, PCode, $http, $scope){
@@ -80,11 +85,14 @@ app.service('uploadFile',function(){
   .when('/totalUsers',{
     templateUrl:"totalUsers.html"
   })
+  .when('/uploadSheet',{
+    templateUrl:"uploadSheet.html"
+  })
   .when('/error500',{
     templateUrl:"error500.html"
   });
 });
-app.controller('dashboard',['$scope','$http','$window','$localStorage',function($scope,$http,$window,$localStorage){
+app.controller('dashboard',['$scope','$http','$window','$localStorage','baseAPIUrl',function($scope,$http,$window,$localStorage,baseAPIUrl){
   $http.defaults.headers.common = {'access_code':'onadmin'};
   //alert(JSON.stringify($localStorage.admin));
   if($localStorage.admin == undefined || $localStorage.admin == ""){
@@ -99,7 +107,7 @@ app.controller('dashboard',['$scope','$http','$window','$localStorage',function(
   }
 }]);
 
-app.controller('addProduct',['$scope','$http','$window','uploadFile',function($scope,$http,$window,uploadFile){
+app.controller('addProduct',['$scope','$http','$window','uploadFile','baseAPIUrl',function($scope,$http,$window,uploadFile,baseAPIUrl){
    $scope.addError = "";
    $http.defaults.headers.common = {'access_code':'onadmin'};
 
@@ -121,7 +129,7 @@ app.controller('addProduct',['$scope','$http','$window','uploadFile',function($s
   $http({
 
          method : 'POST',
-         url : 'http://localhost:3000/api/Products/addProduct',
+         url : baseAPIUrl+'Products/addProduct',
          headers: {'Content-Type': 'application/json',
                     'realm': 'web'},
          data: product
@@ -144,8 +152,49 @@ app.controller('addProduct',['$scope','$http','$window','uploadFile',function($s
      });
    }
 }]);
+app.controller('uploadSheetController',['$scope','$http','$window','uploadFile','baseAPIUrl',function($scope,$http,$window,uploadFile,baseAPIUrl){
 
-app.controller('updateProduct',['$scope','$http','$window','uploadFile',function($scope,$http,$window,uploadFile){
+   $scope.uploadSheet = function(){
+
+     var sheetContainer = "ProductSheets";
+   function sheetUpload(sheetContainer){
+   $scope.uploadSheetError = "";
+   $scope.uploadSheetSuccess = "";
+
+   $http.defaults.headers.common = {'access_code':'onadmin'};
+
+   if(!$scope.productSheet){
+     $scope.uploadSheetError = "Select sheet to upload";
+     return;
+   }
+   uploadFile.upload($scope.productSheet, sheetContainer, $http, $scope)
+  //  setTimeout(function(){
+   //
+  //       $http({
+  //         method : 'GET',
+  //         url : 'http://localhost:3000/api/Products/uploadSheet',
+  //         headers: {'Content-Type': 'application/json',
+  //                    'realm': 'web',
+  //                    'fileName':$scope.productSheet.name},
+   //
+  //       }).
+  //       success(function(data,status,headers,config){
+  //         $scope.uploadSheetSuccess = "Products uploaded Successfully";
+  //       }).
+  //       error(function(data,status,headers,config){
+  //         $scope.uploadSheetError= "Error Occurred";
+  //       })
+   //
+   //
+  //   },9000);
+
+}
+  sheetUpload(sheetContainer);
+}
+
+ }]);
+
+app.controller('updateProduct',['$scope','$http','$window','uploadFile','baseAPIUrl',function($scope,$http,$window,uploadFile,baseAPIUrl){
 $http.defaults.headers.common = {'access_code':'onadmin'};
     var Pcodes=[];
   $http({
@@ -173,7 +222,7 @@ $http.defaults.headers.common = {'access_code':'onadmin'};
         var Pcodes=[];
       $http({
         method : 'GET',
-        url : 'http://localhost:3000/api/Products/getUpdateProduct',
+        url : baseAPIUrl+'Products/getUpdateProduct',
         headers: {'Content-Type': 'application/json',
                    'realm': 'web',
                     'code': code},
@@ -224,7 +273,7 @@ var productCode = product.PCode;
    $http({
 
           method : 'PUT',
-          url : 'http://localhost:3000/api/Products/updateProduct',
+          url : baseAPIUrl+'Products/updateProduct',
           headers: {'Content-Type': 'application/json',
                      'realm': 'web',
                    'code': productCode },

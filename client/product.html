@@ -1,81 +1,88 @@
     <div>
         <div>
 
-          <div class="main-container"  ng-controller = "showProducts">
-            <div class="container" id="filter-container">
+          <div class="main-container"  ng-controller = "showProducts" >
+
+            <div ng-show="noContent==true" class="no-product" style="padding-top: 18%;">
+              <div class="no-product-content">
+              <div class="no-product-text">No Product found matching your search<br>Try again!</div>
+            </div>
+          </div>
+
+            <div class="container" id="filter-container" ng-show="noContent==false">
               <div ng-show="filterData.companies.length > 0" class="company-filter">
-                <b>Companies</b>
+                <b style="color: cadetblue;font-size: 1vw;">Companies</b>
                 <div ng-repeat="company in filterData.companies">
-                  <input type="checkbox" ng-model="company.checked" ng-change="companyFilter(company)">  {{company.company}}</input> ({{company.count}})
+                  <input type="checkbox" style="margin-right:2%;" ng-model="company.checked" ng-change="companyFilter(company)">  {{company.company}}</input> ({{company.count}})
                 </div>
 
             </div>
             <div ng-show="filterData.sizes.length >= 1" class="size-filter">
-              <b>Sizes</b>
+              <b style="color: cadetblue;font-size: 1vw;">Sizes</b>
               <div ng-repeat="size in filterData.sizes">
-                <input type="checkbox" ng-model="size.checked" ng-change="sizeFilter(size)" value="{{size.size}}" name="{{size.size}}">  {{size.size}}</input> ({{size.count}})
+                <input type="checkbox" style="margin-right:2%;" ng-model="size.checked" ng-change="sizeFilter(size)" value="{{size.size}}" name="{{size.size}}">  {{size.size}}</input> ({{size.count}})
               </div>
 
           </div>
 
           <div ng-show="filterData.materials.length >= 3" class="material-filter">
-            <b>Material</b>
+            <b style="color: cadetblue;font-size: 1vw;">Material</b>
             <div ng-repeat="material in filterData.materials">
-              <input type="checkbox" ng-model="material.checked" ng-change="materialFilter(material)" value="{{material.material}}" name="{{material.material}}">  {{material.material}}</input> ({{material.count}})
+              <input type="checkbox" style="margin-right:2%;" ng-model="material.checked" ng-change="materialFilter(material)" value="{{material.material}}" name="{{material.material}}">  {{material.material}}</input> ({{material.count}})
             </div>
           </div>
 
           <div ng-show="(filterData.price.priceMax - filterData.price.priceMin) > 40 && filterData.price.priceFilter === true" class="price-filter">
-            <b>Price</b>
+            <b style="color: cadetblue;font-size: 1vw;">Price</b>
             <div ng-show="filterData.price.price1Exist != 0 && filterData.price.price1 != undefined && filterData.price.price1 != '' && filterData.price.price2 != undefined && filterData.price.price2 != ''">
-              <input type="checkbox" ng-model="price1" ng-change="priceFilter(price1,{{filterData.price.price1}},{{filterData.price.price2}})" > Rs. {{filterData.price.price1}} to Rs. {{filterData.price.price2}}</input> ({{filterData.price.price1Products}})
+              <input type="checkbox" style="margin-right:2%;" ng-model="price1" ng-change="priceFilter(price1,{{filterData.price.price1}},{{filterData.price.price2}})" > Rs. {{filterData.price.price1}} to Rs. {{filterData.price.price2}}</input> ({{filterData.price.price1Products}})
             </div>
             <div ng-show="filterData.price.price2Exist != 0 && filterData.price.price3 != undefined && filterData.price.price3 != '' && filterData.price.price4 != undefined && filterData.price.price4 != ''">
-              <input type="checkbox" ng-model="price2" ng-change="priceFilter(price2,{{filterData.price.price3}},{{filterData.price.price4}})"> Rs. {{filterData.price.price3}} to Rs. {{filterData.price.price4}}</input> ({{filterData.price.price2Products}})
+              <input type="checkbox" style="margin-right:2%;" ng-model="price2" ng-change="priceFilter(price2,{{filterData.price.price3}},{{filterData.price.price4}})"> Rs. {{filterData.price.price3}} to Rs. {{filterData.price.price4}}</input> ({{filterData.price.price2Products}})
             </div>
             <div ng-show="filterData.price.price3Exist != 0 && filterData.price.price5 != undefined && filterData.price.price5 != '' && filterData.price.price6 != undefined && filterData.price.price6 != ''">
-              <input type="checkbox" ng-model="price3" ng-change="priceFilter(price3,{{filterData.price.price5}},{{filterData.price.price6}})"> Rs. {{filterData.price.price5}} to Rs. {{filterData.price.price6}}</input> ({{filterData.price.price3Products}})
+              <input type="checkbox" style="margin-right:2%;" ng-model="price3" ng-change="priceFilter(price3,{{filterData.price.price5}},{{filterData.price.price6}})"> Rs. {{filterData.price.price5}} to Rs. {{filterData.price.price6}}</input> ({{filterData.price.price3Products}})
             </div>
             <div ng-show="filterData.price.price4Exist != 0 && filterData.price.price7 != undefined && filterData.price.price7 != '' && filterData.price.price8 != undefined && filterData.price.price8 != ''">
-              <input type="checkbox" ng-model="price4" ng-change="priceFilter(price4,{{filterData.price.price7}},{{filterData.price.price8}})"> Rs. {{filterData.price.price7}} to Rs. {{filterData.price.price8}}</input> ({{filterData.price.price4Products}})
+              <input type="checkbox" style="margin-right:2%;" ng-model="price4" ng-change="priceFilter(price4,{{filterData.price.price7}},{{filterData.price.price8}})"> Rs. {{filterData.price.price7}} to Rs. {{filterData.price.price8}}</input> ({{filterData.price.price4Products}})
             </div>
 
         </div>
 
         <div ng-show="filterData.discount.discountFilter === true && (filterData.discount.discountMax - filterData.discount.discountMin) > 4" class="discount-filter">
-          <b>Discount</b>
+          <b style="color: cadetblue;font-size: 1vw;">Discount</b>
           <div ng-show="filterData.discount.discount1 != undefined">
-            <input type="checkbox" ng-model="discountCheck1" ng-change="discountFilter(discountCheck1,filterData.discount.discount1)" value="{{filterData.discount.discount1}}" name="{{filterData.discount.discount1}}"> {{filterData.discount.discount1}} % and Above</input>
+            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck1" ng-change="discountFilter(discountCheck1,filterData.discount.discount1)" value="{{filterData.discount.discount1}}" name="{{filterData.discount.discount1}}"> {{filterData.discount.discount1}} % and Above</input>
           </div>
           <div ng-show="filterData.discount.discount2 != undefined">
-            <input type="checkbox" ng-model="discountCheck2" ng-change="discountFilter(discountCheck2,filterData.discount.discount2)" value="{{filterData.discount.discount2}}" name="{{filterData.discount.discount2}}"> {{filterData.discount.discount2}} % and Above</input>
+            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck2" ng-change="discountFilter(discountCheck2,filterData.discount.discount2)" value="{{filterData.discount.discount2}}" name="{{filterData.discount.discount2}}"> {{filterData.discount.discount2}} % and Above</input>
           </div>
           <div ng-show="filterData.discount.discount3 != undefined">
-            <input type="checkbox" ng-model="discountCheck3" ng-change="discountFilter(discountCheck3,filterData.discount.discount3)" value="{{filterData.discount.discount3}}" name="{{filterData.discount.discount3}}"> {{filterData.discount.discount3}}% and Above</input>
+            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck3" ng-change="discountFilter(discountCheck3,filterData.discount.discount3)" value="{{filterData.discount.discount3}}" name="{{filterData.discount.discount3}}"> {{filterData.discount.discount3}}% and Above</input>
           </div>
           <div ng-show="filterData.discount.discount4 != undefined">
-            <input type="checkbox" ng-model="discountCheck4" ng-change="discountFilter(discountCheck4,filterData.discount.discount4)" value="{{filterData.discount.discount4}}" name="{{filterData.discount.discount4}}"> {{filterData.discount.discount4}}% and Above</input>
+            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck4" ng-change="discountFilter(discountCheck4,filterData.discount.discount4)" value="{{filterData.discount.discount4}}" name="{{filterData.discount.discount4}}"> {{filterData.discount.discount4}}% and Above</input>
           </div>
         </div>
 
           </div>
-          <div class="container" id="productContainer">
+          <div class="container" id="productContainer" ng-show="noContent==false">
           <div class="products-grid">
     <div ng-repeat="product in products.fields">
       <div ng-repeat="prod in product">
          					<div class="col-md-4 product simpleCart_shelfItem text-center" id="itemTab">
 
-      						<a href="#productDetails/{{prod.PCode}}" target="_blank"><img src="assets/images/{{prod.PCode}}/{{prod.PImageSmall}}" alt="" width="180" height="240"></a>
+      						<a href="#productDetails/{{prod.PCode}}" target="_blank" class="productImageBox"><img src="assets/images/{{prod.PCode}}/{{prod.PImageSmall}}" alt="" width="175" height="230"></a>
       						<div class="mask">
       							<a href="" ng-click="setModalData(prod)"  data-toggle="modal" data-target="#myModal" class="quick">Quick View</a>
                   </div>
-                    <div ng-show="prod.PDiscount != undefined && prod.PDiscount != ''">
+                    <div ng-show="prod.PDiscount != undefined && prod.PDiscount != ''" style="font-size: 0.85vw;height: 7.8vw;">
                       <h4>{{prod.PName}}</h4>
                       <Strike> Rs. {{prod.PRupee1}}</Strike>
                       <span class="discount">({{prod.PDiscount}}% OFF)</span>
                       <span> Rs. {{prod.PDiscountRupee1}}</span>
                     </div>
-                    <div ng-show="prod.PDiscount === undefined || prod.PDiscount === ''">
+                    <div ng-show="prod.PDiscount === undefined || prod.PDiscount === ''" style="font-size: 0.85vw;height: 7.8vw;">
                       <h4>{{prod.PName}}</h4>
                       Rs. {{prod.PRupee1}}
                     </div>
@@ -84,14 +91,14 @@
                       <div class="modal-dialog">
                         <div class="modal-content" id="product-modal">
                           <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">{{modalData.PName}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">&times;</button>
+                            <!-- <h4 class="modal-title" id="myModalLabel">{{modalData.PName}}</h4> -->
                           </div>
                           <div class="modal-body">
                             <div class="new-product">
 
 
-                              <div class="slider">
+                              <div class="slider" style="border-top: 1px solid rgba(128, 128, 128, 0.18);">
                                 <img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
                               	<input type="radio" name="slide_switch" id="id1" checked="checked"/>
                               	<label for="id1">
@@ -199,11 +206,11 @@
 
 
                                               <span class="input-group-btn">
-                                                  <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant1[1]" onclick="changeQuantity(this)">
+                                                  <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant1[1]" onclick="changeQuantity(this)" >
                                                       <span class="glyphicon glyphicon-minus"></span>
                                                   </button>
                                               </span>
-                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="{{modalData.PQuantityMax1}}">
+                                              <input type="text" name="quant1[1]" class="form-control input-number1" id="quantValue1"  value="0" min="0" max="{{modalData.PQuantityMax1}}" style="padding: 3px;">
                                               <span class="input-group-btn">
                                                   <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd1" onclick="changeQuantity(this)" data-type="plus" data-field="quant1[1]">
                                                       <span class="glyphicon glyphicon-plus"></span>
@@ -224,7 +231,7 @@
                                                             <span class="glyphicon glyphicon-minus"></span>
                                                         </button>
                                                     </span>
-                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="{{modalData.PQuantityMax2}}">
+                                                    <input type="text" name="quant2[1]" class="form-control input-number2" id="quantValue2"  value="0" min="0" max="{{modalData.PQuantityMax2}}" style="padding: 3px;">
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd2" onclick="changeQuantity(this)" data-type="plus" data-field="quant2[1]">
                                                             <span class="glyphicon glyphicon-plus"></span>
@@ -244,7 +251,7 @@
                                                                   <span class="glyphicon glyphicon-minus"></span>
                                                               </button>
                                                           </span>
-                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="{{modalData.PQuantityMax3}}">
+                                                          <input type="text" name="quant3[1]" class="form-control input-number3" id="quantValue3" value="0"  min="0" max="{{modalData.PQuantityMax3}}" style="padding: 3px;">
                                                           <span class="input-group-btn">
                                                               <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd3" onclick="changeQuantity(this)" data-type="plus" data-field="quant3[1]">
                                                                   <span class="glyphicon glyphicon-plus"></span>
@@ -264,7 +271,7 @@
                                                                         <span class="glyphicon glyphicon-minus"></span>
                                                                     </button>
                                                                 </span>
-                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="{{modalData.PQuantityMax4}}">
+                                                                <input type="text" name="quant4[1]" class="form-control input-number4" value="0" id="quantValue4" min="0" max="{{modalData.PQuantityMax4}}" style="padding: 3px;">
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn btn-default btn-number" value="plus" id="quantAdd4" onclick="changeQuantity(this)" data-type="plus" data-field="quant4[1]">
                                                                         <span class="glyphicon glyphicon-plus"></span>
@@ -281,7 +288,7 @@
                       					</div>
 
                       					<div class="addToCart">
-                      						<a href=""><button class="btn btn-primary" ng-click = "addToCart(modalData)" >Add to Cart</button></a>
+                      						<a href=""><button class="btn btn-primary" id="addToCartBtn" ng-click = "addToCart(modalData)" >Add to Cart</button></a>
                                   <br>
                                   <span id="addCartError"></span>
                                   <div class="clearfix"></div>
@@ -319,6 +326,6 @@
 
             	<div class="clearfix"></div>
       				</div>
-              <button class="btn btn-default btn-register" ng-click="getProducts()" value="viewMore" id="viewMore">View More</button>
+              <button class="btn btn-default btn-register" ng-show="noContent==false" ng-click="getProducts()" value="viewMore" id="viewMore">View More</button>
               <br>
     </div>

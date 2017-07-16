@@ -1,6 +1,8 @@
 'use strict';
 var util = require("../util/util");
 var validate = require("../util/validation");
+var xlsx = require("node-xlsx");
+var path = require("path");
 module.exports = function(Product) {
 
 Product.showProducts = function(ctx, category, cb, next){
@@ -14,7 +16,8 @@ var filters = ctx.req.body;
     return;
   }
 
-category = category.toLowerCase();
+category = category;//.toLowerCase();
+console.log("Category---"+category);
 
 console.log(JSON.stringify(filters));
 
@@ -39,6 +42,9 @@ var applyDiscountFilter = {};
 var applyCategoryFilter = {};
 
 if(filters.searchQuery == true){
+  if (category=="all"){
+    category='';
+  }
   var pattern = new RegExp('.*'+category+'.*', "i");
   applyCategoryFilter.or = [];
   var categoryNode = {};
@@ -645,23 +651,7 @@ if(filterData.discount.discountMin != 0 && filterData.discount.discountMax != 0)
 
 }
 
-// for(var i = 0; i < products.length; i++){
-// var productDiscount = parseInt(products[i].PDiscount);
-//   if(productDiscount != undefined && productDiscount != ''){
-//     if(productDiscount > filterData.discount1){
-//       filterData.discount1Exist = 1;
-//     }
-//     if(productDiscount > filterData.discount2){
-//       filterData.discount2Exist = 1;
-//     }
-//     if(productDiscount > filterData.discount3){
-//       filterData.discount3Exist = 1;
-//     }
-//     if(productDiscount > filterData.discount4){
-//       filterData.discount4Exist = 1;
-//     }
-//   }
-// }
+
 
 
 var response = {};
@@ -677,19 +667,14 @@ console.log(response.products.length);
 }
 });
 }
-// Product.find({limit: 52, skip: skip, where: {and:[{PCategory: category},{}]}},function(err,products){
-//   if(err){
-//     cb(util.getGenericError("Error",500,"Internal Server Error!"));
-//   }else{
-//   cb(null, products);
-//   return;
-// }
-// });
+
 
 
 
 Product.addProduct = function(data, cb, next)
 {
+
+
   var realm = data.header('realm');
   var access_code = data.header('access_code');
 
@@ -708,7 +693,95 @@ Product.addProduct = function(data, cb, next)
       return;
     }
   });
-  //cb(null);
+  cb(null);
+}
+
+Product.uploadSheet = function(ctx, cb){
+  var realm = ctx.req.header('realm');
+  var access_code = ctx.req.header('access_code');
+  var fileName = ctx.fileName;
+  console.log(JSON.stringify(fileName));
+  if(!fileName){
+    cb(util.getGenericError('Error',400,'Bad Request!'));
+    return;
+  }
+
+  var obj = xlsx.parse(path.resolve(__dirname + '/../../client/assets/images/ProductSheets/'+ fileName));
+  for(var i=0;i<obj.length;i++){
+    var sheetName = obj[i].name;
+    var sheetData = obj[i].data;
+    for(var j=1; j<sheetData.length;j++){
+      var product = {};
+      product.PCategory = sheetName;
+      product.PName = sheetData[j][0];
+      product.PCompany = sheetData[j][1];
+      product.PMaterial1 = sheetData[j][2];
+      product.PFinish1 = sheetData[j][3];
+      product.PSize1 = sheetData[j][4];
+      product.PLength1 = sheetData[j][5];
+      product.PWidth1= sheetData[j][6];
+      product.PHeight1 = sheetData[j][7];
+      product.PHoleToHole1 = sheetData[j][8];
+      product.PWeight1 = sheetData[j][9];
+      product.PQuantityMin1 = sheetData[j][10];
+      product.PQuantityMax1 = sheetData[j][11];
+      product.PPrice1 = sheetData[j][12];
+      product.PDiscountPrice1 = sheetData[j][13];
+      product.PMaterial2 = sheetData[j][14];
+      product.PFinish2 = sheetData[j][15];
+      product.PSize2 = sheetData[j][16];
+      product.PLength2 = sheetData[j][17];
+      product.PWidth2 = sheetData[j][18];
+      product.PHeight2 = sheetData[j][19];
+      product.PHoleToHole2 = sheetData[j][20];
+      product.PWeight2 = sheetData[j][21];
+      product.PQuantityMin2 = sheetData[j][22];
+      product.PQuantityMax2 = sheetData[j][23];
+      product.PPrice2 = sheetData[j][24];
+      product.PDiscountPrice2 = sheetData[j][25];
+      product.PMaterial3 = sheetData[j][26];
+      product.PFinish3 = sheetData[j][27];
+      product.PSize3 = sheetData[j][28];
+      product.PLength3 = sheetData[j][29];
+      product.PWidth3 = sheetData[j][30];
+      product.PHeight3 = sheetData[j][31];
+      product.PHoleToHole3 = sheetData[j][32];
+      product.PWeight3 = sheetData[j][33];
+      product.PQuantityMin3 = sheetData[j][34];
+      product.PQuantityMax3 = sheetData[j][35];
+      product.PPrice3 = sheetData[j][36];
+      product.PDiscountPrice3 = sheetData[j][37];
+      product.PMaterial4 = sheetData[j][38];
+      product.PFinish4 = sheetData[j][39];
+      product.PSize4 = sheetData[j][40];
+      product.PLength4 = sheetData[j][41];
+      product.PWidth4 = sheetData[j][42];
+      product.PHeight4 = sheetData[j][43];
+      product.PHoleToHole4 = sheetData[j][44];
+      product.PWeight4 = sheetData[j][45];
+      product.PQuantityMin4 = sheetData[j][46];
+      product.PQuantityMax4 = sheetData[j][47];
+      product.PPrice4 = sheetData[j][48];
+      product.PDiscountPrice4 = sheetData[j][49];
+
+      product.PDescription = sheetData[j][50];
+      product.PDiscount = sheetData[j][51];
+      product.PCode = sheetData[j][52];
+      product.PImage1 = sheetData[j][53];
+      product.PImage2 = sheetData[j][54];
+      product.PImage3 = sheetData[j][55];
+      product.PImageSmall = sheetData[j][56];
+
+      console.log(JSON.stringify("Product data "+j+" "+JSON.stringify(product)));
+      Product.upsert(product,function(err,instance){
+        if(err){
+          cb(util.getGenericError("Error",500,"Internal Server Error"+err));
+        }
+      });
+    }
+  }
+  cb(null);
+
 }
 
 Product.getProductCode = function(data, cb, next){
@@ -842,6 +915,17 @@ Product.remoteMethod('addProduct',{
 ],
   returns: {
       arg: 'response',type: 'object'
+    }
+});
+
+Product.remoteMethod('uploadSheet',{
+
+  description:"Add products to database through excel sheet",
+  http: {path: '/uploadSheet', verb: 'get'},
+  accepts: [{arg: 'data', type: 'object', http: { source: 'context' } }
+],
+  returns: {
+      arg: 'response',type: 'string'
     }
 });
 

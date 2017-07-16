@@ -39,6 +39,12 @@
     "client_realm": {
       "type": "string",
       "required": true
+    },
+    "client_gender": {
+      "type": "string"
+    },
+    "client_dob": {
+      "type": "string"
     }
   },
   "validations": [],
