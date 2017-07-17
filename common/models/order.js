@@ -185,7 +185,7 @@ if(err){
           var mailClient = {
             from: 'Akratiindia Updates <info@allied-up.com>', // sender address
             to: [user.email,'akash.rathore1924@gmail.com'], // list of receivers
-            subject: 'Your Akratiindia Order Confirmation ( '+ orderId +' ) ', // Subject line
+            subject: 'Your Akratiindia Order Confirmation ( '+ order.orderId +' ) ', // Subject line
             html: data+itemsData+data1 // html body
           };
           var mailAkrati = {
@@ -224,7 +224,7 @@ if(err){
     var access_code = ctx.req.header('access_code');
     var orderId = ctx.req.header('OrderId');
     var clientId = ctx.req.header('PClientId');
-    console.log(orderId+"clientId"+clientId);
+  //  console.log(orderId+"clientId"+clientId);
     if(!realm || !access_code || access_code != "onyourown" || (realm != "ios" && realm != "web" && realm != "android") || !orderId || !clientId){
       cb(util.getGenericError('Error',400,'Bad Request!'));
       return;
@@ -259,11 +259,7 @@ if(err){
         cb(util.getGenericError("Error",500,"Internal Server Error"));
       }
       if(instance){
-        for(var i=0;i<instance.length;i++){
 
-        //  instance[i].OrderDate = dateFormat(instance[i].OrderDate,'fulldate');
-        //  instance[i].OrderActionDate = dateFormat(instance[i].OrderActionDate,'fulldate');
-        }
         cb(null,instance);
       }else{
         ctx.res.statusCode = 204;
@@ -372,16 +368,11 @@ if(err){
             }else{
               var mailClient = {
                 from: 'Akratiindia Updates <info@allied-up.com>', // sender address
-                to: [email,'akash.rathore1924@gmail.com'], // list of receivers
+                to: [email,'akash.rathore1924@gmail.com','sanketgoel12345@gmail.com'], // list of receivers
                 subject: 'Your Akratiindia Order Cancelled Successfully ( '+ orderId +' ) ', // Subject line
                 html: data1+data // html body
               };
-              var mailAkrati = {
-                from: 'Akratiindia Updates <info@allied-up.com>', // sender address
-                to: 'sanketgoel12345@gmail.com', // list of receivers
-                subject: 'Akratiindia Order Cancelled Successfully ( '+ orderId +' ) ', // Subject line
-                html: data1+data // html body
-              };
+
 
               //send mail with defined transport object
               transporter.sendMail(mailClient, (error, info) => {
@@ -394,12 +385,6 @@ if(err){
 
                 }
               });
-              // transporter.sendMail(mailAkrati, (error, info) => {
-              //   if (error) {
-              //     return console.log(error);
-              //   }
-              //   console.log('Message %s sent: %s', info.messageId, info.response);
-              // });
 
             }
           });
