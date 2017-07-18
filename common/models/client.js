@@ -70,7 +70,7 @@ Client.findOne({where:{and:[{client_email:body.email},{client_verified:{like:'YE
     var uuid5 = uuid.v4() + body.mobile.charAt(3);
     console.log(uuid5);
 
-    var otp = Math.floor((Math.random() * 10000));
+    var otp = Math.floor((Math.random() * 10000)+1000);
 
 
     var registerData = {

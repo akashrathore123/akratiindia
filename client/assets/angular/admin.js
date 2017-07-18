@@ -1,6 +1,11 @@
 var app= angular.module("admin",['ngStorage','ngRoute']);
+app.factory('baseAPIUrl',function(){
+      var baseURL = "http://139.59.23.178/api/";
+      return baseURL;
+  });
 
-app.controller('adminLogin',['$scope','$http','$window','$localStorage',function($scope,$http,$window,$localStorage){
+
+app.controller('adminLogin',['$scope','$http','$window','$localStorage','baseAPIUrl',function($scope,$http,$window,$localStorage,baseAPIUrl){
   $http.defaults.headers.common = {'access_code':'onadmin'};
   document.getElementById('loginError').innerHTML = "";
 if($localStorage.admin){
@@ -19,7 +24,7 @@ if($localStorage.admin){
   }
   $http({
     method : 'POST',
-    url : 'http://localhost:3000/api/Admins/login',
+    url : baseAPIUrl+'Admins/login',
     headers: {'Content-Type': 'application/json',
                'realm': 'web'},
     data : $scope.admin

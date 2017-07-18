@@ -22,12 +22,12 @@ app.factory('baseAPIUrl',function(){
       return baseURL;
   });
 
-app.service('uploadFile',function(){
+app.service('uploadFile',['baseAPIUrl',function(baseAPIUrl){
 
   this.upload = function(file, PCode, $http, $scope){
 
 
-    var backendUrl = 'http://localhost:3000/api/Filedata/upload';
+    var backendUrl = baseAPIUrl+'Filedata/upload';
     var fd = new FormData();
 
     fd.append('file', file, file.name);
@@ -52,7 +52,7 @@ app.service('uploadFile',function(){
     });
 
   }
-});
+}]);
  app.config(function($routeProvider){
   $routeProvider
   .when('/',{
@@ -199,7 +199,7 @@ $http.defaults.headers.common = {'access_code':'onadmin'};
     var Pcodes=[];
   $http({
     method : 'GET',
-    url : 'http://localhost:3000/api/Products/getProductCode',
+    url : baseAPIUrl+'Products/getProductCode',
     headers: {'Content-Type': 'application/json',
                'realm': 'web'},
 
