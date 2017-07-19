@@ -16,7 +16,7 @@ var filters = ctx.req.body;
     return;
   }
 
-category = category;//.toLowerCase();
+category = category.toLowerCase();
 console.log("Category---"+category);
 
 console.log(JSON.stringify(filters));
@@ -236,18 +236,6 @@ if(filters.materials && filters.materials.length > 0){
 
 console.log("discount filter-"+JSON.stringify(applyDiscountFilter));
 console.log("size price filter-"+JSON.stringify(applySizePriceFilter));
-// if(filters.price && filters.price.length > 0){
-//   applyPriceFilter.or = [];
-//   for(var j = 0; j < filters.price.length; j++){
-//     var priceNode = {};
-//     priceNode.PPrice1 = {}
-//     priceNode.PPrice1.between = [];
-//     priceNode.PPrice1.between.push(filters.price[j].range1);
-//     priceNode.PPrice1.between.push(filters.price[j].range2);
-//     applyPriceFilter.or.push(priceNode);
-//   }
-//
-// }
 
 Product.find({where: {and:[applyCategoryFilter,applyCompanyFilter,applySizePriceFilter,applyMaterialFilter,applyDiscountFilter]}},function(err,products){
   if(err){
@@ -707,8 +695,9 @@ Product.uploadSheet = function(ctx, cb){
   }
 
   var obj = xlsx.parse(path.resolve(__dirname + '/../../client/assets/images/ProductSheets/'+ fileName));
+  //console.log(JSON.stringify(obj));
   for(var i=0;i<obj.length;i++){
-    var sheetName = obj[i].name;
+    var sheetName = obj[i].name.toLowerCase();
     var sheetData = obj[i].data;
     for(var j=1; j<sheetData.length;j++){
       var product = {};
@@ -772,12 +761,14 @@ Product.uploadSheet = function(ctx, cb){
       product.PImage3 = sheetData[j][55];
       product.PImageSmall = sheetData[j][56];
 
-      console.log(JSON.stringify("Product data "+j+" "+JSON.stringify(product)));
+      console.log(JSON.stringify("Product data - "+j+" "+JSON.stringify(product)));
+      if(product.PCategory && product.PCode && product.PCompany && product.PMaterial1 && product.PName){
       Product.upsert(product,function(err,instance){
         if(err){
           cb(util.getGenericError("Error",500,"Internal Server Error"+err));
         }
       });
+    }
     }
   }
   cb(null);
