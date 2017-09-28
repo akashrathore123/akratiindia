@@ -18,7 +18,7 @@ app.directive('fileModel', ['$parse', function ($parse) {
         }]);
 
 app.factory('baseAPIUrl',function(){
-      var baseURL = "http://139.59.23.178/api/";
+      var baseURL = "http://139.59.94.11/api/";
       return baseURL;
   });
 

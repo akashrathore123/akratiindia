@@ -240,6 +240,10 @@
                   <input id="email" ng-model="login.email" class="login-form-control" type="text" placeholder="Email" name="email" style="outline: none;">
                   <input id="password" ng-model="login.password" class="login-form-control" type="password" placeholder="Password" name="password" style="outline: none;">
                   <input class="btn btn-default btn-login" type="button" value="Login" ng-click="userLogin()">
+                  <div class="facebook-login-content">
+                    <span style="text-align: center;margin-left: 48%;font-size: 1.4vw;">Or</span>
+                    <button type="button" value="Log In With Facebook" ng-click="logInFacebook()" style="border: 0;color: white;border-radius: 2px;background: rgba(0, 0, 255, 0.73);width: 100%;font-size: 1.2vw;padding: 13px;outline:none;">Log In With Facebook</button>
+                  </div>
                   <span id="loginResponse"></span>
                 </form>
               </div>

@@ -69,7 +69,7 @@ app.directive('myEnter', function () {
 /* Factory methods */
 
 app.factory('baseAPIUrl',function(){
-    var baseURL = "http://139.59.23.178/api/";
+    var baseURL = "http://139.59.94.11/api/";
     return baseURL;
 });
 
@@ -435,6 +435,44 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spin
 
   }
 
+$scope.logInFacebook = function(){
+  var req = new XMLHttpRequest();
+
+ $window.location = "https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://localhost:7084/";
+// Feature detection for CORS
+// if ('withCredentials' in req) {
+//     req.open('GET', 'https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://139.59.23.178/', true);
+//     // Just like regular ol' XHR
+//     req.onreadystatechange = function() {
+//         if (req.readyState === 4) {
+//             if (req.status >= 200 && req.status < 400) {
+//               console.log(JSON.stringify(req.responseText));
+//                 // JSON.parse(req.responseText) etc.
+//             } else {
+//                 // Handle error case
+//             }
+//         }
+//     };
+//     req.send();
+// }
+  $http({
+
+
+           method : 'GET',
+           url : 'https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://139.59.23.178#/',
+           header : {'Origin':'http://localhost:7084',
+                      'Access-Control-Request-Method': 'POST'}
+       }).
+       success(function(data,status,headers,config){
+         console.log(JSON.stringify(data));
+       })
+         .error(function(data,status,headers,config){
+           console.log(JSON.stringify(data));
+           console.log(status);
+
+         });
+}
+
 }]);
 
 app.controller('loginCheck',['$scope','$http','$window','updateCart','localStorage','baseAPIUrl', function($scope,$http,$window,updateCart,localStorage,baseAPIUrl){
@@ -779,13 +817,13 @@ $scope.priceFilter = function(checked,range1,range2){
       $scope.filters.price = [];
       }
       var priceFilter = {};
-      priceFilter.range1 = range1-1;
-      priceFilter.range2 = range2+1;
+      priceFilter.range1 = range1;
+      priceFilter.range2 = range2;
       $scope.filters.price.push(priceFilter);
   }else{
     var priceRange = $scope.filters.price;
     for(var i=0; i < priceRange.length; i++){
-      if(priceRange[i].range1 == range1-1 && priceRange[i].range2 == range2+1){
+      if(priceRange[i].range1 == range1 && priceRange[i].range2 == range2){
         $scope.filters.price.splice(i,1);
       }
 
@@ -944,7 +982,7 @@ $scope.addToCart = function(prod){
   cartItem.PProduct = prod;
   cartItem.PCode = prod.PCode;
 
-  //console.log("cart product--"+JSON.stringify(cartItem.PProduct));
+  console.log("cart product--"+JSON.stringify(cartItem));
 
 
   //console.log(JSON.stringify(cartItem));

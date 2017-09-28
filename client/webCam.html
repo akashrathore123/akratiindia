@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head></head>
+<body>
+
+<input type="file" accept="image/*;capture=camera">
+<video id="basic-stream" class="videostream" autoplay=""></video>
+<script>
+
+function hasGetUserMedia() {
+  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia);
+}
+
+if (hasGetUserMedia()) {
+  // Good to go!
+  alert("yes");
+} else {
+  alert('getUserMedia() is not supported in your browser');
+}
+
+hasGetUserMedia();
+
+navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
+  var video = document.querySelector('video');
+  video.src = window.URL.createObjectURL(localMediaStream);
+
+  // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+  // See crbug.com/110938.
+  video.onloadedmetadata = function(e) {
+  // Ready to go. Do some stuff.
+  };
+}, onFailSoHard);
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+
+var video = document.querySelector('video');
+
+if (navigator.getUserMedia) {
+  navigator.getUserMedia({audio: true, video: true}, function(stream) {
+    if (navigator.webkitGetUserMedia) {
+      video.src = window.webkitURL.createObjectURL(stream);
+    } else {
+      video.src = stream; // Opera
+    }
+  }, onFailSoHard);
+} else {
+  video.src = 'somevideo.webm'; // fallback.
+}
+function onFailSoHard(){
+  alert("failed");
+}
+
+</script>
+</body>
+
+</html>

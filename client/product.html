@@ -94,7 +94,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">&times;</button>
                             <!-- <h4 class="modal-title" id="myModalLabel">{{modalData.PName}}</h4> -->
                           </div>
-                          <div class="modal-body">
+                          <div class="modal-body" style="padding-bottom: 30px;">
                             <div class="new-product">
 
 
@@ -113,11 +113,11 @@
                               	</label>
                               	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
 
-                              	<!-- <input type="radio" name="slide_switch" id="id3"/>
-                              	<label for="id3">
-                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" />
+                              	<input type="radio" ng-if="modalData.PImage3 != undefined && modalData.PImage3 != ''" name="slide_switch" id="id3"/>
+                              	<label for="id3" ng-if="modalData.PImage3 != undefined && modalData.PImage3 != ''" >
+                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" alt="" />
                               	</label>
-                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" /> -->
+                              	<img ng-if="modalData.PImage3 != undefined && modalData.PImage3 != ''"  src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" alt="" />
 
 
                               </div>
@@ -181,27 +181,36 @@
 
                                   <tr><th>Price (Rs.)</th>
                                     <td ng-show="modalData.PDiscountPrice1 != undefined && modalData.PDiscountPrice1 != ''">{{modalData.PDiscountRupee1}}</td>
-                                    <td ng-show="(modalData.PDiscountPrice1 == undefined || modalData.PDiscountPrice1 == '') && (modalData.PPrice1 != undefined && modalData.PPrice1 != '')">{{modalData.PRupee1}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice1 == undefined || modalData.PDiscountPrice1 == '') && (modalData.PPrice1 != undefined && modalData.PPrice1 != '')"><b>{{modalData.PRupee1}}</b></td>
                                     <td ng-show="modalData.PDiscountPrice2 != undefined && modalData.PDiscountPrice2 != ''">{{modalData.PDiscountRupee2}}</td>
-                                    <td ng-show="(modalData.PDiscountPrice2 == undefined || modalData.PDiscountPrice2 == '') && (modalData.PPrice2 != undefined && modalData.PPrice2 != '')">{{modalData.PRupee2}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice2 == undefined || modalData.PDiscountPrice2 == '') && (modalData.PPrice2 != undefined && modalData.PPrice2 != '')"><b>{{modalData.PRupee2}}</b></td>
                                     <td ng-show="modalData.PDiscountPrice3 != undefined && modalData.PDiscountPrice3 != ''">{{modalData.PDiscountPRupee3}}</td>
-                                    <td ng-show="(modalData.PDiscountPrice3 == undefined || modalData.PDiscountPrice3 == '') && (modalData.PPrice3 != undefined && modalData.PPrice3 != '')">{{modalData.PRupee3}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice3 == undefined || modalData.PDiscountPrice3 == '') && (modalData.PPrice3 != undefined && modalData.PPrice3 != '')"><b>{{modalData.PRupee3}}</b></td>
                                     <td ng-show="modalData.PDiscountPrice4 != undefined && modalData.PDiscountPrice4 != ''">{{modalData.PDiscountRupee4}}</td>
-                                    <td ng-show="(modalData.PDiscountPrice4 == undefined || modalData.PDiscountPrice4 == '') && (modalData.PPrice4 != undefined && modalData.PPrice4 != '')">{{modalData.PRupee4}}</td>
+                                    <td ng-show="(modalData.PDiscountPrice4 == undefined || modalData.PDiscountPrice4 == '') && (modalData.PPrice4 != undefined && modalData.PPrice4 != '')"><b>{{modalData.PRupee4}}</b></td>
 
                                 </tr>
                                 </table>
 
                       					<div class="span span1">
+                                  <div class="quant-selector-header">
+                                    <span style="float:left;">Size</span>
+                                    <span style="float:left; padding-left:8%;">Quantity</span>
+                                     <span style="float:left; padding-left:12%;">Min - Max</span>
+                                  </div>
 
-                                  <span class="right">Min - Max</span>
                                   <br>
-                      						<span class="right">
+                      						<span class="right quantity-selector">
 
                                     <div class="sizes">
+                                      <table class="quant-select-table" style="margin-top: -9%;">
+                                        <tr>
 
                                       <div id="quantity1" ng-show="modalData.PSize1 != undefined && modalData.PSize1 !=''">
+                                        <td>
                                       <span class="quantSize">{{modalData.PSize1}}</span>
+                                    </td>
+                                    <td>
                                     <div class="input-group" id="quantSelector1">
 
 
@@ -219,11 +228,21 @@
 
 
                                           </div>
+                                        </td>
+                                        <td>
                                           <span class="Max-Min">{{modalData.PQuantityMin1}} - {{modalData.PQuantityMax1}}</span>
+                                        </td>
                                         </div>
+                                      </tr>
+                                        <div class="clearfix"></div>
+
                                       <br>
+                                      <tr>
                                       <div id="quantity2" ng-show="modalData.PSize2 != undefined && modalData.PSize2 !=''">
+                                        <td>
                                       <span class="quantSize">{{modalData.PSize2}}</span>
+                                      </td>
+                                      <td>
                                     <div class="input-group" id="quantSelector2">
 
                                               <span class="input-group-btn">
@@ -239,11 +258,20 @@
                                                     </span>
 
                                                 </div>
+                                              </td>
+                                              <td>
                                                 <span class="Max-Min">{{modalData.PQuantityMin2}} - {{modalData.PQuantityMax2}}</span>
+                                              </td>
                                               </div>
+                                            </tr>
+                                                <div class="clearfix"></div>
                                                 <br>
+                                                <tr>
                                                 <div id="quantity3" ng-show="modalData.PSize3 != undefined && modalData.PSize3 !=''">
+                                                  <td>
                                                 <span class="quantSize">{{modalData.PSize3}}</span>
+                                              </td>
+                                              <td>
                                                 <div class="input-group" id="quantSelector3">
 
                                                           <span class="input-group-btn">
@@ -259,11 +287,20 @@
                                                           </span>
 
                                                       </div>
+                                                    </td>
+                                                    <td>
                                                       <span class="Max-Min">{{modalData.PQuantityMin3}} - {{modalData.PQuantityMax3}}</span>
+                                                    </td>
                                                     </div>
+                                                  </tr>
+                                                      <div class="clearfix"></div>
                                                       <br>
+                                                      <tr>
                                                       <div id="quantity4" ng-show="modalData.PSize4 != undefined && modalData.PSize4 !=''">
+                                                        <td>
                                                       <span class="quantSize">{{modalData.PSize4}}</span>
+                                                    </td>
+                                                    <td>
                                                       <div class="input-group" id="quantSelector4">
 
                                                                 <span class="input-group-btn">
@@ -279,15 +316,21 @@
                                                                 </span>
 
                                                             </div>
+                                                          </td>
+                                                          <td>
                                                             <span class="Max-Min">  {{modalData.PQuantityMin4}} - {{modalData.PQuantityMax4}}</span>
+                                                          </td>
                                                           </div>
+                                                        </tr>
+                                                            <div class="clearfix"></div>
+                                                          </table>
                                         </div>
 
                                          </span>
                       						<div class="clearfix"></div>
                       					</div>
 
-                      					<div class="addToCart">
+                      					<div class="addToCart" style="width: 49%;">
                       						<a href=""><button class="btn btn-primary" id="addToCartBtn" ng-click = "addToCart(modalData)" >Add to Cart</button></a>
                                   <br>
                                   <span id="addCartError"></span>
@@ -300,7 +343,10 @@
 
                       				</div>
                               <div class="productDescription">
-<h5><u>Description</u></h5> {{modalData.PDescription}}</div>
+                                <div>
+                                  <h5><u>Description</u></h5> {{modalData.PDescription}}
+                                </div>
+                                </div>
                       				<div class="clearfix"></div>
 
 

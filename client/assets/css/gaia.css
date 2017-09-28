@@ -4012,6 +4012,7 @@ transition: background .55s ease;
   float:left;
 	margin: 100px auto;
   margin-top: 82px;
+  margin-bottom: 0px;
 
 	/*Lets add a shadow*/
 	box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.75);
@@ -4070,7 +4071,10 @@ On click the images will be displayed at normal size to complete the effect
 }
 
 .productDescription {
-    width: 44%;
+  height: 152px;
+  position: absolute;
+  margin-top: 50%;
+    width: 40%;
     /* margin-bottom: 20px; */
     /*position: absolute;
     margin-top: 53%;*/
@@ -4250,24 +4254,26 @@ font-size: small;
 }
 
 .quantSize{
-  font-size: x-large;
+  font-size: 1.5vw;
+  float:left;
 
 
 }
 
 .Max-Min{
-    margin-left: 190px;
-    margin-top: 0px;
-    position: absolute;
     font-size: 17px;
+    float: left;
+    padding-top: 1%;
 }
 
 #quantSelector1,#quantSelector2,#quantSelector3,#quantSelector4{
-  margin-right: 74px;
+  margin-right: 18px;
+  float: left;
+  padding-left: 2%;
 }
 
 .sizes{
-  width:300px;
+  width:100%;
 }
 
 #addCartError{
@@ -5352,4 +5358,21 @@ a:focus{
 }
 .discout-filter{
   margin-top: 5%;
+}
+
+.quantity-selector{
+  align-content: center;
+  width: 84%;
+  font-size: smaller;
+}
+
+.quant-selector-header{
+  width: 84%;
+  float: right;
+  font-size: 1.1vw;
+  padding-bottom: 2%;
+}
+
+.quant-select-table{
+  border-spacing:5px;
 }

@@ -2,7 +2,7 @@ var app = angular.module('main',[]);
 app.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "/client/inde.html"
+        templateUrl : "/client/index.html"
     })
     .when("/product", {
         templateUrl : "/client/product.html"

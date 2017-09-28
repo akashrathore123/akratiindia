@@ -4,7 +4,7 @@ var uuid = require("uuid");
 var nodemailer = require("nodemailer");
 var ejs = require("ejs");
 var path = require("path");
-var http = require("https");
+var request = require("request");
 module.exports = function(Client) {
 
  /* Register new User */
@@ -95,19 +95,19 @@ console.log(registerData);
     if(instance){
       console.log("instance---"+JSON.stringify(instance));
       console.log("sending sms");
-      http.get('https://rest.nexmo.com/sms/json' +
-      '?api_key=f2bdd581&api_secret=1b9c05087557ccb1' +
-      '&from=Akratiindia&to=9557404911' +
-      '&text=Akratiindia+verification+code+is '+otp,function() {
-    console.log("sms sent");
-    data.res.on('data', function(data) {
-    console.log("data------------------------"+JSON.stringify(data));
-
-    });
+      request.post('https://textbelt.com/otp/generate', {
+  form: {
+    phone: '+918273816122',
+    userid: 'Hello world'+otp,
+    key: 'example_otp_key',
+  },
+}, function(err, httpResponse, body) {
+  if (err) {
+    console.error('Error:', err);
+    return;
   }
-).on('error', function() {
-  console.log("Error in sending sms");
-});
+  console.log(JSON.parse(body));
+})
       cb(null, instance);
       return;
     }else{
@@ -260,11 +260,12 @@ Client.addToCart = function(data, cb){
       console.log("instance--"+JSON.stringify(instance));
       var cartItem = data.body;
       cartItem.PClientid = instance.id;
+      console.log(JSON.stringify(cartItem));
       instance.CartItems.create(cartItem, function(err, cart){
         if(err){
             cb(util.getGenericError("Error", 500, "Error in creating cart item:"+err));
             return;
-            //console.log("Error in creating cart item:"+err);
+            console.log("Error in creating cart item:"+err);
 
         }
         if(cart){
@@ -273,6 +274,8 @@ Client.addToCart = function(data, cb){
           return;
         }
       });
+    }else{
+      cb(null,"User not found!");
     }
   });
 }
@@ -299,7 +302,7 @@ Client.removeFromCart = function(req, cb){
           if(err){
               cb(util.getGenericError("Error", 500, "Error in deleting cart item:"+err));
               return;
-              //console.log("Error in creating cart item:"+err);
+              console.log("Error in creating cart item:"+err);
 
           }else{
             cb(null,"Deleted!");

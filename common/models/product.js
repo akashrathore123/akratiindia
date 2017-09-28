@@ -237,7 +237,7 @@ if(filters.materials && filters.materials.length > 0){
 console.log("discount filter-"+JSON.stringify(applyDiscountFilter));
 console.log("size price filter-"+JSON.stringify(applySizePriceFilter));
 
-Product.find({where: {and:[applyCategoryFilter,applyCompanyFilter,applySizePriceFilter,applyMaterialFilter,applyDiscountFilter]}},function(err,products){
+Product.find({where: {and:[applyCategoryFilter,applyCompanyFilter,applySizePriceFilter,applyMaterialFilter,applyDiscountFilter,{PPrice1:{neq:null}}]}},function(err,products){
   if(err){
     cb(util.getGenericError("Error",500,"Internal Server Error!"));
   }else{
