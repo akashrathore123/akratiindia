@@ -207,11 +207,11 @@
                                         <tr>
 
                                       <div id="quantity1" ng-show="modalData.PSize1 != undefined && modalData.PSize1 !=''">
-                                        <td>
-                                      <span class="quantSize">{{modalData.PSize1}}</span>
+                                        <td style="width: 5%;">
+                                      <span class="quantSize-quick">{{modalData.PSize1}}</span>
                                     </td>
-                                    <td>
-                                    <div class="input-group" id="quantSelector1">
+                                    <td style="width: 30%;">
+                                    <div class="input-group" id="quantSelector1-quick">
 
 
                                               <span class="input-group-btn">
@@ -237,13 +237,13 @@
                                         <div class="clearfix"></div>
 
                                       <br>
-                                      <tr>
-                                      <div id="quantity2" ng-show="modalData.PSize2 != undefined && modalData.PSize2 !=''">
-                                        <td>
-                                      <span class="quantSize">{{modalData.PSize2}}</span>
+                                      <tr ng-show="modalData.PSize2 != undefined && modalData.PSize2 !=''">
+                                      <div id="quantity2" >
+                                        <td style="width: 5%;">
+                                      <span class="quantSize-quick">{{modalData.PSize2}}</span>
                                       </td>
-                                      <td>
-                                    <div class="input-group" id="quantSelector2">
+                                      <td style="width: 30%;">
+                                    <div class="input-group" id="quantSelector2-quick">
 
                                               <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant2[1]" onclick="changeQuantity(this)">
@@ -266,13 +266,13 @@
                                             </tr>
                                                 <div class="clearfix"></div>
                                                 <br>
-                                                <tr>
-                                                <div id="quantity3" ng-show="modalData.PSize3 != undefined && modalData.PSize3 !=''">
-                                                  <td>
-                                                <span class="quantSize">{{modalData.PSize3}}</span>
+                                                <tr ng-show="modalData.PSize3 != undefined && modalData.PSize3 !=''">
+                                                <div id="quantity3">
+                                                  <td style="width: 5%;">
+                                                <span class="quantSize-quick">{{modalData.PSize3}}</span>
                                               </td>
-                                              <td>
-                                                <div class="input-group" id="quantSelector3">
+                                              <td style="width: 30%;">
+                                                <div class="input-group" id="quantSelector3-quick">
 
                                                           <span class="input-group-btn">
                                                               <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant3[1]" onclick="changeQuantity(this)">
@@ -295,13 +295,13 @@
                                                   </tr>
                                                       <div class="clearfix"></div>
                                                       <br>
-                                                      <tr>
-                                                      <div id="quantity4" ng-show="modalData.PSize4 != undefined && modalData.PSize4 !=''">
-                                                        <td>
-                                                      <span class="quantSize">{{modalData.PSize4}}</span>
+                                                      <tr ng-show="modalData.PSize4 != undefined && modalData.PSize4 !=''">
+                                                      <div id="quantity4" >
+                                                        <td style="width: 5%;">
+                                                      <span class="quantSize-quick">{{modalData.PSize4}}</span>
                                                     </td>
-                                                    <td>
-                                                      <div class="input-group" id="quantSelector4">
+                                                    <td style="width: 30%;">
+                                                      <div class="input-group" id="quantSelector4-quick">
 
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant4[1]" onclick="changeQuantity(this)">

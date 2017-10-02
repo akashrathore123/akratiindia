@@ -22,7 +22,7 @@
     </div>
     </div>
     <div class="confirm-order-button">
-    <button type="button" class="btn btn-primary" id="confirm-order-button" style="" ng-click="proceedOrder();">Confirm Order</button>
+    <button type="button" class="btn btn-primary" id="confirm-order-button" style="" ng-click="proceedOrder();">Checkout</button>
   </div>
   </div>
   <div class="clearfix"></div>
@@ -125,6 +125,9 @@
             </div>
             <input type="text" class="form-control" id="value-input" ng-model="newAdd.Mobile">
           </div>
+        </div>
+        <div class="save-address-error">
+          {{saveAddressError}}
         </div>
       </div>
       <div class="modal-footer">

@@ -69,7 +69,7 @@ app.directive('myEnter', function () {
 /* Factory methods */
 
 app.factory('baseAPIUrl',function(){
-    var baseURL = "http://139.59.94.11/api/";
+    var baseURL = "http://localhost:3000/api/";
     return baseURL;
 });
 
@@ -279,6 +279,12 @@ this.stopSpin = function(spinner){
 $('#body').css({ 'opacity' : 1 });
 
 spinner.stop();
+}
+});
+
+app.service('ScrollTop',function(){
+  this.scroll = function(){
+  window.scrollTo(0,0);
 }
 });
 
@@ -519,8 +525,9 @@ setTimeout(function(){
 
 
 //Controllers for Product PAGE
-app.controller('showProducts',['$scope','$http','$window','$location','$rootScope','$routeParams','$route','localStorage','updateCart','notify','spinner','baseAPIUrl',function($scope,$http,$window,$location,$rootScope,$routeParams,$route,localStorage,updateCart,notify,spinner,baseAPIUrl){
+app.controller('showProducts',['$scope','$http','$window','$location','$rootScope','$routeParams','$route','localStorage','updateCart','notify','spinner','baseAPIUrl','ScrollTop',function($scope,$http,$window,$location,$rootScope,$routeParams,$route,localStorage,updateCart,notify,spinner,baseAPIUrl,ScrollTop){
 $rootScope.isHome = false;
+ScrollTop.scroll();
 $scope.searchPressed = function(){
 $window.location = "#product/search="+$scope.searchQuery;
 $scope.searchQuery = "";
@@ -1032,7 +1039,8 @@ session = JSON.parse(session);
 }
 }]);
 
-app.controller('productDetails',['$scope','$http','$window','$location','$routeParams','$rootScope','localStorage','updateCart','notify','spinner','baseAPIUrl',function($scope,$http,$window,$location,$routeParams,$rootScope,localStorage,updateCart,notify,spinner,baseAPIUrl){
+app.controller('productDetails',['$scope','$http','$window','$location','$routeParams','$rootScope','localStorage','updateCart','notify','spinner','baseAPIUrl','ScrollTop',function($scope,$http,$window,$location,$routeParams,$rootScope,localStorage,updateCart,notify,spinner,baseAPIUrl,ScrollTop){
+  ScrollTop.scroll();
   $http.defaults.headers.common = {'access_code':'onyourown'};
   updateCart.update();
   $rootScope.isHome = false;
@@ -1200,8 +1208,9 @@ function getCookie(cname) {
 
 /* cart controllers */
 
-app.controller('showCartItems',['$http','$scope','$window','localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl', function($http, $scope, $window, localStorage,$rootScope, updateCart,notify,spinner,baseAPIUrl){
+app.controller('showCartItems',['$http','$scope','$window','localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl','ScrollTop', function($http, $scope, $window, localStorage,$rootScope, updateCart,notify,spinner,baseAPIUrl,ScrollTop){
 //console.log("into cart");
+ScrollTop.scroll();
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
 
@@ -1436,8 +1445,9 @@ $scope.placeOrder = function(){
 }
 }]);
 
-app.controller('showAddress',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner,baseAPIUrl){
+app.controller('showAddress',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl','ScrollTop', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner,baseAPIUrl,ScrollTop){
 //console.log("into cart");
+ScrollTop.scroll();
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
 
@@ -1539,6 +1549,7 @@ $scope.removeAddress = function(addressId){
          //console.log(JSON.stringify(data));
          spinner.stopSpin(spinElement);
          $scope.getAddresses();
+         $localStorage.orderAddress = undefined;
        })
        .error(function(data,status,headers,config){
         // console.log(JSON.stringify(data));
@@ -1555,13 +1566,20 @@ $scope.showAddressModal = function(){
 }
 
 $scope.saveAddress = function(){
+  $scope.saveAddressError = "";
   var session = localStorage.getData('User');
   if(session){
     var spinElement = spinner.startSpin('body');
     session = JSON.parse(session);
     //console.log(session.token);
-    $scope.newAdd.PClientId = session.token;
-    var requestData = $scope.newAdd;
+
+    if(!$scope.newAdd || !$scope.newAdd.Name || !$scope.newAdd.Locality || !$scope.newAdd.Street || !$scope.newAdd.City || !$scope.newAdd.PinCode || !$scope.newAdd.State || !$scope.newAdd.Mobile){
+      $scope.saveAddressError = "All fields are required.";
+      spinner.stopSpin(spinElement);
+      return;
+    }else{
+      $scope.newAdd.PClientId = session.token;
+      var requestData = $scope.newAdd;
     //console.log(JSON.stringify(requestData));
   $http({
 
@@ -1583,11 +1601,18 @@ $scope.saveAddress = function(){
        })
        .error(function(data,status,headers,config){
          //console.log(JSON.stringify(data));
+         if(status == 402){
+          spinner.stopSpin(spinElement);
+          $scope.saveAddressError = data.error.message;
+          return;
+         }else{
          spinner.stopSpin(spinElement);
          notify.showNotification('Address could not be added.','danger');
          return;
+       }
     });
-  }else{
+  }
+}else{
     notify.showNotification('Address could not be added.','danger');
 
   }
@@ -1596,60 +1621,138 @@ $scope.saveAddress = function(){
 $scope.proceedOrder = function(){
   var session = localStorage.getData('User');
   var spinElement = spinner.startSpin('body');
-  document.getElementById("confirm-order-button").disabled = true;
+
   if(session && $localStorage.orderAddress && localStorage.getData('order')){
-    document.getElementById("confirm-order-button").disabled = true;
-    session = JSON.parse(session);
-    var order = localStorage.getData('order');
-  //  console.log(JSON.stringify(order));
-    order = angular.fromJson(order);
-    order.orderAddress = $localStorage.orderAddress;
+    var requestData='key=gtKFFx&txnid=1506874346&amount=1000&productinfo=asdfghjkl&firstname=akash&email=akash.rathore1924%40gmail.com&phone=8273816122&surl=http%3A%2F%2F127.0.0.1%3A8038%2Findex.html&hash=b7a422971d067729bec8c6c3085e3d141c0e1232522d9e64a041a6a0f0651e652a316461ed7d31db93b06606d310d259480caee46c9a0c45415f50b41da34430';
 
-    $http({
+var form = '<form action="https://test.payu.in/_payment"  name="payuform" method=POST >'+
+'<input type="hidden" name="key" value="gtKFFx" />'+
+'<input type="hidden" name="hash_string" value="gtKFFx|1506874346|1000|asdfghjkl|akash|akash.rathore1924@gmail.com|||||||||||eCwWELxi" />'+
+'<input type="hidden" name="hash" value="b7a422971d067729bec8c6c3085e3d141c0e1232522d9e64a041a6a0f0651e652a316461ed7d31db93b06606d310d259480caee46c9a0c45415f50b41da34430"/>'+
+'<input type="hidden" name="txnid" value="1506874346"/>'+
+'<table>'+
+'<tr>'+
+'<td><b>Mandatory Parameters</b></td>'+
+'</tr>'+
+'<tr>'+
+'<td>Amount: </td>'+
+'<td><input name="amount"  value="1000"/></td>'+
+'<td>First Name: </td>'+
+'<td><input name="firstname" id="firstname" value="akash" /></td>'+
+'</tr>'+
+'<tr>'+
+'<td>Email: </td>'+
+'<td><input name="email" id="email" value="akash.rathore1924@gmail.com"  /></td>'+
+'<td>Phone: </td>'+
+'<td><input name="phone"  value="8273816122"/></td>'+
+'</tr>'+
+'<tr>'+
+'<td>Product Info: </td>'+
+'<td colspan="3"><textarea name="productinfo" >asdfghjkl</textarea>  </td>'+
+'</tr>'+
+'<tr>'+
+'<td>Success URI: </td>'+
+'<td colspan="3"><input name="surl"  size="64"  value="http://sitenol.com/payumoney-integration-errors-sandbox-production"/></td>'+
+'</tr>'+
+'<tr>'+
+'<td>Failure URI: </td>'+
+'<td colspan="3"><input name="furl"  size="64" value="http://sitenol.com/payumoney-integration-errors-sandbox-production"/></td>'+
+'</tr>'+
+'<tr>'+
+'<td colspan="3"><input type="hidden" name="service_provider" value="payu_paisa" /></td>'+
+'</tr>'+
+// '<tr>'+
+// '<td><b>Optional Parameters</b></td>'+
+// '</tr>'+
+// '<tr>'+
+// '<td>Last Name: </td>'+
+// '<td><input name="lastname" id="lastname"  /></td>'+
+// '<td>Cancel URI: </td>'+
+// '<td><input name="curl" value="" /></td>'+
+// '</tr>'+
+'<tr>'+
+'<td colspan="4"><input type="submit" value="Submit"  /></td>'+
+'</tr>'+
+'</table>'+
+'</form>';
+  $(form).appendTo('body').submit();
+  //   $http({
+  //
+  //
+  //            method : 'POST',
+  //            url : 'https://test.payu.in/_payment',
+  //            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+  //            data : requestData
+  //        }).
+  //        success(function(data,status,headers,config){
+  //         // notify.showNotification('Product '+item.PProduct.PName+' Removed from the cart.','success');
+  //         //
+  //         // localStorage.deleteData('cart', item);
+  //         // $scope.items = localStorage.getData('cart');
+  //         // manageCart();
+  //         // updateCart.update();
+  //         console.log(data);
+  //        })
+  //   .error(function(data,status,headers,config){
+  //     // notify.showNotification('Issue in removing product '+item.PProduct.PName+' from the cart.','danger');
+  //     // return;
+  // });
 
-             method : 'POST',
-             url : baseAPIUrl+'Orders/placeOrder',
-             headers: {'Content-Type': 'application/json',
-                        'realm': 'web'},
-             data: order
-           }).
-         success(function(data,status,headers,config){
-                var order = data.response;
-
-              //  console.log(JSON.stringify(order));
-               $http({
-
-                        method : 'DELETE',
-                        url : baseAPIUrl+'CartItems/deleteCart',
-                        headers: {'Content-Type': 'application/json',
-                                   'realm': 'web',
-                                   'PClientId':session.id}
-                      }).
-                    success(function(data,status,headers,config){
-                      localStorage.deleteAll('cart');
-                      localStorage.deleteData('order')
-                      $localStorage.orderAddress = undefined;
-                      updateCart.update();
-                      spinner.stopSpin(spinElement);
-                      $window.location = "#orderConfirmed/"+order.OrderId;
-
-                    })
-                    .error(function(data,status,headers,config){
-                      document.getElementById("confirm-order-button").disabled = true;
-                      spinner.stopSpin(spinElement);
-                      $window.location = "#error500";
-
-                    });
-
-              return;
 
 
-         })
-    .error(function(data,status,headers,config){
-      spinner.stopSpin(spinElement);
-      $window.location = "#orderFailed";
-      return;
-    });
+  // //    document.getElementById("confirm-order-button").disabled = true;
+  //   document.getElementById("confirm-order-button").disabled = true;
+  //   session = JSON.parse(session);
+  //   var order = localStorage.getData('order');
+  // //  console.log(JSON.stringify(order));
+  //   order = angular.fromJson(order);
+  //   order.orderAddress = $localStorage.orderAddress;
+  //
+  //   $http({
+  //
+  //            method : 'POST',
+  //            url : baseAPIUrl+'Orders/placeOrder',
+  //            headers: {'Content-Type': 'application/json',
+  //                       'realm': 'web'},
+  //            data: order
+  //          }).
+  //        success(function(data,status,headers,config){
+  //               var order = data.response;
+  //
+  //             //  console.log(JSON.stringify(order));
+  //              $http({
+  //
+  //                       method : 'DELETE',
+  //                       url : baseAPIUrl+'CartItems/deleteCart',
+  //                       headers: {'Content-Type': 'application/json',
+  //                                  'realm': 'web',
+  //                                  'PClientId':session.id}
+  //                     }).
+  //                   success(function(data,status,headers,config){
+  //                     localStorage.deleteAll('cart');
+  //                     localStorage.deleteData('order')
+  //                     $localStorage.orderAddress = undefined;
+  //                     updateCart.update();
+  //                     spinner.stopSpin(spinElement);
+  //                     $window.location = "#orderConfirmed/"+order.OrderId;
+  //
+  //                   })
+  //                   .error(function(data,status,headers,config){
+  //                     document.getElementById("confirm-order-button").disabled = true;
+  //                     spinner.stopSpin(spinElement);
+  //                     $window.location = "#error500";
+  //
+  //                   });
+  //
+  //             return;
+  //
+  //
+  //        })
+  //   .error(function(data,status,headers,config){
+  //     spinner.stopSpin(spinElement);
+  //     $window.location = "#orderFailed";
+  //     return;
+  //   });
   }else{
     if(!$localStorage.orderAddress){
       spinner.stopSpin(spinElement);
@@ -1663,8 +1766,9 @@ $scope.proceedOrder = function(){
 
 }]);
 
-app.controller('confirmedOrder',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner,baseAPIUrl){
+app.controller('confirmedOrder',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl','ScrollTop', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify,spinner,baseAPIUrl,ScrollTop){
 //console.log("into cart");
+ScrollTop.scroll();
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
 var orderId = $routeParams.orderId;
@@ -1749,30 +1853,36 @@ app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage
 
 }]);
 
-app.controller('aboutUs',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+app.controller('aboutUs',['$http','$scope','$window','$rootScope','localStorage','updateCart','ScrollTop', function($http, $scope, $window, $rootScope, localStorage, updateCart,ScrollTop){
   $rootScope.isHome = false;
+  ScrollTop.scroll();
 }]);
 
-app.controller('termsConditions',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+app.controller('termsConditions',['$http','$scope','$window','$rootScope','localStorage','updateCart','ScrollTop', function($http, $scope, $window, $rootScope, localStorage, updateCart,ScrollTop){
   $rootScope.isHome = false;
+  ScrollTop.scroll();
 }]);
 
-app.controller('moneyBack',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+app.controller('moneyBack',['$http','$scope','$window','$rootScope','localStorage','updateCart','ScrollTop', function($http, $scope, $window, $rootScope, localStorage, updateCart,ScrollTop){
   $rootScope.isHome = false;
+  ScrollTop.scroll();
 }]);
 
-app.controller('companyPolicy',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+app.controller('companyPolicy',['$http','$scope','$window','$rootScope','localStorage','updateCart','ScrollTop', function($http, $scope, $window, $rootScope, localStorage, updateCart,ScrollTop){
   $rootScope.isHome = false;
+  ScrollTop.scroll();
 }]);
 
-app.controller('howWeWork',['$http','$scope','$window','$rootScope','localStorage','updateCart', function($http, $scope, $window, $rootScope, localStorage, updateCart){
+app.controller('howWeWork',['$http','$scope','$window','$rootScope','localStorage','updateCart','ScrollTop', function($http, $scope, $window, $rootScope, localStorage, updateCart, ScrollTop){
   $rootScope.isHome = false;
+  ScrollTop.scroll();
 }]);
 
-app.controller('contactUs',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','baseAPIUrl', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify, baseAPIUrl){
+app.controller('contactUs',['$http','$scope','$window','$routeParams','localStorage','$localStorage','$rootScope','updateCart','notify','baseAPIUrl','ScrollTop', function($http, $scope, $window,$routeParams, localStorage,$localStorage,$rootScope, updateCart, notify, baseAPIUrl,ScrollTop){
 //console.log("into cart");
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
+ScrollTop.scroll();
 
   $scope.submitQuery = function(){
     var session = localStorage.getData('User');

@@ -53,6 +53,24 @@ module.exports = function(Address) {
       cb(util.getGenericError('Error',400,'Bad Request!'));
       return;
     }
+    if(!validate.isName(address.Name)){
+      cb(util.getGenericError('Error',402,"Enter valid name"));
+      return;
+    }
+    if(!validate.isPinCode(address.PinCode)){
+      cb(util.getGenericError('Error',402,"Enter valid pin code."));
+        return;
+    }
+    if(!validate.isState(address.State)){
+      cb(util.getGenericError('Error',402,"Enter valid state."));
+        return;
+    }
+   if(!validate.isPhone(address.Mobile)){
+     cb(util.getGenericError('Error',402,"Enter valid mobile number."));
+       return;
+   }
+
+
 
     Address.create(address,function(err){
       if(err){

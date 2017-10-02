@@ -7,7 +7,8 @@
 
                           <div class="product-body">
                             <div class="new-product">
-
+                              <div class="product-details-left">
+                                <div class="product-slider-left">
                               <div class="slider-window">
                               <div class="slider" id="sliderDiv">
                                 <img src="assets/images/{{prodDetailData.PCode}}/{{prodDetailData.PImage1}}" />
@@ -44,6 +45,8 @@
                             </div>
 
                             </div>
+                          </div>
+                          <div class="product-table-right">
                       					<div class="productdetail-name">
                                   <h3>{{prodDetailData.PName}}</h3>
                                   <div class="clearfix"></div>
@@ -102,10 +105,17 @@
                                     <td ng-show="(prodDetailData.PDiscountPrice4 == undefined || prodDetailData.PDiscountPrice4 == '') && (prodDetailData.PPrice4 != undefined && prodDetailData.PPrice4 != '')">{{prodDetailData.PPrice4}}</td>
                                   </tr>
                                 </table>
-
+                                <div class="productDesc">
+                                  <h5><u>Description</u></h5> {{prodDetailData.PDescription}}
+                                </div>
+                              </div>
+                              </div>
                       					<div class="span span1" id="selectQuantitySpan">
-
-                                  <span class="right">Min - Max</span>
+                                  <div>
+                                    <span class="right-size">Size</span>
+                                    <span class="right-quant-selector">Quantity</span>
+                                    <span class="right-max-min">Min - Max</span>
+                                </div>
                                   <br>
                       						<span class="right">
 
@@ -199,7 +209,7 @@
                       					</div>
 
                       					<div class="addToCart">
-                      						<a href=""><button class="btn btn-primary" id="addToCartBtn" ng-click = "addToCart(prodDetailData)" >Add to Cart</button></a>
+                      						<a href=""><button class="btn btn-primary" id="addToCartBtn" style="margin-right: 10.3%;" ng-click = "addToCart(prodDetailData)" >Add to Cart</button></a>
                                   <br>
                                   <span id="prodDetailError" style="color:red;"></span>
 
@@ -207,8 +217,7 @@
                       					</div>
 
                       					<!-- FlexSlider -->
-                              <div class="productDesc">
-                                <h5><u>Description</u></h5> {{prodDetailData.PDescription}}</div>
+
                       				<div class="clearfix"></div>
 
 

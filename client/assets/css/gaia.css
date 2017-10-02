@@ -3972,6 +3972,12 @@ transition: background .55s ease;
 }
 .span1 .right{
   float: right;
+
+
+}
+.right-max-min{
+  width: 30%;
+  float: right;
 }
 
 .product-name .price{
@@ -3979,9 +3985,8 @@ transition: background .55s ease;
 }
 
 .productdetail-name{
-  position: absolute;
   margin-top: 10px;
-  margin-left: 33%;
+
 }
 .discount{
   color:red;
@@ -4254,12 +4259,18 @@ font-size: small;
 }
 
 .quantSize{
+  width: 20%;
   font-size: 1.5vw;
   float:left;
 
 
 }
+.quantSize-quick{
+  font-size: 1.5vw;
+  float:left;
 
+
+}
 .Max-Min{
     font-size: 17px;
     float: left;
@@ -4270,8 +4281,14 @@ font-size: small;
   margin-right: 18px;
   float: left;
   padding-left: 2%;
+  width: 40%;
 }
+#quantSelector1-quick,#quantSelector2-quick,#quantSelector3-quick,#quantSelector4-quick{
+  margin-right: 18px;
+  float: left;
+  padding-left: 2%;
 
+}
 .sizes{
   width:100%;
 }
@@ -4291,24 +4308,36 @@ font-size: small;
   width: 95%;
   margin-left: 3%;
   margin-top: 7%;
+  margin-bottom: 10%;
 }
-
+.product-table-right{
+  width: 56%;
+  float: right;
+}
+.product-slider-left{
+  width: 44%;
+  float: left;
+}
+.product-details-left{
+  width: 72%;
+  float: left;
+}
 #prodDescTable{
-  width: 30%;
-  margin-top:  4.5%;
+  width: 100%;
+  margin-top: 1.5%;
   height: 41%;
-  margin-left: 35%;
+  margin-left: 1%;
 }
 
 #selectQuantitySpan{
-width: 21%;
+width: 25%;
 float: right;
-margin-top: -22%;
-margin-right: 2%;
+margin-top: 5.7%;
 }
 
 #Max-Min{
-  margin-left: 226px;
+  width: 30%;
+  float: right;
 }
 
 #addToCartBtn{
@@ -4322,16 +4351,19 @@ margin-right: 2%;
 
 .productDesc{
   position: relative;
-  margin-left: 38%;
+  margin-left: 2%;
+  font-size: 1.1vw;
 }
 
 #sliderDiv{
-  width: 34%;
+  width: 100%;
 }
-
+.right-quant-selector{
+  margin-left: 23%;
+}
 #prodDetailError{
   float: right;
-  margin-top: 2%;
+  margin-top: 4%;
   margin-right: -11%;
 }
 
@@ -5375,4 +5407,7 @@ a:focus{
 
 .quant-select-table{
   border-spacing:5px;
+}
+.save-address-error{
+  color: red;
 }
