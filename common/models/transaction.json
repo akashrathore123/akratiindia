@@ -1,5 +1,5 @@
 {
-  "name": "Order",
+  "name": "Transaction",
   "base": "PersistedModel",
   "strict": false,
   "idInjection": false,
@@ -7,54 +7,49 @@
     "validateUpsert": true
   },
   "properties": {
-    "OrderDiscount": {
+    "TransactionMode": {
       "type": "string"
     },
-    "OrderGST": {
+    "TransactionTime": {
+      "type": "date"
+    },
+    "TransactionOrderID": {
+      "type": "string",
+      "required": true
+    },
+    "TransactionAddressID": {
       "type": "string"
     },
-    "OrderDeliveryCharge": {
-      "type": "string"
-    },
-    "OrderStatus": {
-      "type": "string",
+    "TransactionOrderAmount": {
+      "type": "number",
       "required": true
     },
-    "OrderActionDate": {
-      "type": "date",
-      "required": true
-    },
-    "OrderId": {
-      "type": "string",
-      "required": true
-    },
-    "OrderDate": {
-      "type": "date",
-      "required": true
-    },
-    "OrderClientId": {
-      "type": "string",
-      "required": true
-    },
-    "OrderAddress": {
-      "type": "Address",
-      "required": true
-    },
-    "OrderAmount": {
-      "type": "string",
-      "required": true
-    },
-    "OrderProducts": {
+    "TransactionProducts": {
       "type": [
-        "any"
-      ],
-      "required": true
+        "string"
+      ]
     },
-    "OrderTotal": {
+    "TransactionReqHash": {
       "type": "string",
       "required": true
     },
-    "OrderTransactionID": {
+    "TransactionResHash": {
+      "type": "string",
+      "required": true
+    },
+    "TransactionStatus": {
+      "type": "string",
+      "required": true
+    },
+    "TransactionAmount": {
+      "type": "number"
+    },
+    "TransactionID": {
+      "type": "string",
+      "id": false,
+      "required": true
+    },
+    "TransactionPayID": {
       "type": "string"
     }
   },

@@ -69,7 +69,7 @@ app.directive('myEnter', function () {
 /* Factory methods */
 
 app.factory('baseAPIUrl',function(){
-    var baseURL = "http://localhost:3000/api/";
+    var baseURL = "http://139.59.94.11:8080/api/";
     return baseURL;
 });
 
@@ -393,6 +393,8 @@ if(password1 == password2){
 app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spinner','baseAPIUrl', function($scope,$http,$window,localStorage,spinner,baseAPIUrl){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   $scope.userLogin = function(){
+    $scope.login.email='akash@123.com';
+    $scope.login.password = 'jelvin123';
       var login =JSON.stringify($scope.login);
       var cart = localStorage.getData('cart');
       if(cart == undefined){
@@ -1623,80 +1625,34 @@ $scope.proceedOrder = function(){
   var spinElement = spinner.startSpin('body');
 
   if(session && $localStorage.orderAddress && localStorage.getData('order')){
-    var requestData='key=gtKFFx&txnid=1506874346&amount=1000&productinfo=asdfghjkl&firstname=akash&email=akash.rathore1924%40gmail.com&phone=8273816122&surl=http%3A%2F%2F127.0.0.1%3A8038%2Findex.html&hash=b7a422971d067729bec8c6c3085e3d141c0e1232522d9e64a041a6a0f0651e652a316461ed7d31db93b06606d310d259480caee46c9a0c45415f50b41da34430';
 
-var form = '<form action="https://test.payu.in/_payment"  name="payuform" method=POST >'+
-'<input type="hidden" name="key" value="gtKFFx" />'+
-'<input type="hidden" name="hash_string" value="gtKFFx|1506874346|1000|asdfghjkl|akash|akash.rathore1924@gmail.com|||||||||||eCwWELxi" />'+
-'<input type="hidden" name="hash" value="b7a422971d067729bec8c6c3085e3d141c0e1232522d9e64a041a6a0f0651e652a316461ed7d31db93b06606d310d259480caee46c9a0c45415f50b41da34430"/>'+
-'<input type="hidden" name="txnid" value="1506874346"/>'+
-'<table>'+
-'<tr>'+
-'<td><b>Mandatory Parameters</b></td>'+
-'</tr>'+
-'<tr>'+
-'<td>Amount: </td>'+
-'<td><input name="amount"  value="1000"/></td>'+
-'<td>First Name: </td>'+
-'<td><input name="firstname" id="firstname" value="akash" /></td>'+
-'</tr>'+
-'<tr>'+
-'<td>Email: </td>'+
-'<td><input name="email" id="email" value="akash.rathore1924@gmail.com"  /></td>'+
-'<td>Phone: </td>'+
-'<td><input name="phone"  value="8273816122"/></td>'+
-'</tr>'+
-'<tr>'+
-'<td>Product Info: </td>'+
-'<td colspan="3"><textarea name="productinfo" >asdfghjkl</textarea>  </td>'+
-'</tr>'+
-'<tr>'+
-'<td>Success URI: </td>'+
-'<td colspan="3"><input name="surl"  size="64"  value="http://sitenol.com/payumoney-integration-errors-sandbox-production"/></td>'+
-'</tr>'+
-'<tr>'+
-'<td>Failure URI: </td>'+
-'<td colspan="3"><input name="furl"  size="64" value="http://sitenol.com/payumoney-integration-errors-sandbox-production"/></td>'+
-'</tr>'+
-'<tr>'+
-'<td colspan="3"><input type="hidden" name="service_provider" value="payu_paisa" /></td>'+
-'</tr>'+
-// '<tr>'+
-// '<td><b>Optional Parameters</b></td>'+
-// '</tr>'+
-// '<tr>'+
-// '<td>Last Name: </td>'+
-// '<td><input name="lastname" id="lastname"  /></td>'+
-// '<td>Cancel URI: </td>'+
-// '<td><input name="curl" value="" /></td>'+
-// '</tr>'+
-'<tr>'+
-'<td colspan="4"><input type="submit" value="Submit"  /></td>'+
-'</tr>'+
-'</table>'+
-'</form>';
-  $(form).appendTo('body').submit();
-  //   $http({
-  //
-  //
-  //            method : 'POST',
-  //            url : 'https://test.payu.in/_payment',
-  //            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  //            data : requestData
-  //        }).
-  //        success(function(data,status,headers,config){
-  //         // notify.showNotification('Product '+item.PProduct.PName+' Removed from the cart.','success');
-  //         //
-  //         // localStorage.deleteData('cart', item);
-  //         // $scope.items = localStorage.getData('cart');
-  //         // manageCart();
-  //         // updateCart.update();
-  //         console.log(data);
-  //        })
-  //   .error(function(data,status,headers,config){
-  //     // notify.showNotification('Issue in removing product '+item.PProduct.PName+' from the cart.','danger');
-  //     // return;
-  // });
+      document.getElementById("confirm-order-button").disabled = true;
+      session = JSON.parse(session);
+      var order = localStorage.getData('order');
+    //  console.log(JSON.stringify(order));
+      order = angular.fromJson(order);
+      order.orderAddress = $localStorage.orderAddress;
+
+      $http({
+
+               method : 'POST',
+               url : baseAPIUrl+'Orders/initiateTransaction',
+               headers: {'Content-Type': 'application/json',
+                          'realm': 'web'},
+               data: order
+             }).
+           success(function(data,status,headers,config){
+                  var response = data.response;
+
+                    $(response.form).appendTo('body').submit();
+                }).
+           error(function(data,status,headers,config){
+                      spinner.stopSpin(spinElement);
+                      $window.location = "#orderFailed";
+                      return;
+                    });
+
+
 
 
 
@@ -1771,37 +1727,38 @@ app.controller('confirmedOrder',['$http','$scope','$window','$routeParams','loca
 ScrollTop.scroll();
 $http.defaults.headers.common = {'access_code':'onyourown'};
 $rootScope.isHome = false;
-var orderId = $routeParams.orderId;
+//var orderId = $routeParams.orderId;
+localStorage.deleteAll('cart');
+localStorage.deleteData('order');
+$localStorage.orderAddress = undefined;
 var session = localStorage.getData('User');
 var spinElement = spinner.startSpin('body');
-if(session && orderId){
+if(session){
   session = JSON.parse(session);
-  $http({
+               $http({
 
-           method : 'get',
-           url : baseAPIUrl+'Orders/getOrder',
-           headers: {'Content-Type': 'application/json',
-                      'realm': 'web',
-                      'OrderId':orderId,
-                      'PClientId':session.token}
-         }).
-       success(function(data,status,headers,config){
-         if(status == "204"){
-           spinner.stopSpin(spinElement);
-            $window.location = "#cart";
-         }
-         spinner.stopSpin(spinElement);
-         $scope.confirmedOrder = data.response;
-       })
-       .error(function(data,status,headers,config){
-         $window.location = "#error500";
-         spinner.stopSpin(spinElement);
-       });
+                        method : 'DELETE',
+                        url : baseAPIUrl+'CartItems/deleteCart',
+                        headers: {'Content-Type': 'application/json',
+                                   'realm': 'web',
+                                   'PClientId':session.id}
+                      }).
+                    success(function(data,status,headers,config){
+                      updateCart.update();
+                      spinner.stopSpin(spinElement);
+
+                    })
+                    .error(function(data,status,headers,config){
+
+                      spinner.stopSpin(spinElement);
+                      $window.location = "error500.html";
+
+                    });
 
 
 }else{
   spinner.stopSpin(spinElement);
-  $window.location = "#cart";
+  $window.location = "cart.html";
 }
 
 

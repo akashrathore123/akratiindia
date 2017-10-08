@@ -6,7 +6,7 @@ function define(name, value) {
     });
 }
 
-define("HOST_NAME", 'http://localhost:3000');
+define("HOST_NAME", 'http://localhost:3000/');
 define("STATIC_PATH", "/home/Saurabh/WeCanLearn")
 
 define("REALM_ANDROID", 'android');

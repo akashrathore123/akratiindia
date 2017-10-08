@@ -85,5 +85,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "Transaction": {
+    "dataSource": "mongoDB",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }
