@@ -393,8 +393,8 @@ if(password1 == password2){
 app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spinner','baseAPIUrl', function($scope,$http,$window,localStorage,spinner,baseAPIUrl){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   $scope.userLogin = function(){
-    $scope.login.email='akash@123.com';
-    $scope.login.password = 'jelvin123';
+    // $scope.login.email='akash@123.com';
+    // $scope.login.password = 'jelvin123';
       var login =JSON.stringify($scope.login);
       var cart = localStorage.getData('cart');
       if(cart == undefined){
