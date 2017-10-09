@@ -8,7 +8,6 @@ var path = require("path");
 var dateFormat = require("dateformat");
 var loopback = require("loopback");
 var crypto = require("crypto");
-var transaction = require("./Transaction");
 var constant = require("../util/constants");
 
 module.exports = function(Order) {
