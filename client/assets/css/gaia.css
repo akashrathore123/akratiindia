@@ -5481,7 +5481,16 @@ a:focus{
 .product-subHeader {
   color: #1b1a19;
 }
+.no-product{
+  margin-top: 40%;
+}
 
+.no-product-content {
+  width: 60%;
+  margin-left: 20%;
+  text-align: center;
+  font-size: 3vw;
+}
 .product-container {
   margin-left: 0px;
   margin-top: 12%;

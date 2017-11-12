@@ -1,4 +1,5 @@
 'use strict';
+var util = require("../util/util.js");
 
 module.exports = function(HomeTemplate) {
 
