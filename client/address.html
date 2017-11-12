@@ -82,8 +82,8 @@
   </div>
 
   <div class="modal fade" id="addAddressModal" role="dialog">
-    <div class="modal-dialog" role="document" style="margin-top:5%;width: 33%;">
-    <div class="modal-content">
+    <div class="modal-dialog" role="document" id="address-modal-dialog">
+    <div class="modal-content" id="address-modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle" style="font-family: sans-serif;">Add New Address</h5>
       </div>
@@ -131,8 +131,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:25%;">Cancel</button>
-        <button type="button" class="btn btn-primary" style="width:25%;" ng-click="saveAddress();">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-address-cancel">Cancel</button>
+        <button type="button" class="btn btn-primary"  ng-click="saveAddress();" id="add-address-save">Save</button>
       </div>
     </div>
   </div>

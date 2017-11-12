@@ -95,13 +95,10 @@ console.log(registerData);
     if(instance){
       console.log("instance---"+JSON.stringify(instance));
       console.log("sending sms");
-      request.post('https://textbelt.com/otp/generate', {
-  form: {
-    phone: '+918273816122',
-    userid: 'Hello world'+otp,
-    key: 'example_otp_key',
-  },
-}, function(err, httpResponse, body) {
+      request.post('http://websms.one97.net/sendsms/sms_request.php?username='+util.SMS_NAME+'& password='+util.SMS_PASSWORD+
+      '&smsfrom=Akratiindia&receiver='+registerData.client_mobile+
+      '&content=Akratiindia - '+registerData.client_verified+util.SMS_OTP_MESSAGE+'&udh=&response=JSON',
+      function(err, httpResponse, body) {
   if (err) {
     console.error('Error:', err);
     return;

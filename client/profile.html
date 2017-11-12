@@ -124,12 +124,12 @@ You have not ordered anything till now
 
 
 <div class="modal fade" id="profileEditModal" role="dialog">
-  <div class="modal-dialog" role="document" style="margin-top:8%;width: 41%;">
+  <div class="modal-dialog" id="profile-edit-modal" role="document" style="margin-top:8%;">
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLongTitle" style="font-family: sans-serif;"> Profile Details</h5>
     </div>
-    <div class="modal-body">
+    <div class="modal-body edit-profileData">
       <div class="account-details">
         <div class="account-mobile-detail">
           <div class="account-mobile-label">Mobile <sup>*</sup></div>
@@ -139,7 +139,7 @@ You have not ordered anything till now
         </div>
         <div class="account-password-detail">
           <div class="account-password-label">Password <sup>*</sup></div>
-          <div class="account-password-change"><a href="" ng-click="openChangePasswordModal();">Change Password</a></div>
+          <div class="account-password-change"><a href="" ng-click="openChangePasswordModal();" class="change-password-link">Change Password</a></div>
           <div class="account-password-input">
             <input type="password" ng-model="editProfileData.client_password" readonly="true" style="width:96%;background:aliceblue;" class="profile-input">
           </div>
@@ -185,11 +185,11 @@ You have not ordered anything till now
             <div class="account-gender-label">Gender</div>
             <div style="margin-top: 1%;">
             <div class="account-gender-male">
-              <input type="radio" ng-model="editProfileData.client_gender_male" value="male" name="gender"  style="width: 12%;height: 1.5vw;" class="profile-input" ng-click="maleGenderSelected();">
+              <input type="radio" ng-model="editProfileData.client_gender_male" value="male" name="gender"  style="width: 12%;height: 1.5vw;" class="profile-input gender-input" ng-click="maleGenderSelected();">
               <span>Male</span>
             </div>
             <div class="account-gender-female">
-              <input type="radio" ng-model="editProfileData.client_gender_female" value="female" name="gender"  style="width: 12%;height: 1.5vw;" class="profile-input" ng-click="femaleGenderSelected();">
+              <input type="radio" ng-model="editProfileData.client_gender_female" value="female" name="gender"  style="width: 12%;height: 1.5vw;" class="profile-input gender-input" ng-click="femaleGenderSelected();">
               <span>Female</span>
             </div>
           </div>
@@ -208,8 +208,8 @@ You have not ordered anything till now
 </div>
 
 <div class="modal fade" id="changePasswordModal" role="dialog">
-  <div class="modal-dialog" role="document" style="margin-top: 15%;margin-left: 51%;width: 20%;">
-  <div class="modal-content" style="height: 22vw;">
+  <div class="modal-dialog change-password-dialog" role="document" style="margin-top: 15%;margin-left: 51%;width: 20%;">
+  <div class="modal-content change-password-content" style="height: 22vw;">
     <div class="modal-body">
       <div class="change-password-label">
         Old Password <sup>*</sup>

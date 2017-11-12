@@ -69,8 +69,15 @@ app.directive('myEnter', function () {
 /* Factory methods */
 
 app.factory('baseAPIUrl',function(){
-    var baseURL = "http://139.59.94.11:8080/api/";
+     var baseURL = "http://139.59.94.11:8080/api/";
+    // var baseURL = "http://0.0.0.0:3000/api/";
     return baseURL;
+});
+
+app.factory('baseUrl',function(){
+     var URL = "http://139.59.94.11:8080/";
+    // var URL = "http://0.0.0.0:3000/";
+    return URL;
 });
 
 app.factory('notify',function(){
@@ -88,7 +95,7 @@ app.factory('notify',function(){
              align: "right"
             },
        offset: {
-                x: 100,
+                x: 0,
                   y: 200
                 },
         spacing: 10,
@@ -443,47 +450,47 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spin
 
   }
 
-$scope.logInFacebook = function(){
-  var req = new XMLHttpRequest();
-
- $window.location = "https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://localhost:7084/";
-// Feature detection for CORS
-// if ('withCredentials' in req) {
-//     req.open('GET', 'https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://139.59.23.178/', true);
-//     // Just like regular ol' XHR
-//     req.onreadystatechange = function() {
-//         if (req.readyState === 4) {
-//             if (req.status >= 200 && req.status < 400) {
-//               console.log(JSON.stringify(req.responseText));
-//                 // JSON.parse(req.responseText) etc.
-//             } else {
-//                 // Handle error case
-//             }
-//         }
-//     };
-//     req.send();
+// $scope.logInFacebook = function(){
+//   var req = new XMLHttpRequest();
+//
+//  $window.location = "https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://localhost:7084/";
+// // Feature detection for CORS
+// // if ('withCredentials' in req) {
+// //     req.open('GET', 'https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://139.59.23.178/', true);
+// //     // Just like regular ol' XHR
+// //     req.onreadystatechange = function() {
+// //         if (req.readyState === 4) {
+// //             if (req.status >= 200 && req.status < 400) {
+// //               console.log(JSON.stringify(req.responseText));
+// //                 // JSON.parse(req.responseText) etc.
+// //             } else {
+// //                 // Handle error case
+// //             }
+// //         }
+// //     };
+// //     req.send();
+// // }
+//   $http({
+//
+//
+//            method : 'GET',
+//            url : 'https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://139.59.23.178#/',
+//            header : {'Origin':'http://localhost:7084',
+//                       'Access-Control-Request-Method': 'POST'}
+//        }).
+//        success(function(data,status,headers,config){
+//          console.log(JSON.stringify(data));
+//        })
+//          .error(function(data,status,headers,config){
+//            console.log(JSON.stringify(data));
+//            console.log(status);
+//
+//          });
 // }
-  $http({
-
-
-           method : 'GET',
-           url : 'https://www.facebook.com/v2.10/dialog/oauth?client_id=1172211706217489&redirect_uri=http://139.59.23.178#/',
-           header : {'Origin':'http://localhost:7084',
-                      'Access-Control-Request-Method': 'POST'}
-       }).
-       success(function(data,status,headers,config){
-         console.log(JSON.stringify(data));
-       })
-         .error(function(data,status,headers,config){
-           console.log(JSON.stringify(data));
-           console.log(status);
-
-         });
-}
 
 }]);
 
-app.controller('loginCheck',['$scope','$http','$window','updateCart','localStorage','baseAPIUrl', function($scope,$http,$window,updateCart,localStorage,baseAPIUrl){
+app.controller('loginCheck',['$scope','$http','$window','updateCart','localStorage','baseAPIUrl','baseUrl', function($scope,$http,$window,updateCart,localStorage,baseAPIUrl,baseUrl){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   updateCart.update();
   $scope.checkSession = function(){
@@ -494,12 +501,13 @@ app.controller('loginCheck',['$scope','$http','$window','updateCart','localStora
 //session exists
     var cookies = JSON.parse(session);
   //  document.getElementById("userTools").style.visibility = "visible";
-    document.getElementById("userIcon").onmouseover = function(){
-    document.getElementById("userTools").style.display = "block";
-    };
-    document.getElementById("userIcon").onmouseout = function(){
-    document.getElementById("userTools").style.display = "none";
-    };
+  //   document.getElementById("userIcon").onmouseover = function(){
+  //   document.getElementById("userTools").style.display = "block";
+  //   };
+  //   document.getElementById("userIcon").onmouseout = function(){
+  //   document.getElementById("userTools").style.display = "none";
+  //   };
+
 
     document.getElementsByClassName("userToolName").innerHTML = cookies.fname + " " +cookies.lname;
     document.getElementById("userToolEmail").innerHTML = cookies.email;
@@ -517,7 +525,7 @@ $scope.logOut = function(){
 localStorage.deleteAll('User');
 localStorage.deleteAll('cart');
 setTimeout(function(){
-  $window.location = "index.html";
+  $window.location = baseUrl+"index.html";
 }, 300);
 
 
@@ -925,7 +933,7 @@ $scope.setModalData = function(prod){
 
 
 $scope.addToCart = function(prod){
-
+  document.getElementById("addCartError").innerHTML = "";
   var cart;
 
   var order1 = 0;

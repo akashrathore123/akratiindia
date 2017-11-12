@@ -11,57 +11,57 @@
 
             <div class="container" id="filter-container" ng-show="noContent==false">
               <div ng-show="filterData.companies.length > 0" class="company-filter">
-                <b style="color: cadetblue;font-size: 1vw;">Companies</b>
+                <b style="color: cadetblue;">Companies</b>
                 <div ng-repeat="company in filterData.companies">
-                  <input type="checkbox" style="margin-right:2%;" ng-model="company.checked" ng-change="companyFilter(company)">  {{company.company}}</input> ({{company.count}})
+                  <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="company.checked" ng-change="companyFilter(company)">  {{company.company}}</input> ({{company.count}})
                 </div>
 
             </div>
             <div ng-show="filterData.sizes.length >= 1" class="size-filter">
-              <b style="color: cadetblue;font-size: 1vw;">Sizes</b>
+              <b style="color: cadetblue;">Sizes</b>
               <div ng-repeat="size in filterData.sizes">
-                <input type="checkbox" style="margin-right:2%;" ng-model="size.checked" ng-change="sizeFilter(size)" value="{{size.size}}" name="{{size.size}}">  {{size.size}}</input> ({{size.count}})
+                <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="size.checked" ng-change="sizeFilter(size)" value="{{size.size}}" name="{{size.size}}">  {{size.size}}</input> ({{size.count}})
               </div>
 
           </div>
 
           <div ng-show="filterData.materials.length >= 3" class="material-filter">
-            <b style="color: cadetblue;font-size: 1vw;">Material</b>
+            <b style="color: cadetblue;">Material</b>
             <div ng-repeat="material in filterData.materials">
-              <input type="checkbox" style="margin-right:2%;" ng-model="material.checked" ng-change="materialFilter(material)" value="{{material.material}}" name="{{material.material}}">  {{material.material}}</input> ({{material.count}})
+              <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="material.checked" ng-change="materialFilter(material)" value="{{material.material}}" name="{{material.material}}">  {{material.material}}</input> ({{material.count}})
             </div>
           </div>
 
           <div ng-show="(filterData.price.priceMax - filterData.price.priceMin) > 40 && filterData.price.priceFilter === true" class="price-filter">
-            <b style="color: cadetblue;font-size: 1vw;">Price</b>
+            <b style="color: cadetblue;">Price</b>
             <div ng-show="filterData.price.price1Exist != 0 && filterData.price.price1 != undefined && filterData.price.price1 != '' && filterData.price.price2 != undefined && filterData.price.price2 != ''">
-              <input type="checkbox" style="margin-right:2%;" ng-model="price1" ng-change="priceFilter(price1,{{filterData.price.price1}},{{filterData.price.price2}})" > Rs. {{filterData.price.price1}} to Rs. {{filterData.price.price2}}</input> ({{filterData.price.price1Products}})
+              <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="price1" ng-change="priceFilter(price1,{{filterData.price.price1}},{{filterData.price.price2}})" > Rs. {{filterData.price.price1}} to Rs. {{filterData.price.price2}}</input> ({{filterData.price.price1Products}})
             </div>
             <div ng-show="filterData.price.price2Exist != 0 && filterData.price.price3 != undefined && filterData.price.price3 != '' && filterData.price.price4 != undefined && filterData.price.price4 != ''">
-              <input type="checkbox" style="margin-right:2%;" ng-model="price2" ng-change="priceFilter(price2,{{filterData.price.price3}},{{filterData.price.price4}})"> Rs. {{filterData.price.price3}} to Rs. {{filterData.price.price4}}</input> ({{filterData.price.price2Products}})
+              <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="price2" ng-change="priceFilter(price2,{{filterData.price.price3}},{{filterData.price.price4}})"> Rs. {{filterData.price.price3}} to Rs. {{filterData.price.price4}}</input> ({{filterData.price.price2Products}})
             </div>
             <div ng-show="filterData.price.price3Exist != 0 && filterData.price.price5 != undefined && filterData.price.price5 != '' && filterData.price.price6 != undefined && filterData.price.price6 != ''">
-              <input type="checkbox" style="margin-right:2%;" ng-model="price3" ng-change="priceFilter(price3,{{filterData.price.price5}},{{filterData.price.price6}})"> Rs. {{filterData.price.price5}} to Rs. {{filterData.price.price6}}</input> ({{filterData.price.price3Products}})
+              <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="price3" ng-change="priceFilter(price3,{{filterData.price.price5}},{{filterData.price.price6}})"> Rs. {{filterData.price.price5}} to Rs. {{filterData.price.price6}}</input> ({{filterData.price.price3Products}})
             </div>
             <div ng-show="filterData.price.price4Exist != 0 && filterData.price.price7 != undefined && filterData.price.price7 != '' && filterData.price.price8 != undefined && filterData.price.price8 != ''">
-              <input type="checkbox" style="margin-right:2%;" ng-model="price4" ng-change="priceFilter(price4,{{filterData.price.price7}},{{filterData.price.price8}})"> Rs. {{filterData.price.price7}} to Rs. {{filterData.price.price8}}</input> ({{filterData.price.price4Products}})
+              <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="price4" ng-change="priceFilter(price4,{{filterData.price.price7}},{{filterData.price.price8}})"> Rs. {{filterData.price.price7}} to Rs. {{filterData.price.price8}}</input> ({{filterData.price.price4Products}})
             </div>
 
         </div>
 
         <div ng-show="filterData.discount.discountFilter === true && (filterData.discount.discountMax - filterData.discount.discountMin) > 4" class="discount-filter">
-          <b style="color: cadetblue;font-size: 1vw;">Discount</b>
+          <b style="color: cadetblue;">Discount</b>
           <div ng-show="filterData.discount.discount1 != undefined">
-            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck1" ng-change="discountFilter(discountCheck1,filterData.discount.discount1)" value="{{filterData.discount.discount1}}" name="{{filterData.discount.discount1}}"> {{filterData.discount.discount1}} % and Above</input>
+            <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="discountCheck1" ng-change="discountFilter(discountCheck1,filterData.discount.discount1)" value="{{filterData.discount.discount1}}" name="{{filterData.discount.discount1}}"> {{filterData.discount.discount1}} % and Above</input>
           </div>
           <div ng-show="filterData.discount.discount2 != undefined">
-            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck2" ng-change="discountFilter(discountCheck2,filterData.discount.discount2)" value="{{filterData.discount.discount2}}" name="{{filterData.discount.discount2}}"> {{filterData.discount.discount2}} % and Above</input>
+            <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="discountCheck2" ng-change="discountFilter(discountCheck2,filterData.discount.discount2)" value="{{filterData.discount.discount2}}" name="{{filterData.discount.discount2}}"> {{filterData.discount.discount2}} % and Above</input>
           </div>
           <div ng-show="filterData.discount.discount3 != undefined">
-            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck3" ng-change="discountFilter(discountCheck3,filterData.discount.discount3)" value="{{filterData.discount.discount3}}" name="{{filterData.discount.discount3}}"> {{filterData.discount.discount3}}% and Above</input>
+            <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="discountCheck3" ng-change="discountFilter(discountCheck3,filterData.discount.discount3)" value="{{filterData.discount.discount3}}" name="{{filterData.discount.discount3}}"> {{filterData.discount.discount3}}% and Above</input>
           </div>
           <div ng-show="filterData.discount.discount4 != undefined">
-            <input type="checkbox" style="margin-right:2%;" ng-model="discountCheck4" ng-change="discountFilter(discountCheck4,filterData.discount.discount4)" value="{{filterData.discount.discount4}}" name="{{filterData.discount.discount4}}"> {{filterData.discount.discount4}}% and Above</input>
+            <input type="checkbox" class="form-check-input" style="margin-right:2%;" ng-model="discountCheck4" ng-change="discountFilter(discountCheck4,filterData.discount.discount4)" value="{{filterData.discount.discount4}}" name="{{filterData.discount.discount4}}"> {{filterData.discount.discount4}}% and Above</input>
           </div>
         </div>
 
@@ -69,20 +69,20 @@
           <div class="container" id="productContainer" ng-show="noContent==false">
           <div class="products-grid">
     <div ng-repeat="product in products.fields">
-      <div ng-repeat="prod in product">
+      <div ng-repeat="prod in product" class="product-grid">
          					<div class="col-md-4 product simpleCart_shelfItem text-center" id="itemTab">
 
       						<a href="#productDetails/{{prod.PCode}}" target="_blank" class="productImageBox"><img src="assets/images/{{prod.PCode}}/{{prod.PImageSmall}}" alt="" width="190" height="190"></a>
       						<div class="mask">
       							<a href="" ng-click="setModalData(prod)"  data-toggle="modal" data-target="#myModal" class="quick">Quick View</a>
                   </div>
-                    <div ng-show="prod.PDiscount != undefined && prod.PDiscount != ''" style="font-size: 0.85vw;height: 7.8vw;">
+                    <div ng-show="prod.PDiscount != undefined && prod.PDiscount != ''" class="product-name-price" style="font-size: 12.3px;height: 7.8vw;">
                       <h4>{{prod.PName}}</h4>
                       <Strike> Rs. {{prod.PRupee1}}</Strike>
                       <span class="discount">({{prod.PDiscount}}% OFF)</span>
                       <span> Rs. {{prod.PDiscountRupee1}}</span>
                     </div>
-                    <div ng-show="prod.PDiscount === undefined || prod.PDiscount === ''" style="font-size: 0.85vw;height: 7.8vw;">
+                    <div ng-show="prod.PDiscount === undefined || prod.PDiscount === ''" class="product-name-price">
                       <h4>{{prod.PName}}</h4>
                       Rs. {{prod.PRupee1}}
                     </div>

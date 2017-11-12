@@ -41,6 +41,7 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
       return;
   }
   if(transaction){
+    if(transaction.TransactionStatus != "Completed"){
     // if(requestData.hash.match(transaction.TransactionResHash)){
       transaction.TransactionMode = requestData.mode;
       transaction.TransactionStatus = "Completed";
@@ -220,11 +221,31 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
     //   return;
     //  }
   }else{
+
+              Order.findOne({where:{OrderId : requestData.productinfo}}, function(err,instance){
+                if(err){
+                  data.res.end(util.getOrderFailedHTML());
+                  return;
+                }
+
+                if(instance){
+                  data.res.end(util.getConfirmOrderHTML(instance.OrderId,instance.OrderTotal,instance.OrderProducts.length));
+                  return;
+                }else{
+                  cb(util.getGenericError("Error",500,"Internal Server Error"));
+                }
+              });
+  }
+  }else{
     data.res.end(util.getOrderFailedHTML());
     return;
   }
 
+
 })
+
+}else{
+  cb(util.getGenericError("Error",402,"Invalid request"));
 
 }
 
