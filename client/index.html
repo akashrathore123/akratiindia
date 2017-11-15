@@ -33,9 +33,10 @@
 
 <body ng-app="main"  ng-controller = "loginCheck" id="body">
 
-  <nav class="navbar navbar-default navbar-transparent navbar-fixed-top" color-on-scroll="200" ng-class="{'nav-opposite':isHome!=true}" ng-controller="showProducts" >
+  <nav class="main-header navbar navbar-default navbar-transparent navbar-fixed-top" color-on-scroll="200" ng-class="{'nav-opposite':isHome!=true}" ng-controller="showProducts" >
     <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
-    <div class="container" style="width:1268px;">
+    <div class="container">
+    <!-- <div class="container" style="width:1268px;"> -->
       <div class="navbar-header">
         <button id="menu-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example">
           <span class="sr-only">Toggle navigation</span>
@@ -51,7 +52,7 @@
       </div>
   <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right navbar-uppercase" style="margin-top:13px;">
-        <li>
+        <li class="li-search">
           <div class="search-box">
             <div class="container-1">
               <a href="#product/search={{searchQuery}}"><span class="icon" ><i class="fa fa-search"></i></span></a>

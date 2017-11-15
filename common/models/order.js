@@ -9,6 +9,7 @@ var dateFormat = require("dateformat");
 var loopback = require("loopback");
 var crypto = require("crypto");
 var constant = require("../util/constants");
+var request = require("request");
 
 module.exports = function(Order) {
 
@@ -70,6 +71,7 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
                   data.res.end(util.getOrderFailedHTML());
                   return;
                 }else{
+
                   data.res.end(util.getConfirmOrderHTML(instance.OrderId,instance.OrderTotal,instance.OrderProducts.length));
                   return;
                 }
@@ -185,6 +187,18 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
 
                         }
                       });
+
+                      request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
+                      '&smsfrom=Akratiindia&receiver=' + user.client_mobile +
+                      '&content=' + util.getSMSOrderMessage(orderItems[0].PProduct.PName,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
+                       function(err, httpResponse, body) {
+                         if (err) {
+                           console.error('Error:', err);
+                           return;
+                         }
+                         console.log(JSON.parse(body));
+                       })
+
                     }
                   });
 

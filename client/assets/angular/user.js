@@ -232,7 +232,7 @@ app.factory('localStorage', function($localStorage){
    if(key == 'User' && $localStorage.Akratiindia.User != ""){
    $localStorage.Akratiindia.User = "";
  }
-  //  $localStorage.$reset();
+    //$localStorage.$reset();
 
 
   }
@@ -376,11 +376,13 @@ if(password1 == password2){
               //console.log(data.response.client_token);
               var Akratiindia = '{\"token\" :\"'+ data.response.client_token+'\", \"id\" :\"'+ data.response.id +'\",\"mobile\" : \"'+data.response.client_mobile+'\", \"email\" :\"'+ data.response.client_email+'\" , \"fname\" :\"'+ data.response.client_fname+'\", \"lname\" :\"'+ data.response.client_lname+'\"}';
               localStorage.saveData('User', Akratiindia);
-            //  console.log('cookies'+Akratiindia);
+              console.log('cookies'+Akratiindia);
               document.cookie = Akratiindia;
             //  console.log(data.response.otp);
               $scope.OTP = false;
-              $window.location = "index.html";
+              setTimeout(function(){
+                $window.location = "index.html";
+              }, 300);
 
               return;
 
@@ -427,7 +429,7 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spin
              var User = '{\"token\" :\"'+ loginData.client_token+'\", \"id\" :\"'+ loginData.id +'\",\"mobile\" : \"'+loginData.client_mobile+'\", \"email\" :\"'+ loginData.client_email+'\" , \"fname\" :\"'+ loginData.client_fname+'\", \"lname\" :\"'+ loginData.client_lname+'\"}';
              var cartData = loginData.CartItems;
              localStorage.deleteAll('cart');
-             localStorage.deleteAll('User')
+             localStorage.deleteAll('User');
              for(i=0; i < cartData.length; i++){
                localStorage.saveData('cart', cartData[i]);
 
@@ -490,7 +492,7 @@ app.controller('loginAction',['$scope', '$http', '$window', 'localStorage','spin
 
 }]);
 
-app.controller('loginCheck',['$scope','$http','$window','updateCart','localStorage','baseAPIUrl','baseUrl', function($scope,$http,$window,updateCart,localStorage,baseAPIUrl,baseUrl){
+app.controller('loginCheck',['$scope','$http','$window','updateCart','localStorage','$localStorage','baseAPIUrl','baseUrl', function($scope,$http,$window,updateCart,localStorage,$localStorage,baseAPIUrl,baseUrl){
   $http.defaults.headers.common = {'access_code':'onyourown'};
   updateCart.update();
   $scope.checkSession = function(){
@@ -524,6 +526,7 @@ $scope.checkSession();
 $scope.logOut = function(){
 localStorage.deleteAll('User');
 localStorage.deleteAll('cart');
+$localStorage.orderAddress = undefined;
 setTimeout(function(){
   $window.location = baseUrl+"index.html";
 }, 300);
@@ -1218,7 +1221,7 @@ function getCookie(cname) {
 
 /* cart controllers */
 
-app.controller('showCartItems',['$http','$scope','$window','localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl','ScrollTop', function($http, $scope, $window, localStorage,$rootScope, updateCart,notify,spinner,baseAPIUrl,ScrollTop){
+app.controller('showCartItems',['$http','$scope','$window','localStorage','$localStorage','$rootScope','updateCart','notify','spinner','baseAPIUrl','ScrollTop', function($http, $scope, $window, localStorage,$localStorage,$rootScope, updateCart,notify,spinner,baseAPIUrl,ScrollTop){
 //console.log("into cart");
 ScrollTop.scroll();
 $http.defaults.headers.common = {'access_code':'onyourown'};
@@ -1412,7 +1415,7 @@ $scope.placeOrder = function(){
   var session = localStorage.getData('User');
 
   if(session){
-
+    $localStorage.orderAddress = undefined;
 
     session = JSON.parse(session);
     var orderDetails = {};
@@ -1791,7 +1794,7 @@ app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage
        $(document).ready(function(){
        $('.product-slider').slick({
          slidesToShow: 4,
-         slidesToScroll: 2,
+         slidesToScroll: 4,
          autoplay: true,
          autoplaySpeed: 2000,
          arrow:true,

@@ -1174,6 +1174,11 @@ a,
   background: linear-gradient(135deg, #6b39ac 0%, #c8fece 100%);
 }
 
+.main-header .container{
+  margin: 0;
+width: 100%;
+}
+
 .section-numbers .text-area {
   padding: 30px 0 0;
 }
@@ -4379,7 +4384,7 @@ margin-top: 5.7%;
 }
 
 #filter-container{
-  font-size: 13px;
+  font-size: 15px;
   float: left;
   /*position: absolute;*/
   margin-top: 160px;
@@ -4400,7 +4405,7 @@ margin-top: 5.7%;
 }
 
 #topHeaderLogo{
-  margin-left: 70px;
+  margin-left: 71px;
 }
 
 .opaque {
@@ -4425,13 +4430,16 @@ margin-top: 5.7%;
     /*left: -25px;*/
     left: -14vw !important;
     height: 11vw !important;
+    width: 37px !important;
 }
 .slick-next{
   height: 11vw !important;
-      right: -12vw !important;
+  right: -12vw !important;
+  width: 37px !important;
 }
 .slick-list{
-  margin-left: 3vw !important;
+  /*margin-left: 3vw !important;*/
+  border: 0.6px solid;
 }
 .product-slider{
     width: 54%;
@@ -5430,8 +5438,16 @@ a:focus{
 
 .quantity-selector{
   align-content: center;
-  width: 84%;
+  width: 100%;
   font-size: smaller;
+}
+
+.quantity-selector-modal{
+  width: 84% !important;
+
+}
+#quantity1-modal, #quantity2-modal, #quantity3-modal, #quantity4-modal{
+  padding-top: 0;
 }
 
 .quant-selector-header{
@@ -5465,10 +5481,16 @@ a:focus{
   width: 25%;
 }
 
-/*************************************** Media Queries *******************************************/
-@media only screen and (max-device-width: 480px) {
+#quantity1,  #quantity2, #quantity3, #quantity4{
+  float: left;
+  padding-top: 4%;
+  width: 100%;
+}
 
-  .product-header {
+/*************************************** Media Queries *******************************************/
+@media all and (max-device-width: 760px) {
+
+.product-header {
   font-size: 2.65vw;
   font-family: -webkit-pictograph;
   margin-left: 4%;
@@ -5478,6 +5500,11 @@ a:focus{
   width: 46%;
   height: 2%;
 }
+
+.quantity-selector{
+  width:100%;
+}
+
 .product-subHeader {
   color: #1b1a19;
 }
@@ -5496,7 +5523,8 @@ a:focus{
   margin-top: 12%;
 }
 #filter-container {
-  font-size: 3vw;
+  font-size: 15px;
+
 }
 
 #product-modal{
@@ -5508,6 +5536,7 @@ a:focus{
   height: 42vw;
   float: left;
   padding: 0;
+  margin-left: 2%;
 }
 
 
@@ -5529,8 +5558,8 @@ a:focus{
 }
 
 .product-name-price{
-  font-size: 7px;
-  height: 17.8vw;
+  font-size: 2vw;
+  height: 84px;
 }
 
 .company-filter,.size-filter,.material-filter,.price-filter,.discount-filter{
@@ -5538,7 +5567,7 @@ a:focus{
 }
 
 .product-slider-left{
-  height: 135vw;
+  height: 394px;
   width: 100%;
 }
 
@@ -5557,6 +5586,14 @@ a:focus{
 
 .slider>img{
   height:76%;
+  width: 95%;
+}
+
+
+#cartValue{
+  margin-top: -34px;
+  margin-left: -63px;
+  padding: 0;
 }
 
 .product-table-right{
@@ -5569,7 +5606,7 @@ a:focus{
 
 .productdetail-name {
   margin-top: 24px;
-  font-size: 4vw;
+  font-size: 18px;
 }
 
 .product-table-right{
@@ -5587,39 +5624,43 @@ a:focus{
 }
 
 .quantSize{
-  font-size: 7vw;
+  font-size: 25px;
   width: 16%;
 }
 
 #Max-Min {
-  width: 31%;
+  width: 28%;
 }
 
 #quantSelector1, #quantSelector2, #quantSelector3, #quantSelector4 {
   float: left;
-  width: 46%;
+  width: 130px;
   margin-right: 2px;
+  margin-left: 3%;
 }
 
 #quantity1,  #quantity2, #quantity3, #quantity4{
   float: left;
+  width: 100%;
+  padding-top: 1%;
 }
 #prodDetailError {
   float: left;
   margin-top: 0;
   margin-right: 0;
   margin-left: 15%;
+  width: 80%;
 }
 
 #addToCartBtn {
   margin-right: 0;
-  margin-top: -40px;
-  margin-left: 18vw;
+  /*margin-top: -40px;*/
+  margin-left: 20vw;
   float: left;
 }
 
 .productDesc{
-  font-size: 4vw;
+  font-size: 16px;
 }
 
 
@@ -5663,7 +5704,7 @@ a:focus{
 }
 
 .cart-total{
-  font-size: 5vw;
+  font-size: 14px;
 }
 
 .cart-image{
@@ -5683,7 +5724,7 @@ a:focus{
 }
 
 .cart-right-block{
-  width: 62%;
+  width: 166px;
 }
 
 .cart-left-block {
@@ -5692,8 +5733,12 @@ a:focus{
 
 }
 
+.cart-price{
+  float: right;
+}
+
 .cart-title{
-  font-size: 5vw;
+  font-size: 16px;
   margin-left: 8px;
 }
 
@@ -5703,6 +5748,8 @@ a:focus{
 
 #cart-remove{
   margin-top: 10px;
+  float: right;
+  width: 92px;
 
 }
 
@@ -5725,8 +5772,8 @@ a:focus{
 }
 
 .confirm-order-button {
-  width: 36%;
-  height: 14vw;
+  width: 100px;
+  height: 41px;
 }
 
 .select-address {
@@ -5740,9 +5787,10 @@ a:focus{
 }
 
 .address-boxx {
-  width: 90%;
+  width: 249px;
   margin-top: 12%;
   margin-left: 4%;
+  float: left;
 }
 
 #address-modal-content{
@@ -5809,7 +5857,7 @@ a:focus{
 }
 
 .profile-input{
-  height: 9.3vw;
+  height: 34px;
 }
 
 .account-password-label {
@@ -5817,7 +5865,7 @@ a:focus{
 }
 
 .change-password-link{
-  font-size: 4vw;
+  font-size: 12px;
 }
 
 .edit-profileData{
@@ -5825,41 +5873,44 @@ a:focus{
 }
 
 .account-password-change{
-  margin-top: -6.5vw;
+  margin-top: -21px;
 }
 
 .account-location-detail {
-  margin-top: -11%;
+  margin-top: -37px;
+  padding-top: 4%;
 }
 
 .edit-profileData{
-  height: 134vw;
+  height: 510px;
 }
 
 .cancel-profile-button {
-  height: 10.8vw;
+  height: 40px;
 }
 
 .save-profile-button {
-  height: 10.8vw;
+  height: 40px;
 }
 
 .gender-input{
-  height: 4.5vw !important;
+  height: 15px !important;
 }
 
 .change-password-dialog{
-  width: 92% !important;
-  margin-left: 10px !important;
-  margin-top: 101px !important;
+  width: 237px !important;
+  margin-top: 15% !important;
+  margin-left: 8% !important;
+  height: 270px !important;
 }
 
 .change-password-button{
-  height: 12.5vw;
+  height: 38px;
+  width: 194px;
 }
 
 .change-password-content{
-  height: 86vw !important;
+  height: 100% !important;
 }
 
 .change-password-error{
@@ -5901,7 +5952,7 @@ a:focus{
   width: 72%;
   margin-top: 43%;
   margin-bottom: 25%;
-  height: 53.3vw;
+  height: 20%;
   margin-left: 14.5%;
   font-size: 4.1vw;
 }
@@ -5928,6 +5979,7 @@ a:focus{
 .failed-order-note {
   margin-top: 10%;
   margin-left: 2%;
+  font-size: 12px;
 }
 
 /******** Order Confirmed media query ********/
@@ -5936,12 +5988,12 @@ a:focus{
   margin-top: 150px;
   margin-bottom: 100px;
   width: 96%;
-  height: 276px;
+  height: 410px;
   margin-left: 2%;
 }
 
 .order-confirm-message {
-  height: 75%;
+  height: 56%;
   width: 60%;
   float: left;
 }
@@ -5971,7 +6023,7 @@ a:focus{
   float: right;
   width: 40%;
   margin-top: 5%;
-  height: 59%;
+  height: 50%;
   font-size: 4.5vw;
 }
 
@@ -5985,10 +6037,11 @@ a:focus{
 
 .order-note{
   float: left;
+  margin-top: 14%;
 }
 
 .order-note > p {
-  font-size: 3vw;
+  font-size: 14px;
 }
 
 .aboutUs-content {
@@ -6116,4 +6169,244 @@ a:focus{
 .moneyBack-heading {
   font-size: 6vw;
 }
+}
+
+/******** Media Queries between 768 to 1080  ***********/
+@media (min-width:768px) and (max-width:1230px) {
+
+.navbar-header{
+  width: 93px;
+}
+
+#topHeaderImage {
+  width: 3.5vw;
+  margin-top: -35px;
+}
+
+#topHeaderLogo{
+  margin-left: 0;
+}
+.li-search{
+  width: 17%;
+}
+
+.container-1 .icon {
+  margin-left: 2px;
+}
+
+.container-1 input#search {
+  width: 35%;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+  width: 86.5%;
+  float: right;
+}
+
+.navbar .navbar-nav > li > a {
+  padding: 10px 1px;
+  margin: 15px 3px;
+}
+
+.search-box{
+  width: 100%;
+}
+
+.navbar .navbar-brand {
+  padding: 15px 0px;
+}
+
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+  margin-left: -10px;
+}
+
+.navbar .navbar-nav.navbar-uppercase > li > a {
+  font-size: 11px;
+}
+
+.navbar-nav > li {
+  margin-left: 1%;
+}
+
+#filter-container{
+  width: 218px;
+}
+
+.company-filter, .size-filter, .material-filter, .price-filter, .discount-filter {
+  margin-left: 14%;
+}
+
+#productContainer {
+  margin-left: 24%;
+  width: 76%;
+}
+
+#itemTab {
+  width: 175px;
+  float: left;
+}
+
+#itemTab a img {
+  height: 100%;
+  width: 100%;
+}
+.product-name-price {
+  height: 10.8vw;
+}
+.mask {
+    opacity: 0;
+}
+
+#filter-container {
+  font-size: 15px;
+}
+
+.productContainer{
+  margin-top: 14%;
+}
+
+.productContainer {
+  width: 98%;
+  margin-left: 1%;
+}
+.product-details-left {
+  width: 100%;
+}
+.productDesc{
+  font-size: 16px;
+}
+
+#selectQuantitySpan {
+  width: 48%;
+  float: right;
+  margin-top: 0;
+}
+.quantSize{
+  font-size: 22px;
+}
+.Max-Min {
+  font-size: 20px;
+}
+
+.quick{
+  pointer-events: none;
+}
+
+#prodDetailError {
+  float: right;
+  margin-top: 20%;
+  margin-right: -15%;
+}
+
+#addToCartBtn{
+  margin-right: 13.3%;
+  margin-top: 12%;
+}
+
+#quantSelector1, #quantSelector2, #quantSelector3, #quantSelector4 {
+  width: 133px;
+}
+
+#cartContainer {
+  margin-top: 20%;
+  width: 69%;
+  margin-left: 2%;
+}
+.checkout {
+  width: 28%;
+  float: right;
+  margin-right: 1%;
+}
+.cart-block {
+  width: 94%;
+}
+.cart-right-block {
+  width: 35%;
+}
+#cart-remove {
+  position: relative;
+  margin-top: 10px;
+  margin-left: 54px;
+  float: right;
+}
+.cart-price{
+  float: right;
+}
+.cart-total {
+  float: right;
+  font-size: 15px;
+}
+.cart-image > img {
+  height: 90%;
+  width: 160px;
+}
+.cart-left-block{
+  margin-top: -55px;
+}
+.cart-title{
+  font-size: 15px;
+}
+
+.address-container {
+  margin-top: 19%;
+}
+.address-boxx {
+  width: 28vw;
+  float: left;
+  margin-top: 8%;
+  margin-left: 4%;
+  height: 290px;
+}
+.select-address {
+  width: 70%;
+}
+.confirm-order-details {
+  width: 21%;
+  float: right;
+  margin-right: 30px;
+}
+#add-address-cancel {
+  width: 32%;
+
+}
+#add-address-save {
+  width: 32%;
+}
+.confirm-order-button {
+  width: 102px;
+}​
+.order-confirm-message {
+  height: 82%;
+}
+.order-confirm-details {
+  margin-top: -262px;
+}
+.order-confirm-content {
+  margin-top: 21%;
+}
+.order-note >p{
+  margin-top: 30px;
+  font-size: 9px;
+
+}
+.change-password-dialog {
+  width: 237px !important;
+  margin-top: 20% !important;
+  margin-left: 51% !important;
+  height: 270px !important;
+
+}
+.change-password-content{
+  height: 100% !important;
+
+}
+
+.change-password-button {
+  width: 130px;
+  height: 31px;
+}
+.failed-order-content {
+  margin-top: 18%;
+}
+
 }
