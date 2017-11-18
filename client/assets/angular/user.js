@@ -69,13 +69,13 @@ app.directive('myEnter', function () {
 /* Factory methods */
 
 app.factory('baseAPIUrl',function(){
-     var baseURL = "http://139.59.94.11:8080/api/";
+     var baseURL = "http://52.66.161.111//api/";
     // var baseURL = "http://0.0.0.0:3000/api/";
     return baseURL;
 });
 
 app.factory('baseUrl',function(){
-     var URL = "http://139.59.94.11:8080/";
+     var URL = "http://52.66.161.111/";
     // var URL = "http://0.0.0.0:3000/";
     return URL;
 });
@@ -1575,6 +1575,42 @@ $scope.removeAddress = function(addressId){
 }
 
 $scope.showAddressModal = function(){
+  // $(".state-input").hide();
+  // $(".city-input").hide();
+  $("#pincode-value-input").keyup(function() {
+    var el = $(this);
+
+    if ((el.val().length == 6)) {
+
+      console.log("ajax");
+      $.ajax({
+        url: "http://maps.googleapis.com/maps/api/geocode/json?address="+el.val(),
+        cache: false,
+        dataType: "json",
+        type: "GET",
+        data: "zip=" + el.val(),
+        success: function(result, success) {
+          console.log(result.results);
+          // $(".fancy-form div > div").slideDown(); /* Show the fields */
+          if(result.results[0].address_components.length > 2){
+          document.getElementById("city-value-input").value = result.results[0].address_components[1].long_name;
+          document.getElementById("state-value-input").value = result.results[0].address_components[2].long_name;
+          }
+          // $("#address-line-1").focus(); /* Put cursor where they need it */
+
+        },
+        error: function(result, success) {
+
+          // $(".zip-error").show(); /* Ruh row */
+
+        }
+
+});
+
+    }
+
+  });
+  console.log("hidden");
   $('#addAddressModal').modal('show');
 }
 

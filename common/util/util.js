@@ -1,8 +1,8 @@
 
-const DOMAIN = "http://139.59.94.11:8080/";
+const DOMAIN = "http://52.66.161.111/";
 // const DOMAIN = "http://0.0.0.0:3000/";
 // const LOCALHOST = "http://0.0.0.0:3000/";
-const LOCALHOST = "http://139.59.94.11:8080/";
+const LOCALHOST = "http://52.66.161.111/";
 const PAYMENT_SURL = LOCALHOST+'api/Orders/confirmOrder';
 const PAYMENT_FURL = LOCALHOST+'api/Orders/orderFailed';
 const MERCHANT_KEY = 'gtKFFx';

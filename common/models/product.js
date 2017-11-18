@@ -321,6 +321,12 @@ console.log("products size"+products.length);
 
 
         }
+        var sizeIncreasing = [];
+        // for(var i=0;i<filterData.sizes.length;i++){
+          filterData.sizes = filterData.sizes.sort();
+          console.log(filterData.sizes);
+        // }
+
         materialFilter = filterData.materials;
         for(var j =0; j < materialFilter.length; j++){
           if(products[i].PMaterial1 != undefined && products[i].PMaterial1 == materialFilter[j].material){
@@ -701,6 +707,7 @@ Product.uploadSheet = function(ctx, cb){
     var sheetData = obj[i].data;
     for(var j=1; j<sheetData.length;j++){
       var product = {};
+      console.log(sheetName);
       product.PCategory = sheetName;
       product.PName = sheetData[j][0];
       product.PCompany = sheetData[j][1];

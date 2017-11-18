@@ -339,8 +339,12 @@ body > .navbar-collapse a {
   height: auto;
 }
 
+.app-avatar{
+  width: 82% !important;
+}
 .avatar-danger {
   border-color: #e78b90;
+
 }
 
 *::selection {
@@ -1176,7 +1180,7 @@ a,
 
 .main-header .container{
   margin: 0;
-width: 100%;
+width: 98%;
 }
 
 .section-numbers .text-area {
@@ -4709,28 +4713,35 @@ margin-top: 5.7%;
   font-weight: 100;
   height: 20px;
 }
+.city-key-input{
+  background: white;
+  margin-top: 55px;
+  margin-left: 30px;
+  font-weight: 100;
+  position: absolute;
+}
 #value-input{
   border-radius: 0;
   margin-bottom: 15px;
 }
-.key-input > label{
+.city-key-input > label,.key-input > label{
   font-weight: 100;
 }
 #city-value-input{
-  width: 50%;
+  /*width: 50%;*/
   border-radius: 0;
   margin-bottom: 15px;
 }
 #pincode-value-input{
-  width: 49%;
+  /*width: 49%;*/
   margin-left: 50%;
-  margin-top: -56px;
+  /*margin-top: -56px;*/
   float: right;
   border-radius: 0;
 }
 .pincode-key-input{
-  margin-left: 54%;
-  margin-top: -66px;
+  margin-left: 30px;
+margin-top: -10px;
   position: absolute;
   background: white;
   font-weight: 100;
@@ -4740,6 +4751,7 @@ margin-top: 5.7%;
   font-weight: 100;
 }
 .state-key-input{
+  margin-top: -10px;
   margin-left: 30px;
   position: absolute;
   background: white;
@@ -5087,7 +5099,7 @@ a:focus{
 
 /* Company Policy CSS */
 .companyPolicy-content-data{
-  margin-top: 10%;
+  margin-top: 16%;
   margin-bottom: 10%;
   font-size: 1.2vw;
   width: 80%;
@@ -5490,6 +5502,9 @@ a:focus{
 /*************************************** Media Queries *******************************************/
 @media all and (max-device-width: 760px) {
 
+#topHeaderImage {
+  width: 7.5vw;
+}
 .product-header {
   font-size: 2.65vw;
   font-family: -webkit-pictograph;

@@ -99,26 +99,27 @@
             </div>
             <textarea class="form-control" id="value-input" ng-model="newAdd.Street"></textarea>
           </div>
+
           <div class="locality-input">
             <div class="key-input"><label>Locality/Town*</label>
             </div>
             <input type="text" class="form-control" id="value-input" ng-model="newAdd.Locality">
           </div>
 
-          <div class="city-input">
-            <div class="key-input"><label>City/District*</label>
-            </div>
-            <input type="text" class="form-control" id="city-value-input" ng-model="newAdd.City">
-          </div>
           <div class="pincode-input">
             <div class="pincode-key-input"><label>Pin Code*</label>
             </div>
             <input type="text" class="form-control" id="pincode-value-input" ng-model="newAdd.PinCode" maxlength="6">
           </div>
-          <div class="state-input">
+          <div class="city-input" id="city-input">
+            <div class="city-key-input"><label>City/District*</label>
+            </div>
+            <input type="text" class="form-control" id="city-value-input" ng-model="newAdd.City">
+          </div>
+          <div class="state-input" id="state-input">
             <div class="state-key-input"><label>State*</label>
             </div>
-            <input type="text" class="form-control" id="value-input" ng-model="newAdd.State">
+            <input type="text" class="form-control" id="state-value-input" ng-model="newAdd.State">
           </div>
           <div class="mobile-input">
             <div class="key-input"><label>Mobile*</label>
@@ -126,15 +127,20 @@
             <input type="text" class="form-control" id="value-input" ng-model="newAdd.Mobile" maxlength="10">
           </div>
         </div>
+
+
+
+        </div>
         <div class="save-address-error">
           {{saveAddressError}}
         </div>
-      </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-address-cancel">Cancel</button>
         <button type="button" class="btn btn-primary"  ng-click="saveAddress();" id="add-address-save">Save</button>
       </div>
     </div>
+      </div>
   </div>
 </div>
     </div>
