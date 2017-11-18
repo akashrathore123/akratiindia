@@ -69,7 +69,7 @@ app.directive('myEnter', function () {
 /* Factory methods */
 
 app.factory('baseAPIUrl',function(){
-     var baseURL = "http://52.66.161.111//api/";
+     var baseURL = "http://52.66.161.111/api/";
     // var baseURL = "http://0.0.0.0:3000/api/";
     return baseURL;
 });
@@ -1813,6 +1813,7 @@ if(session){
 
 app.controller('homeData',['$http','$scope','$window','$rootScope','localStorage','updateCart','spinner','baseAPIUrl', function($http, $scope, $window, $rootScope, localStorage, updateCart,spinner,baseAPIUrl){
   $rootScope.isHome = true;
+  $http.defaults.headers.common = {'access_code':'onyourown'};
   $scope.tempData  = '';
   var spinElement = spinner.startSpin('body');
   $http({
