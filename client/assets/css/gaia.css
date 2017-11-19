@@ -4382,8 +4382,9 @@ margin-top: 5.7%;
 }
 
 #productContainer{
-  margin-left: 31%;
-  width: 70%;
+  /*margin-left: 31%;*/
+  width: 72%;
+  margin-right: 0;
 
 }
 
@@ -5541,7 +5542,9 @@ a:focus{
   margin-top: 12%;
 }
 #filter-container {
-  font-size: 15px;
+  font-size: 12px;
+  /*width: 41%;*/
+  width: 158px;
 
 }
 
@@ -5581,7 +5584,7 @@ a:focus{
 }
 
 .company-filter,.size-filter,.material-filter,.price-filter,.discount-filter{
-   margin-left: 14%;
+   margin-left: 6%;
 }
 
 .product-slider-left{
