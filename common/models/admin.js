@@ -6,10 +6,11 @@ module.exports = function(Admin) {
 
 Admin.login = function(data, cb, next){
   var body = data.body;
-  var accessCode = data.header('access_code');
+
 
   var realm = data.header('realm');
-  if(!body.adminId || !body.password || !accessCode || !realm || accessCode != "onadmin" || (realm != "ios" && realm != "web" && realm != "android")){
+
+  if(!body.adminId || !body.password ||  !realm || (realm != "ios" && realm != "web" && realm != "android")){
     cb(util.getGenericError("Error", 422, "Request Unprocessable"));
     return;
   }

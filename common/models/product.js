@@ -673,7 +673,7 @@ Product.addProduct = function(data, cb, next)
   var access_code = data.header('access_code');
 
   var body = data.body;
-  if(!realm || !access_code || access_code != "onadmin" || (realm != "ios" && realm != "web" && realm != "android") || !body || body.PCode == undefined){
+  if(!realm || !access_code || access_code != "onyourown" || (realm != "ios" && realm != "web" && realm != "android") || !body || body.PCode == undefined){
     cb(util.getGenericError('Error',400,'Bad Request!'));
     return;
   }
@@ -785,7 +785,7 @@ Product.uploadSheet = function(ctx, cb){
 Product.getProductCode = function(data, cb, next){
   var realm = data.header('realm');
   var access_code = data.header('access_code');
-  if(!realm || !access_code || access_code != "onadmin" || (realm != "ios" && realm != "web" && realm != "android")){
+  if(!realm || !access_code || access_code != "onyourown" || (realm != "ios" && realm != "web" && realm != "android")){
     cb(util.getGenericError('Error',400,'Bad Request!'));
     return;
   }
@@ -804,7 +804,7 @@ Product.find({fields:{'PCode':true}},function(err,object){
 Product.getUpdateProduct = function(data, cb, next){
   var realm = data.req.header('realm');
   var access_code = data.req.header('access_code');
-  if(!realm || !access_code || access_code != "onadmin" || (realm != "ios" && realm != "web" && realm != "android")){
+  if(!realm || !access_code || access_code != "onyourown" || (realm != "ios" && realm != "web" && realm != "android")){
     cb(util.getGenericError('Error',400,'Bad Request!'));
     return;
   }
@@ -831,7 +831,7 @@ Product.updateProduct = function(data, cb, next){
   var realm = data.header('realm');
   var access_code = data.header('access_code');
   var code = data.header('code');
-  if(!realm || !access_code || access_code != "onadmin" || (realm != "ios" && realm != "web" && realm != "android") || !code){
+  if(!realm || !access_code || access_code != "onyourown" || (realm != "ios" && realm != "web" && realm != "android") || !code){
     cb(util.getGenericError('Error',400,'Bad Request!'));
     return;
   }
