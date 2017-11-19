@@ -69,14 +69,14 @@ app.directive('myEnter', function () {
 /* Factory methods */
 
 app.factory('baseAPIUrl',function(){
-     var baseURL = "http://52.66.161.111/api/";
-    // var baseURL = "http://0.0.0.0:3000/api/";
+    //  var baseURL = "/api/";
+    var baseURL = "/api/";
     return baseURL;
 });
 
 app.factory('baseUrl',function(){
-     var URL = "http://52.66.161.111/";
-    // var URL = "http://0.0.0.0:3000/";
+    //  var URL = "/";
+    var URL = "/";
     return URL;
 });
 

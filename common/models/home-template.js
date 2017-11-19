@@ -6,7 +6,7 @@ module.exports = function(HomeTemplate) {
 HomeTemplate.getTempData = function(req,cb){
   var realm = req.header("realm");
   var access_code = req.header("access_code");
-
+console.log(access_code+realm);
   if(!access_code || access_code != "onyourown" || !realm || (realm != "ios" && realm != "web" && realm != "android")){
     cb(util.getGenericError("Error", 405, "Bad Request!"));
     return;
