@@ -1,6 +1,6 @@
 var app= angular.module("admin",['ngStorage','ngRoute']);
 app.factory('baseAPIUrl',function(){
-      var baseURL = "http://52.66.161.111//api/";
+      var baseURL = "/api/";
       // var baseURL = "http://0.0.0.0:3000/api/";
 
       return baseURL;
