@@ -5512,7 +5512,7 @@ a:focus{
   position: absolute;
   margin-top: 2%;
   color: #1673ad;
-  width: 46%;
+  width: 52%;
   height: 2%;
 }
 
@@ -5522,6 +5522,9 @@ a:focus{
 
 .product-subHeader {
   color: #1b1a19;
+  margin-left: -36%;
+  font-size: 16px;
+  margin-top: 11%;
 }
 .no-product{
   margin-top: 40%;
