@@ -134,13 +134,13 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
 
               var transporter = nodemailer.createTransport({
                 ignoreTLS: true,
-                host: 'allied-up.com',
+                host: 'smtp.gmail.com',
                 port: 587,
                 secure:false,
                 auth: {
 
-                  user: 'info@allied-up.com',
-                  pass: 'AUPmail*733'
+                  user: 'info@akratiindia.com',
+                  pass: 'qwertyuiop'
               }
           });
 
@@ -171,8 +171,8 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
                     }
                     if(user){
                       var mailClient = {
-                        from: 'Akratiindia Updates <info@allied-up.com>', // sender address
-                        to: [user.client_email,'akash.rathore1924@gmail.com'], // list of receivers
+                        from: 'Akratiindia Updates <info@akratiindia.com>', // sender address
+                        to: [user.client_email], // list of receivers
                         subject: 'Your Akratiindia Order Confirmation ( '+ instance.OrderId +' ) ', // Subject line
                         html: data+itemsData+data1 // html body
                       };
@@ -569,13 +569,13 @@ Order.create(order,function(err,instance){
 
       var transporter = nodemailer.createTransport({
         ignoreTLS: true,
-        host: 'allied-up.com',
+        host: 'smtp.gmail.com',
         port: 587,
         secure:false,
         auth: {
 
-          user: 'info@allied-up.com',
-          pass: 'AUPmail*733'
+          user: 'info@akratiindia.com',
+          pass: 'qwertyuiop'
       }
   });
 
@@ -602,13 +602,13 @@ if(err){
         }else{
           var mailClient = {
             from: 'Akratiindia Updates <info@allied-up.com>', // sender address
-            to: [user.email,'akash.rathore1924@gmail.com'], // list of receivers
+            to: [user.email], // list of receivers
             subject: 'Your Akratiindia Order Confirmation ( '+ order.orderId +' ) ', // Subject line
             html: data+itemsData+data1 // html body
           };
           var mailAkrati = {
-            from: 'Akratiindia Updates <info@allied-up.com>', // sender address
-            to: 'sanketgoel12345@gmail.com', // list of receivers
+            from: 'Akratiindia Updates <info@akratiindia.com>', // sender address
+            to: 'info@akratiindia.com', // list of receivers
             subject: 'Akratiindia Order Confirmation ( '+ orderId +' ) ', // Subject line
             html: data+itemsData+data1 // html body
           };
@@ -769,13 +769,13 @@ if(err){
 
         var transporter = nodemailer.createTransport({
           ignoreTLS: true,
-          host: 'allied-up.com',
+          host: 'smtp.gmail.com',
           port: 587,
           secure:false,
           auth: {
 
-            user: 'info@allied-up.com',
-            pass: 'AUPmail*733'
+            user: 'info@akratiindia.com',
+            pass: 'qwertyuiop'
         }
     });
 
@@ -786,7 +786,7 @@ if(err){
             }else{
               var mailClient = {
                 from: 'Akratiindia Updates <info@allied-up.com>', // sender address
-                to: [email,'akash.rathore1924@gmail.com','sanketgoel12345@gmail.com'], // list of receivers
+                to: [email,'info@akratiindia.com'], // list of receivers
                 subject: 'Your Akratiindia Order Cancelled Successfully ( '+ orderId +' ) ', // Subject line
                 html: data1+data // html body
               };
