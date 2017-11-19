@@ -5,6 +5,12 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+app.use('/', function(req, res, next){
+  req.headers.access_code = 'onyourown'
+  next()
+})
+
+
 app.start = function() {
   // start the web server
   return app.listen(function() {
