@@ -12,7 +12,7 @@ const SMS_NAME = 'Akrati';
 const SMS_PASSWORD = 'kdiweod';
 const SMS_API = 'http://websms.one97.net/sendsms/sms_request.php?username=';
 const SMS_OTP_MESSAGE = ' is your one time password (OTP). Please use this otp to complete registration at Akratiindia.';
-
+const AKRATI_PHONE = '9557404911';
 module.exports = {
  DOMAIN : DOMAIN,
  LOCALHOST : LOCALHOST,
@@ -22,7 +22,16 @@ module.exports = {
  SMS_PASSWORD : SMS_PASSWORD,
  SMS_OTP_MESSAGE : SMS_OTP_MESSAGE,
  SMS_API : SMS_API,
+ AKRATI_PHONE : AKRATI_PHONE,
+ getSMSOrderAkrati: function(orderPhone,prodSize,orderTotal,date){
+   var message = 'Received: Order of '+orderTotal;
 
+     message += ' for ' + prodSize + ' items';
+
+   message += ' from '+ orderPhone +' has to be delivered by '+date+'.';
+
+   return message;
+ },
  getSMSOrderMessage: function(prodName,prodSize,orderTotal,date){
    var message = 'Confirmed: Order for '+prodName;
    if(prodSize > 1){
