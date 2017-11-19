@@ -72,7 +72,7 @@
       <div ng-repeat="prod in product" class="product-grid">
          					<div class="col-md-4 product simpleCart_shelfItem text-center" id="itemTab">
 
-      						<a href="#productDetails/{{prod.PCode}}" target="_blank" class="productImageBox"><img src="assets/images/{{prod.PCode}}/{{prod.PImageSmall}}" alt="" width="190" height="190"></a>
+      						<a href="#productDetails/{{prod.PCode}}" target="_blank" class="productImageBox"><img src="assets/images/Products/{{prod.PCode}}/{{prod.PImageSmall}}" alt="" width="190" height="190"></a>
       						<div class="mask">
       							<a href="" ng-click="setModalData(prod)"  data-toggle="modal" data-target="#myModal" class="quick">Quick View</a>
                   </div>
@@ -99,25 +99,25 @@
 
 
                               <div class="slider" style="border-top: 1px solid rgba(128, 128, 128, 0.18);">
-                                <img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                                <img src="assets/images/Products/{{modalData.PCode}}/{{modalData.PImage1}}" />
                               	<input type="radio" name="slide_switch" id="id1" checked="checked"/>
                               	<label for="id1">
-                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                              		<img src="assets/images/Products/{{modalData.PCode}}/{{modalData.PImage1}}" />
                               	</label>
-                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage1}}" />
+                              	<img src="assets/images/Products/{{modalData.PCode}}/{{modalData.PImage1}}" />
 
                               	<!--Lets show the second image by default on page load-->
                               	<input type="radio" name="slide_switch" id="id2" />
                               	<label for="id2">
-                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
+                              		<img src="assets/images/Products/{{modalData.PCode}}/{{modalData.PImage2}}" />
                               	</label>
-                              	<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage2}}" />
+                              	<img src="assets/images/Products/{{modalData.PCode}}/{{modalData.PImage2}}" />
 
                               	<input type="radio" ng-if="modalData.PImage3 != undefined && modalData.PImage3 != ''" name="slide_switch" id="id3"/>
                               	<label for="id3" ng-if="modalData.PImage3 != undefined && modalData.PImage3 != ''" >
-                              		<img src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" alt="" />
+                              		<img src="assets/images/Products/{{modalData.PCode}}/{{modalData.PImage3}}" alt="" />
                               	</label>
-                              	<img ng-if="modalData.PImage3 != undefined && modalData.PImage3 != ''"  src="assets/images/{{modalData.PCode}}/{{modalData.PImage3}}" alt="" />
+                              	<img ng-if="modalData.PImage3 != undefined && modalData.PImage3 != ''"  src="assets/images/Products/{{modalData.PCode}}/{{modalData.PImage3}}" alt="" />
 
 
                               </div>

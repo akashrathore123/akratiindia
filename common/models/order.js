@@ -85,7 +85,7 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
 
               itemsData += '<div class="item" style="background-color: white;width: 96%;margin-left: -5px;padding-top: 10px;">'+
                   '<table>'+
-                  '<tr><td rowspan="3" width="35%;"><img src = '+util.DOMAIN+'assets/images/'+orderItems[i].PProduct.PCode+'/'+orderItems[i].PProduct.PImageSmall+' height="30%" width="80%"></td>'+
+                  '<tr><td rowspan="3" width="35%;"><img src = '+util.DOMAIN+'assets/images/Products/'+orderItems[i].PProduct.PCode+'/'+orderItems[i].PProduct.PImageSmall+' height="30%" width="80%"></td>'+
                   '<td><span class="productName" style="font-size:80%">'+orderItems[i].PProduct.PName+'</span></td></tr>'+
                   '<tr><td><div class="itemDetails">'+
                   '<table class="productTable" style="font-family:arial,sans-serif;font-size:15px;color:rgba(0, 0, 0, 0.66);">'+
@@ -520,7 +520,7 @@ Order.create(order,function(err,instance){
 
       itemsData += '<div class="item" style="background-color: white;width: 96%;margin-left: -5px;padding-top: 10px;">'+
           '<table>'+
-          '<tr><td rowspan="3" width="35%;"><img src = '+util.DOMAIN+'assets/images/'+orderItems[i].PProduct.PCode+'/'+orderItems[i].PProduct.PImageSmall+' height="30%" width="80%"></td>'+
+          '<tr><td rowspan="3" width="35%;"><img src = '+util.DOMAIN+'assets/images/Products/'+orderItems[i].PProduct.PCode+'/'+orderItems[i].PProduct.PImageSmall+' height="30%" width="80%"></td>'+
           '<td><span class="productName" style="font-size:80%">'+orderItems[i].PProduct.PName+'</span></td></tr>'+
           '<tr><td><div class="itemDetails">'+
           '<table class="productTable" style="font-family:arial,sans-serif;font-size:15px;color:rgba(0, 0, 0, 0.66);">'+
@@ -714,7 +714,7 @@ if(err){
 
          data += '<div class="orderDetail" style="width: 84%;margin-left: 5%;border: 1px solid rgba(128, 128, 128, 0.38);border-radius: 8px;padding-left: 2%;padding-bottom: 1%;padding-top: 1%;height:14vw;padding-right: 2%;font-size: 0.8vw;margin-top: 1%;">'+
              '<div class="orderImage" style="width: 15%;height: 12vw;float:left;">'+
-               '<img src="assets/images/'+instance.OrderProducts[i].PProduct.PCode+'/'+instance.OrderProducts[i].PProduct.PImageSmall+'" width="100%" height="100%">'+
+               '<img src="assets/images/Products/'+instance.OrderProducts[i].PProduct.PCode+'/'+instance.OrderProducts[i].PProduct.PImageSmall+'" width="100%" height="100%">'+
              '</div>'+
              '<div class="productName" style="width: 80%;float: right;font-size: 1.5vw;">'+
                instance.OrderProducts[i].PProduct.PName+

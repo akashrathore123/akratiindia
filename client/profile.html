@@ -101,7 +101,7 @@ You have not ordered anything till now
       <span ng-show="order.OrderProducts.length != 1">Items</span>
       <span ng-show="order.OrderProducts.length == 1">Item</span>/ Rs. {{order.OrderTotal}}</div>
       <div ng-repeat="product in order.OrderProducts" class="profile-orders-image">
-        <img src="assets/images/{{product.PCode}}/{{product.PProduct.PImageSmall}}" width="100%" height="100%">
+        <img src="assets/images/Products/{{product.PCode}}/{{product.PProduct.PImageSmall}}" width="100%" height="100%">
       </div>
       <div class="clearfix"></div>
       <div class="order-action-placed" ng-show="order.OrderStatus == 'Placed'">
