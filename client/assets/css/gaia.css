@@ -4470,15 +4470,15 @@ margin-top: 5.7%;
   margin-top: 4px;
   width: 39%;
   position: absolute;
+  margin-bottom: 4px;
 }
 
 .product-subHeader{
   position: absolute;
-  margin-top: 10%;
+  margin-top: 3%;
   color: #7a7974;
   font-family: -webkit-pictograph;
   font-weight: 100;
-  margin-left: -39%;
   /*font-size: large;*/
 }
 
@@ -5522,9 +5522,9 @@ a:focus{
 
 .product-subHeader {
   color: #1b1a19;
-  margin-left: -36%;
-  font-size: 16px;
-  margin-top: 11%;
+  margin-left: 0;
+  font-size: 2vw;
+  margin-top: 3%;
 }
 .no-product{
   margin-top: 40%;
