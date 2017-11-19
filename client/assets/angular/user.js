@@ -1288,7 +1288,7 @@ if(localStorage.getData('cart') != undefined){
   $scope.bag.withoutDiscount = 0;
 
   $scope.bag.discount = 0;
-  $scope.bag.deliveryCharge = 99;
+  $scope.bag.deliveryCharge = 20;
   $scope.bag.orderTotal = 0;
   $scope.bag.VAT = 0;
 
@@ -1358,7 +1358,7 @@ for(i=0; i<$scope.cartCount; i++){
 }
 $scope.bag.discount = $scope.bag.withoutDiscount - $scope.cartTotal;
 $scope.cartRupeeTotal = convertToRupee($scope.cartTotal);
-$scope.bag.GST = 0.28 * ($scope.bag.withoutDiscount - $scope.bag.discount);
+$scope.bag.GST = 0.18 * ($scope.bag.withoutDiscount - $scope.bag.discount);
 
 $scope.bag.withoutDiscount = convertToRupee($scope.bag.withoutDiscount);
 $scope.bag.orderTotal = convertToRupee(parseInt($scope.cartTotal + $scope.bag.deliveryCharge + $scope.bag.GST));
