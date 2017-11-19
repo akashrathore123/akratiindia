@@ -22,7 +22,7 @@ Admin.login = function(data, cb, next){
     cb(util.getGenericError("Error",402,"Password too short"));
     return;
   }
-
+console.log();
   Admin.findOne({where:{and:[{adminId: body.adminId},{adminPassword: body.password}]}}, function(err, instance){
     if(err){
       console.log("error");

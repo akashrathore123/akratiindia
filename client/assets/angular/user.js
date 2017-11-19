@@ -1581,7 +1581,8 @@ $scope.showAddressModal = function(){
     var el = $(this);
 
     if ((el.val().length == 6)) {
-
+      // $scope.newAdd.City = "aligarh";
+      // $scope.newAdd.State = "up";
       console.log("ajax");
       $.ajax({
         url: "http://maps.googleapis.com/maps/api/geocode/json?address="+el.val(),
@@ -1593,8 +1594,10 @@ $scope.showAddressModal = function(){
           console.log(result.results);
           // $(".fancy-form div > div").slideDown(); /* Show the fields */
           if(result.results[0].address_components.length > 2){
-          document.getElementById("city-value-input").value = result.results[0].address_components[1].long_name;
-          document.getElementById("state-value-input").value = result.results[0].address_components[2].long_name;
+            $scope.newAdd.City = result.results[0].address_components[1].long_name;
+            $scope.newAdd.State = result.results[0].address_components[2].long_name;
+          // document.getElementById("city-value-input").value = result.results[0].address_components[1].long_name;
+          // document.getElementById("state-value-input").value = result.results[0].address_components[2].long_name;
           }
           // $("#address-line-1").focus(); /* Put cursor where they need it */
 
