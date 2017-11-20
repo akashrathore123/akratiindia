@@ -14,7 +14,7 @@ module.exports = function(Filedata) {
         //     cb(err);
         //   }
         // })
-        mkdirp('./client/assets/images/'+ctx.req.header('container'), function (err) {
+        mkdirp('./client/assets/images/Products/'+ctx.req.header('container'), function (err) {
        console.log(err);
    });
         Filedata.app.models.Container.upload(ctx.req,ctx.result,options,function (err,fileObj) {
