@@ -28,7 +28,7 @@ module.exports = function(Filedata) {
                     name: fileInfo.name,
                     type: fileInfo.type,
                     container: fileInfo.container,
-                    url: 'assets/images/'+ctx.req.header('container')+'/'+fileInfo.name
+                    url: 'assets/images/Products/'+ctx.req.header('container')+'/'+fileInfo.name
                 },function (err,obj) {
                     if (err !== null) {
                       cb(util.getGenericError("Error",500,"Unable to add file info"+err));
