@@ -389,5 +389,40 @@ function openDropdown(element){
   element.className = "dropdown open";
 }
 function closeDropdown(element){
-  element.className = "dropdown";
+
+    element.className = "dropdown";
+}
+
+function changeDropdown(element){
+  if(element.className == "dropdown open show"){
+    element.className = "dropdown";
+  }else{
+    element.className = "dropdown open";
+  }
+}
+
+function toggleBar(element){
+
+element = document.getElementById("menu-toggle");
+  //
+  if(document.getElementById("menu-toggle").className == "navbar-toggle"){
+    //document.getElementById("menu-toggle").className = "navbar-toggle toggled";
+    $(".js").attr("class"," js touch nav-open");
+  }else{
+    document.getElementById("menu-toggle").className = "navbar-toggle";
+    $(".js").attr("class"," js touch");
+   }
+}
+
+function closeNavBar(element){
+  if(element.className == "navbar-toggle"){
+//$("#menu-toggle").toggle();
+      element.className = "navbar-toggle toggled";
+     $(".js").attr("class"," js touch nav-open");
+  }else{
+    //  $("#menu-toggle").toggle();
+      element.className = "navbar-toggle";
+     $(".js").attr("class"," js touch");
+  }
+  return;
 }

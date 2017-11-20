@@ -496,6 +496,9 @@ app.controller('loginCheck',['$scope','$http','$window','updateCart','localStora
   $http.defaults.headers.common = {'access_code':'onyourown'};
   updateCart.update();
   $scope.checkSession = function(){
+
+
+
     //console.log("checking session");
  var session = localStorage.getData('User');
  //console.log("session--"+JSON.stringify(session));
