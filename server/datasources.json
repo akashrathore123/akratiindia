@@ -17,6 +17,6 @@
     "name": "imageFiles",
     "connector": "loopback-component-storage",
     "provider": "filesystem",
-    "root": "./client/assets/images"
+    "root": "./client/assets/images/Products"
   }
 }
