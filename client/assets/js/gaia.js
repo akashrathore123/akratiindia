@@ -386,19 +386,22 @@ $(".input-number").keydown(function (e) {
   }
 
 function openDropdown(element){
-  element.className = "dropdown open";
+
+  if(window.screen.availWidth > 760){
+    element.className = "dropdown open";
+}
 }
 function closeDropdown(element){
-
+  if(window.screen.availWidth > 760){
     element.className = "dropdown";
 }
-
+}
 function changeDropdown(element){
-  if(element.className == "dropdown open show"){
-    element.className = "dropdown";
-  }else{
-    element.className = "dropdown open";
-  }
+  // if(element.className == "dropdown open"){
+  // //  element.className = "dropdown";
+  // }else{
+  //   element.className = "dropdown open";
+  // }
 }
 
 function toggleBar(element){
@@ -406,12 +409,13 @@ function toggleBar(element){
 element = document.getElementById("menu-toggle");
   //
   if(document.getElementById("menu-toggle").className == "navbar-toggle"){
-    //document.getElementById("menu-toggle").className = "navbar-toggle toggled";
+    document.getElementById("menu-toggle").className = "navbar-toggle toggled";
     $(".js").attr("class"," js touch nav-open");
   }else{
     document.getElementById("menu-toggle").className = "navbar-toggle";
     $(".js").attr("class"," js touch");
    }
+   gaia.misc.navbar_menu_visible = 0;
 }
 
 function closeNavBar(element){
@@ -424,5 +428,6 @@ function closeNavBar(element){
       element.className = "navbar-toggle";
      $(".js").attr("class"," js touch");
   }
+  setTimeout(toggleBar(element), 550);
   return;
 }

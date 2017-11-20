@@ -32,14 +32,14 @@ function showLoginForm(){
 function openLoginModal(){
     showLoginForm();
     setTimeout(function(){
-        $('#loginModal').modal('show');
+        $('#loginModal').modal('toggle');
     }, 230);
 
 }
 function openRegisterModal(){
     showRegisterForm();
     setTimeout(function(){
-        $('#loginModal').modal('show');
+        $('#loginModal').modal('toggle');
     }, 230);
 
 }

@@ -38,7 +38,7 @@
     <div class="container">
     <!-- <div class="container" style="width:1268px;"> -->
       <div class="navbar-header">
-        <button id="menu-toggle" type="button" class="navbar-toggle" onclick="closeNavBar(this)" data-toggle="collapse" data-target="#example">
+        <button id="menu-toggle" type="button" class="navbar-toggle"  data-toggle="collapse" data-target="#example">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar bar1" ng-class="{'navbar-toggle-color': isHome!=true}" ></span>
           <span class="icon-bar bar2" ng-class="{'navbar-toggle-color': isHome!=true}" ></span>
@@ -61,7 +61,7 @@
           </div>
         </li>
 
-        <li class="dropdown" onclick="changeDropdown(this)" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+        <li class="dropdown"  onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
           <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Door Fitting
           </a>
@@ -99,7 +99,7 @@
           </ul>
         </li>
 
-        <li class="dropdown" onclick="changeDropdown(this)" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+        <li class="dropdown"  onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
           <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Cub Board Fitting
           </a>
@@ -128,7 +128,7 @@
           </ul>
         </li>
 
-        <li class="dropdown" onclick="changeDropdown(this)" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+        <li class="dropdown"  onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
           <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Glass Fitting
           </a>
@@ -154,7 +154,7 @@
           </ul>
         </li>
 
-        <li class="dropdown" onclick="changeDropdown(this)" onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
+        <li class="dropdown"  onmouseover="openDropdown(this)" onmouseout="closeDropdown(this)">
           <a href="" class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown">
             <i class=""></i> Furniture
           </a>
@@ -179,8 +179,8 @@
           </li>
 
 
-        <li class="dropdown userIcon" id="userIcon">
-          <a class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}" data-toggle="dropdown" style="margin-left :7px;">
+        <li class="dropdown userIcon" id="userIcon" >
+          <a class="dropdown-toggle" ng-class="{'nav-opposite':isHome!=true}"  data-toggle="dropdown" style="margin-left :7px;">
 
           <!-- <a href="javascript:void(0)" style="margin-left :7px;"> -->
             <i class="fa fa-user" ng-class="{'nav-opposite':isHome!=true}"></i>
@@ -188,7 +188,7 @@
           <ul class="dropdown-menu dropdown-danger" id="userTools">
             <li>
               <div class="userToolInfo">
-                <a href="#my/profile">
+                <a href="#my/profile" onclick="toggleBar(this)">
                   <div class="userToolName">
                   </div>
                   <div id="userToolEmail">
@@ -198,11 +198,11 @@
               <hr>
             </li>
             <li>
-                <a href="#my/orders" ng-click="reloadData();"><i class=""></i> My Orders</a>
+                <a href="#my/orders" onclick="toggleBar(this)" ng-click="reloadData();"><i class=""></i> My Orders</a>
             </li>
             <li>
 
-                <a href="" ng-click="logOut()">Log Out</a>
+                <a href="" ng-click="logOut()" onclick="toggleBar(this)">Log Out</a>
                  </li>
           </ul>
 
