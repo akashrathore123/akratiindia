@@ -5,10 +5,7 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
-app.use('/', function(req, res, next){
-  req.headers.access_code = 'onyourown'
-  next()
-})
+
 
 
 app.start = function() {
@@ -33,3 +30,8 @@ boot(app, __dirname, function(err) {
   if (require.main === module)
     app.start();
 });
+
+app.use('/', function(req, res, next){
+  req.headers.access_code = 'onyourown'
+  next()
+})

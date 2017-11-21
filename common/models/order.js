@@ -188,27 +188,27 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
                         }
                       });
 
-                      request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
-                      '&smsfrom=Akratiindia&receiver=' + user.client_mobile +
-                      '&content=' + util.getSMSOrderMessage(orderItems[0].PProduct.PName,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
-                       function(err, httpResponse, body) {
-                         if (err) {
-                           console.error('Error:', err);
-                           return;
-                         }
-                         console.log(JSON.parse(body));
-                       })
-
-                       request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
-                       '&smsfrom=Akratiindia&receiver=' + util.AKRATI_PHONE+
-                       '&content=' + util.getSMSOrderAkrati(user.client_mobile,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
-                        function(err, httpResponse, body) {
-                          if (err) {
-                            console.error('Error:', err);
-                            return;
-                          }
-                          console.log(JSON.parse(body));
-                        })
+                      // request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
+                      // '&smsfrom=Akratiindia&receiver=' + user.client_mobile +
+                      // '&content=' + util.getSMSOrderMessage(orderItems[0].PProduct.PName,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
+                      //  function(err, httpResponse, body) {
+                      //    if (err) {
+                      //      console.error('Error:', err);
+                      //      return;
+                      //    }
+                      //    console.log(JSON.parse(body));
+                      //  })
+                      //
+                      //  request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
+                      //  '&smsfrom=Akratiindia&receiver=' + util.AKRATI_PHONE+
+                      //  '&content=' + util.getSMSOrderAkrati(user.client_mobile,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
+                      //   function(err, httpResponse, body) {
+                      //     if (err) {
+                      //       console.error('Error:', err);
+                      //       return;
+                      //     }
+                      //     console.log(JSON.parse(body));
+                      //   })
 
                     }
                   });
@@ -332,7 +332,6 @@ Order.initiateTransaction = function(data,cb){
      console.log(responseHash);
      var responseData = {};
 
-     console.log(responseData);
      if(!firstName || !productInfo || !orderAmount || !email || !transactionID || !requestHash || !responseHash){
        cb(util.getGenericError("Error",402,"Transaction Failed"));
        return;
