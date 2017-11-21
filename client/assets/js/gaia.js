@@ -405,7 +405,7 @@ function changeDropdown(element){
 }
 
 function toggleBar(element){
-
+if(window.screen.availWidth < 760){
 element = document.getElementById("menu-toggle");
   //
   if(document.getElementById("menu-toggle").className == "navbar-toggle"){
@@ -417,17 +417,4 @@ element = document.getElementById("menu-toggle");
    }
    gaia.misc.navbar_menu_visible = 0;
 }
-
-function closeNavBar(element){
-  if(element.className == "navbar-toggle"){
-//$("#menu-toggle").toggle();
-      element.className = "navbar-toggle toggled";
-     $(".js").attr("class"," js touch nav-open");
-  }else{
-    //  $("#menu-toggle").toggle();
-      element.className = "navbar-toggle";
-     $(".js").attr("class"," js touch");
-  }
-  setTimeout(toggleBar(element), 550);
-  return;
 }

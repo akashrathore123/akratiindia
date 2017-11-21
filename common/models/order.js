@@ -32,7 +32,6 @@ Order.deleteOrder = function(orderId,cb){
 
 Order.confirmOrder = function(data,cb){
 data.res.setHeader('Content-Type', 'text/html');
-console.log("data-"+JSON.stringify(data.req.body));
 var requestData = data.req.body;
 if(requestData && requestData.txnid && requestData.productinfo){
 Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}},function(err,transaction){
@@ -188,27 +187,27 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
                         }
                       });
 
-                      // request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
-                      // '&smsfrom=Akratiindia&receiver=' + user.client_mobile +
-                      // '&content=' + util.getSMSOrderMessage(orderItems[0].PProduct.PName,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
-                      //  function(err, httpResponse, body) {
-                      //    if (err) {
-                      //      console.error('Error:', err);
-                      //      return;
-                      //    }
-                      //    console.log(JSON.parse(body));
-                      //  })
-                      //
-                      //  request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
-                      //  '&smsfrom=Akratiindia&receiver=' + util.AKRATI_PHONE+
-                      //  '&content=' + util.getSMSOrderAkrati(user.client_mobile,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
-                      //   function(err, httpResponse, body) {
-                      //     if (err) {
-                      //       console.error('Error:', err);
-                      //       return;
-                      //     }
-                      //     console.log(JSON.parse(body));
-                      //   })
+                      request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
+                      '&smsfrom=Akratiindia&receiver=' + user.client_mobile +
+                      '&content=' + util.getSMSOrderMessage(orderItems[0].PProduct.PName,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
+                       function(err, httpResponse, body) {
+                         if (err) {
+                           console.error('Error:', err);
+                           return;
+                         }
+                         console.log(JSON.parse(body));
+                       })
+
+                       request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
+                       '&smsfrom=Akratiindia&receiver=' + util.AKRATI_PHONE+
+                       '&content=' + util.getSMSOrderAkrati(user.client_mobile,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
+                        function(err, httpResponse, body) {
+                          if (err) {
+                            console.error('Error:', err);
+                            return;
+                          }
+                          console.log(JSON.parse(body));
+                        })
 
                     }
                   });
@@ -287,7 +286,6 @@ Order.initiateTransaction = function(data,cb){
 
   var orderId =  Math.floor((Math.random() * Math.random() * 10000000000));
   var orderFound = undefined;
-  console.log(orderId);
   do{
     orderFound = undefined;
     Order.findOne({where:{OrderId:orderId}},function(err,instance){
@@ -295,9 +293,7 @@ Order.initiateTransaction = function(data,cb){
       cb(util.getGenericError('Error',403,'Error occured'));
     }
     if(instance){
-      console.log("instance------>"+JSON.stringify(instance));
       orderId =  Math.floor((Math.random() * Math.random()));
-      console.log("order id-"+orderId);
       orderFound = instance;
     }
   });
@@ -322,14 +318,12 @@ Order.initiateTransaction = function(data,cb){
   var hash = crypto.createHash('sha512', 'SecretKey');
      hash.update(hash_string_req);
      var requestHash = hash.digest('hex');
-     console.log(hash_string_req);
-     console.log(requestHash);
+
 
      hash = crypto.createHash('sha512', 'SecretKey');
      hash.update(hash_string_res);
      var responseHash = hash.digest('hex');
-     console.log(hash_string_res);
-     console.log(responseHash);
+
      var responseData = {};
 
      if(!firstName || !productInfo || !orderAmount || !email || !transactionID || !requestHash || !responseHash){
@@ -412,7 +406,7 @@ Order.initiateTransaction = function(data,cb){
              responseData.merchantSalt = util.MERCHANT_SALT;
 
              responseData.form = util.getPaymentForm(responseData);
-console.log(responseData);
+
              cb(null,responseData);
              return;
            }
@@ -424,7 +418,6 @@ console.log(responseData);
 }
 
 Order.orderFailed = function(data,cb){
-  console.log(JSON.stringify(data.req.body));
   Order.deleteOrder(requestData.productinfo,function(err,count){});
   data.res.setHeader('Content-Type','text/html');
   data.res.end(util.getOrderFailedHTML());
@@ -444,7 +437,7 @@ var orderItems = body.orderItems;
 var user = body.user;
 var address = body.orderAddress;
 var order = {};
-//console.log(JSON.stringify(orderItems));
+
 order.OrderDiscount = orderDetails.discount;
 order.OrderGST = orderDetails.GST;
 order.OrderAddress = address;
@@ -456,7 +449,6 @@ order.OrderStatus = 'Placed';
 
 var orderId =  Math.floor((Math.random() * Math.random()));
 var orderFound = undefined;
-console.log(orderId);
 do{
   orderFound = undefined;
   Order.findOne({where:{OrderId:orderId}},function(err,instance){
@@ -464,9 +456,7 @@ do{
     cb(util.getGenericError('Error',403,'Error occured'));
   }
   if(instance){
-    console.log("instance------>"+JSON.stringify(instance));
     orderId =  Math.floor((Math.random() * Math.random()));
-    console.log("order id-"+orderId);
     orderFound = instance;
   }
 });
@@ -564,7 +554,6 @@ Order.create(order,function(err,instance){
                         '</div> ';
 
     }
-//console.log('items data---'+ itemsData);
 
       var transporter = nodemailer.createTransport({
         ignoreTLS: true,
@@ -585,7 +574,6 @@ ejs.renderFile(path.resolve(__dirname , "../util/orderConfirmation.ejs"), {homeU
 if(err){
     cb(util.getGenericError("Error",500,"Order Confirmation mail can not be sent."))
   }else{
-    //console.log("data 1"+data);
     var discount = 0;
     if(parseInt(orderDetails.discount) > 0){
        discount = 'Rs. '+ orderDetails.discount
@@ -794,7 +782,6 @@ if(err){
               //send mail with defined transport object
               transporter.sendMail(mailClient, (error, info) => {
                 if (error) {
-                  return console.log(error);
                   cb(util.getGenericError("Error",500,"Internal Server Error!"))
                 }else{
                   console.log('Message %s sent: %s', info.messageId, info.response);
