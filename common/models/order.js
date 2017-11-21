@@ -32,7 +32,7 @@ Order.deleteOrder = function(orderId,cb){
 
 Order.confirmOrder = function(data,cb){
 data.res.setHeader('Content-Type', 'text/html');
-console.log(JSON.stringify(data.req.body));
+console.log("data-"+JSON.stringify(data.req.body));
 var requestData = data.req.body;
 if(requestData && requestData.txnid && requestData.productinfo){
 Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}},function(err,transaction){
@@ -413,7 +413,7 @@ Order.initiateTransaction = function(data,cb){
              responseData.merchantSalt = util.MERCHANT_SALT;
 
              responseData.form = util.getPaymentForm(responseData);
-
+console.log(responseData);
              cb(null,responseData);
              return;
            }
