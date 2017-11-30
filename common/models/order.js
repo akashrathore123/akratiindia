@@ -418,7 +418,8 @@ Order.initiateTransaction = function(data,cb){
 }
 
 Order.orderFailed = function(data,cb){
-  Order.deleteOrder(requestData.productinfo,function(err,count){});
+  console.log(data.req.productinfo);
+  Order.deleteOrder(data.req.productinfo,function(err,count){});
   data.res.setHeader('Content-Type','text/html');
   data.res.end(util.getOrderFailedHTML());
 }
