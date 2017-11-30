@@ -84,10 +84,7 @@ getPaymentForm : function(responseData){
   '<td colspan="3"><input name="furl"  size="64" value="'+PAYMENT_FURL+'"/></td>'+
   '</tr>'+
   '<tr>'+
-'<td colspan="3"><input type="hidden" name="service_provider" value="payu_paisa" /></td>'+
-'</tr>'+
-  '<tr>'+
-  '<td colspan="3"><input type="hidden" name="service_provider" value="" /></td>'+
+  '<td colspan="3"><input type="hidden" name="service_provider" value="payu_paisa" /></td>'+
   '</tr>'+
   '<tr>'+
   '<td colspan="4"><input type="submit" value="Submit"  /></td>'+
