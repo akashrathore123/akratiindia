@@ -700,8 +700,8 @@ Product.uploadSheet = function(ctx, cb){
     return;
   }
 
-  var obj = xlsx.parse(path.resolve(__dirname + '/../../client/assets/images/ProductSheets/'+ fileName));
-  //console.log(JSON.stringify(obj));
+  var obj = xlsx.parse(path.resolve(__dirname + '/../../client/assets/images/Products/ProductSheets/'+ fileName));
+  console.log(JSON.stringify(obj));
   for(var i=0;i<obj.length;i++){
     var sheetName = obj[i].name.toLowerCase();
     var sheetData = obj[i].data;
@@ -768,7 +768,7 @@ Product.uploadSheet = function(ctx, cb){
       product.PImage3 = sheetData[j][55];
       product.PImageSmall = sheetData[j][56];
 
-      console.log(JSON.stringify("Product data - "+j+" "+JSON.stringify(product)));
+      console.log(JSON.stringify("Product data - "+j+" - "+JSON.stringify(product)));
       if(product.PCategory && product.PCode && product.PCompany && product.PMaterial1 && product.PName){
       Product.upsert(product,function(err,instance){
         if(err){

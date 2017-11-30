@@ -5,9 +5,9 @@ const LOCALHOST = "https://www.akratiindia.in/";
 // const LOCALHOST = "http://0.0.0.0:3000/";
 const PAYMENT_SURL = LOCALHOST+'api/Orders/confirmOrder';
 const PAYMENT_FURL = LOCALHOST+'api/Orders/orderFailed';
-const MERCHANT_KEY = 'gtKFFx';
-const MERCHANT_SALT = 'eCwWELxi';
-const PAYMENT_URL = 'https://test.payu.in/_payment';
+const MERCHANT_KEY = 'Gaba2Xqf';//'gtKFFx';
+const MERCHANT_SALT = 'bE4eBZkEIV';//'eCwWELxi';
+const PAYMENT_URL = 'https://secure.payu.in/_payment ';//'https://test.payu.in/_payment';
 const SMS_NAME = 'Akrati';
 const SMS_PASSWORD = 'kdiweod';
 const SMS_API = 'http://websms.one97.net/sendsms/sms_request.php?username=';
@@ -83,6 +83,9 @@ getPaymentForm : function(responseData){
   '<td>Failure URI: </td>'+
   '<td colspan="3"><input name="furl"  size="64" value="'+PAYMENT_FURL+'"/></td>'+
   '</tr>'+
+  '<tr>'+
+'<td colspan="3"><input type="hidden" name="service_provider" value="payu_paisa" /></td>'+
+'</tr>'+
   '<tr>'+
   '<td colspan="3"><input type="hidden" name="service_provider" value="" /></td>'+
   '</tr>'+
