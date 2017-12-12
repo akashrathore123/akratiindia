@@ -10,6 +10,7 @@ var loopback = require("loopback");
 var crypto = require("crypto");
 var constant = require("../util/constants");
 var request = require("request");
+const xoauth2 = require('xoauth2');
 
 module.exports = function(Order) {
 
@@ -753,30 +754,31 @@ console.log("instance exist");
                '<hr style="width:84%;"><div class="totalPrice" style="width: 40%;float: left;padding-left: 8%;">Total Value </div>'+
                '<div class="totalPriceValue" style="width: 40%;text-align: right;margin-right: 8%;float: right;">Rs. '+instance.OrderTotal+'</div>'+
              '</div>  </div></div></div> </div>';
-    //     var transporter = nodemailer.createTransport({
-    //       ignoreTLS: false,
-    //       host: 'smtp.gmail.com',
-    //       port: 587,
-    //       secure:true,
-    //       auth: {
-    //
-    //         user: 'info@akratiindia.com',
-    //         pass: 'thdgerfshujk25'
-    //     }
-    // });
 
-    var transporter  = nodemailer.createTransport({
-  service: "Gmail",
-  auth: {
-    XOAuth2: {
-      user: "info@akratiindia.com", // Your gmail address.
-                                            // Not @developer.gserviceaccount.com
-      clientId: "195662290508-c211u3sbuslcjbuou63pa1t3ujs1cakt.apps.googleusercontent.com",
-      clientSecret: "yNF8kxuqDmR08J7Y0rOCR-jv",
-      refreshToken: "1/oiWSf-_4KC5BfyNta2PaVgAU19SwBoAVjd4J6LcEgHw"
-    }
-  }
-});
+        var transporter = nodemailer.createTransport({
+          ignoreTLS: false,
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure:true,
+          auth: {
+
+            user: 'info@akratiindia.com',
+            pass: 'thdgerfshujk25'
+        }
+    });
+
+//     var transporter  = nodemailer.createTransport({
+//   service: 'Gmail',
+//   auth: {
+//     xoauth2: xoauth2.createXOAuth2Generator({
+//       user: "info@akratiindia.com",
+//       pass: "thdgerfshujk25", // Your gmail address.
+//       clientId: "195662290508-c211u3sbuslcjbuou63pa1t3ujs1cakt.apps.googleusercontent.com",
+//       clientSecret: "yNF8kxuqDmR08J7Y0rOCR-jv",
+//       refreshToken: "1/oiWSf-_4KC5BfyNta2PaVgAU19SwBoAVjd4J6LcEgHw"
+//     })
+//   }
+// });
 
 
         ejs.renderFile(path.resolve(__dirname , "../util/orderCancelation.ejs"), {orderId:instance.OrderId }, function (err, data1) {
