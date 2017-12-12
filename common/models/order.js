@@ -132,17 +132,17 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
             }
         //console.log('items data---'+ itemsData);
 
-              var transporter = nodemailer.createTransport({
-                ignoreTLS: true,
-                host: 'smtp.gmail.com',
-                port: 587,
-                secure:false,
-                auth: {
+        var transporter = nodemailer.createTransport({
+          ignoreTLS: false,
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure:false,
+          auth: {
 
-                  user: 'info@akratiindia.com',
-                  pass: 'thdgerfshujk25'
-              }
-          });
+            user: 'info@akratiindia.com',
+            pass: 'thdgerfshujk25'
+        }
+    });
 
 
         // setup email data with unicode symbols
@@ -557,18 +557,17 @@ Order.create(order,function(err,instance){
 
     }
 
-      var transporter = nodemailer.createTransport({
-        ignoreTLS: true,
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure:false,
-        auth: {
+    var transporter = nodemailer.createTransport({
+      ignoreTLS: false,
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure:false,
+      auth: {
 
-          user: 'info@akratiindia.com',
-          pass: 'thdgerfshujk25'
-      }
-  });
-
+        user: 'info@akratiindia.com',
+        pass: 'thdgerfshujk25'
+    }
+});
 
 // setup email data with unicode symbols
 ejs.renderFile(path.resolve(__dirname , "../util/orderConfirmation.ejs"), {homeURL:util.DOMAIN+'index.html', name: address.Name,logo: util.DOMAIN+"assets/img/logo.png",orderid: order.orderId, orderDate: dateFormat(order.OrderDate, "fullDate"), orderCount: orderItems.length,
@@ -759,7 +758,7 @@ console.log("instance exist");
           ignoreTLS: false,
           host: 'smtp.gmail.com',
           port: 587,
-          secure:true,
+          secure:false,
           auth: {
 
             user: 'info@akratiindia.com',
