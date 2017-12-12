@@ -139,7 +139,7 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
                 auth: {
 
                   user: 'info@akratiindia.com',
-                  pass: 'qwertyuiop'
+                  pass: 'thdgerfshujk25'
               }
           });
 
@@ -564,7 +564,7 @@ Order.create(order,function(err,instance){
         auth: {
 
           user: 'info@akratiindia.com',
-          pass: 'qwertyuiop'
+          pass: 'thdgerfshujk25'
       }
   });
 
@@ -694,8 +694,7 @@ if(err){
         cb(util.getGenericError("Error",500,"Internal Server Error"));
       }
       if(instance){
-
-        cb(null,instance);
+console.log("instance exist");
         var data = '';
 
         for(var i=0;i<instance.OrderProducts.length;i++){
@@ -754,18 +753,30 @@ if(err){
                '<hr style="width:84%;"><div class="totalPrice" style="width: 40%;float: left;padding-left: 8%;">Total Value </div>'+
                '<div class="totalPriceValue" style="width: 40%;text-align: right;margin-right: 8%;float: right;">Rs. '+instance.OrderTotal+'</div>'+
              '</div>  </div></div></div> </div>';
+    //     var transporter = nodemailer.createTransport({
+    //       ignoreTLS: false,
+    //       host: 'smtp.gmail.com',
+    //       port: 587,
+    //       secure:true,
+    //       auth: {
+    //
+    //         user: 'info@akratiindia.com',
+    //         pass: 'thdgerfshujk25'
+    //     }
+    // });
 
-        var transporter = nodemailer.createTransport({
-          ignoreTLS: true,
-          host: 'smtp.gmail.com',
-          port: 587,
-          secure:false,
-          auth: {
-
-            user: 'info@akratiindia.com',
-            pass: 'qwertyuiop'
-        }
-    });
+    var transporter  = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    XOAuth2: {
+      user: "info@akratiindia.com", // Your gmail address.
+                                            // Not @developer.gserviceaccount.com
+      clientId: "195662290508-c211u3sbuslcjbuou63pa1t3ujs1cakt.apps.googleusercontent.com",
+      clientSecret: "yNF8kxuqDmR08J7Y0rOCR-jv",
+      refreshToken: "1/oiWSf-_4KC5BfyNta2PaVgAU19SwBoAVjd4J6LcEgHw"
+    }
+  }
+});
 
 
         ejs.renderFile(path.resolve(__dirname , "../util/orderCancelation.ejs"), {orderId:instance.OrderId }, function (err, data1) {
@@ -773,8 +784,8 @@ if(err){
               cb(util.getGenericError("Error",500,"Order Cancellation mail can not be sent."))
             }else{
               var mailClient = {
-                from: 'Akratiindia Updates <info@allied-up.com>', // sender address
-                to: [email,'info@akratiindia.com'], // list of receivers
+                from: 'Akratiindia Updates <info@akratiindia.com>', // sender address
+                to: ['akash.rathore1924@gmail.com','info@akratiindia.com'], // list of receivers
                 subject: 'Your Akratiindia Order Cancelled Successfully ( '+ orderId +' ) ', // Subject line
                 html: data1+data // html body
               };
@@ -783,6 +794,7 @@ if(err){
               //send mail with defined transport object
               transporter.sendMail(mailClient, (error, info) => {
                 if (error) {
+                  console.log(error);
                   cb(util.getGenericError("Error",500,"Internal Server Error!"))
                 }else{
                   console.log('Message %s sent: %s', info.messageId, info.response);
@@ -795,6 +807,7 @@ if(err){
           });
 
 
+          cb(null,instance);
 
       }
     });
