@@ -786,7 +786,7 @@ console.log("instance exist");
             }else{
               var mailClient = {
                 from: 'Akratiindia Updates <info@akratiindia.com>', // sender address
-                to: ['akash.rathore1924@gmail.com','info@akratiindia.com'], // list of receivers
+                to: [email,'info@akratiindia.com'], // list of receivers
                 subject: 'Your Akratiindia Order Cancelled Successfully ( '+ orderId +' ) ', // Subject line
                 html: data1+data // html body
               };
