@@ -356,15 +356,14 @@ Client.submitQuery = function(req,cb){
   }
 
   var transporter = nodemailer.createTransport({
-
-    ignoreTLS: true,
-    host: 'allied-up.com',
+    ignoreTLS: false,
+    host: 'smtp.gmail.com',
     port: 587,
     secure:false,
+    auth: {
 
-  auth: {
-      user: 'info@allied-up.com',
-      pass: 'AUPmail*733'
+      user: 'info@akratiindia.com',
+      pass: 'thdgerfshujk25'
   }
 });
 
