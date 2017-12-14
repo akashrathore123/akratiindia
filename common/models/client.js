@@ -374,7 +374,7 @@ Client.submitQuery = function(req,cb){
       }else{
         var mailAkrati = {
           from: 'Akratiindia Query <info@allied-up.com>', // sender address
-          to: 'info@allied-up.com', // list of receivers
+          to: 'info@akratiindia.com', // list of receivers
           subject: 'Akratiindia User Query ', // Subject line
           html: data // html body
         };
