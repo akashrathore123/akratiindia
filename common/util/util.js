@@ -35,9 +35,9 @@ module.exports = {
  getSMSOrderMessage: function(prodName,prodSize,orderTotal,date){
    var message = 'Confirmed: Order for '+prodName;
    if(prodSize > 1){
-     message += ' and for ' + (prodSize - 1) + ' more items';
+     message += ' and for more items';
    }
-   message += ' with total of Rs.'+ orderTotal +' is successfully placed and will reach you by '+date+'.';
+   message += ' with total of Rs.'+ orderTotal +' is placed and will reach you by '+date+'.';
 
    return message;
 },
