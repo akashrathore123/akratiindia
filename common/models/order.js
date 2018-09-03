@@ -189,7 +189,7 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
                       });
 
                       request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
-                      '&smsfrom=Akratiindia&receiver=' + user.client_mobile +
+                      '&smsfrom=Akrati&receiver=' + user.client_mobile +
                       '&content=' + util.getSMSOrderMessage(orderItems[0].PProduct.PName,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
                        function(err, httpResponse, body) {
                          if (err) {
@@ -200,7 +200,7 @@ Order.app.models.Transaction.findOne({where:{TransactionID : requestData.txnid}}
                        })
 
                        request.post(util.SMS_API + util.SMS_NAME + '& password=' + util.SMS_PASSWORD+
-                       '&smsfrom=Akratiindia&receiver=' + util.AKRATI_PHONE+
+                       '&smsfrom=Akrati&receiver=' + util.AKRATI_PHONE+
                        '&content=' + util.getSMSOrderAkrati(user.client_mobile,instance.OrderProducts.length,instance.OrderTotal,dateFormat(instance.OrderDate, "fullDate"))+'&udh=&response=JSON',
                         function(err, httpResponse, body) {
                           if (err) {

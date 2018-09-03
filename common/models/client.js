@@ -93,10 +93,9 @@ console.log(registerData);
        return;
     }
     if(instance){
-      console.log("instance---"+JSON.stringify(instance));
-      console.log("sending sms");
+
       request.post('http://websms.one97.net/sendsms/sms_request.php?username='+util.SMS_NAME+'& password='+util.SMS_PASSWORD+
-      '&smsfrom=Akratiindia&receiver='+registerData.client_mobile+
+      '&smsfrom=Akrati&receiver='+registerData.client_mobile+
       '&content=Akratiindia - '+registerData.client_verified+util.SMS_OTP_MESSAGE+'&udh=&response=JSON',
       function(err, httpResponse, body) {
   if (err) {
